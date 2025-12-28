@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Movida de SST DAO Network | Hub Central</title>
+    <meta name="description" content="Hub central del ecosistema descentralizado de seguridad y salud en el trabajo.">
+
+    <!-- 1. SEGURIDAD: Content Security Policy (CSP) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://assets.poap.xyz; connect-src 'self' https://cdn.tailwindcss.com;">
+
+    <!-- 2. SOCIAL SHARING: Open Graph -->
+    <meta property="og:title" content="La Movida de SST DAO Network">
+    <meta property="og:description" content="Hub Central: Identidad digital, formación y certificaciones blockchain en SST.">
+    <meta property="og:image" content="https://assets.poap.xyz/ae80dd44-a4b8-4a90-9d76-2da198a1f6fc.png">
+    <meta property="og:url" content="https://www.movidasst.com">
+    <meta property="og:type" content="website">
+
+    <!-- 3. UX/BRANDING: Favicon (Icono de Pestaña) -->
+    <link rel="icon" type="image/png" href="https://assets.poap.xyz/ae80dd44-a4b8-4a90-9d76-2da198a1f6fc.png">
+
+    <!-- 4. PERFORMANCE: Preconexión a CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://assets.poap.xyz"> <!-- Acelera la carga del logo -->
+    
+    <!-- Fuente Outfit (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#00b050',      // Verde Corporativo
+                        brandDark: '#008f40',  // Verde Oscuro
+                        lightBg: '#ffffff',    // Fondo Blanco Puro
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '0.3' },
+                            '50%': { opacity: '0.6' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos Light Tech Originales */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #0f172a; /* Slate 900 */
+            overflow-x: hidden;
+        }
+
+        /* 5. UI: Scrollbar Personalizado */
+        /* Webkit (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; /* Slate 100 - Muy sutil */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* Slate 300 - Gris suave por defecto */
+            border-radius: 5px;
+            border: 2px solid #f1f5f9; /* Espacio alrededor para que flote */
+            transition: background 0.3s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00b050; /* Brand Color - Verde al interactuar */
+        }
+        /* Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+
+        /* 1. Fondo de Grid Tecnológico (Versión Clara Restaurada) */
+        .tech-grid {
+            background-size: 40px 40px;
+            /* Líneas grises muy suaves y elegantes */
+            background-image: 
+                linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+            /* Mascara para desvanecer bordes suavemente */
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            z-index: -1;
+            top: 0;
+        }
+
+        /* 2. Tarjetas con Glassmorphism (Versión Light) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Efecto Hover en Tarjetas */
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: #ffffff;
+            border-color: #00b050; 
+            box-shadow: 0 20px 25px -5px rgba(0, 176, 80, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Decoración interna de la tarjeta */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00b050, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand selection:text-white">
+
+    <!-- FONDO DE AMBIENTE: Grid Tecnológico -->
+    <div class="tech-grid"></div>
+    
+    <!-- Luces Ambientales Suaves -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-brand/5 blur-[100px] rounded-full pointer-events-none z-[-1] animate-pulse-glow"></div>
+    <div class="fixed bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none z-[-1]"></div>
+
+    <!-- NAVBAR FLOTANTE -->
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-4 rtl:space-x-reverse group">
+                <!-- Logo Imagen Grande -->
+                <img src="https://assets.poap.xyz/ae80dd44-a4b8-4a90-9d76-2da198a1f6fc.png" alt="Logo Movida SST" class="h-20 w-auto shadow-sm rounded-full group-hover:scale-110 transition-transform duration-300">
+                
+                <div class="flex flex-col">
+                    <span class="self-center text-2xl font-bold whitespace-nowrap tracking-tight text-slate-900 leading-none group-hover:text-brand transition-colors">Movida SST</span>
+                    <span class="text-xs text-brand font-medium tracking-widest">DAO NETWORK</span>
+                </div>
+            </a>
+            <div class="hidden md:flex md:order-2 space-x-3">
+                <a href="https://movidasst.org/login/index.php" class="text-slate-700 bg-white hover:bg-brand hover:text-white focus:ring-4 focus:outline-none focus:ring-brand/30 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-slate-200 hover:border-brand transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    Ingresar a la Academia
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER / HERO SECTION -->
+    <header class="pt-32 pb-12 px-4 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/20 bg-brand/5 text-brand text-xs font-bold uppercase tracking-wider mb-6 animate-pulse-glow">
+            <span class="w-2 h-2 rounded-full bg-brand"></span>
+            DAO Organización Autónoma Descentralizada
+        </div>
+        
+        <h1 class="mb-6 text-4xl font-extrabold tracking-tight leading-tight md:text-6xl lg:text-7xl text-slate-900">
+            La Movida de SST <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-emerald-500">DAO Network</span>
+        </h1>
+        
+        <p class="mb-8 text-lg font-normal text-slate-600 lg:text-xl sm:px-16 lg:px-48 max-w-4xl mx-auto">
+            Tu punto de acceso al ecosistema descentralizado más completo. Gestiona tu identidad Web3, fórmate en nuestra Academia, consulta la biblioteca normativa colaborativa y conecta con profesionales certificados. Todo en un entorno seguro, transparente y gobernado por la comunidad.
+        </p>
+    </header>
+
+    <!-- GRID DE NAVEGACIÓN (Los Satélites) -->
+    <main class="max-w-screen-xl mx-auto px-4 pb-24 relative z-10">
+        
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            
+            <!-- 1. PORTAL DEL INTEGRANTE -->
+            <a href="https://portal.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center mb-6 text-blue-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10h2"/><path d="M16 14h2"/><path d="M6.17 15a3 3 0 0 1 5.66 0"/><circle cx="9" cy="9" r="2"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Portal del Integrante</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Tu primer paso. Regístrate, únete a los grupos oficiales y descarga tu <strong class="text-slate-700">Credencial Oficial</strong> con código de verificación.
+                </p>
+            </a>
+
+            <!-- 2. IDENTIDAD DIGITAL (DAO) -->
+            <a href="https://dao.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-purple-50 border border-purple-100 rounded-xl flex items-center justify-center mb-6 text-purple-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Z"/><path d="M2 20h20"/><path d="M7 20v-2.17a3.996 3.996 0 0 1 2.45-3.69l1.83-.67a2.002 2.002 0 0 1 1.44 0l1.83.67A3.996 3.996 0 0 1 17 17.83V20"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Identidad Digital DAO Wallet</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Gestiona tu identidad Web3. Firma contratos inteligentes, participa en votaciones y recibe tus activos digitales.
+                </p>
+            </a>
+
+            <!-- 3. INSIGNIAS Y CERTIFICADOS -->
+            <a href="https://insignias.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-yellow-50 border border-yellow-100 rounded-xl flex items-center justify-center mb-6 text-yellow-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Insignias Blockchain</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Tus logros inmutables. Visualiza tus certificados e insignias oficiales y compártelos en LinkedIn o OpenSea.
+                </p>
+            </a>
+
+            <!-- 4. DIRECTORIO DE PROFESIONALES -->
+            <a href="https://directorio.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-cyan-50 border border-cyan-100 rounded-xl flex items-center justify-center mb-6 text-cyan-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Directorio Profesional</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Mapa público de talento. Tu perfil visible ante colegas y reclutadores en nuestro buscador descentralizado.
+                </p>
+            </a>
+
+            <!-- 5. ACADEMIA MOVIDA SST -->
+            <a href="https://movidasst.org" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-orange-50 border border-orange-100 rounded-xl flex items-center justify-center mb-6 text-orange-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Academia LMS</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Plataforma educativa Moodle. Cursos blended learning, recursos web y grupos de estudio especializados.
+                </p>
+            </a>
+
+            <!-- 6. INSCRIPCIONES CURSOS (NUEVO) -->
+            <a href="https://inscripciones.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center mb-6 text-red-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Inscripciones Cursos</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Reserva tu cupo. Inscripciones a cursos blended learning, con clases sincrónicas y asincrónicas en materia de SST.
+                </p>
+            </a>
+
+             <!-- 7. ESTUDIA MOVIDA SST -->
+             <a href="https://estudia.movidasst.com" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center justify-center mb-6 text-indigo-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Estudio Normativa Legal</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Gestión de estudio colaborativo continuo de la normativa legal venezolana. Leyes, reglamentos, NT y normas COVENIN.
+                </p>
+            </a>
+
+            <!-- 8. DRIVE DE LA MOVIDA -->
+            <a href="https://drive.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
+                <div class="w-14 h-14 bg-teal-50 border border-teal-100 rounded-xl flex items-center justify-center mb-6 text-teal-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Biblioteca Colaborativa</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Acceso al Drive compartido. Biblioteca de documentos, normas y formatos editables para la gestión de SST.
+                </p>
+            </a>
+
+            <!-- 9. PERFIL DEL CREADOR -->
+            <a href="https://davidlinares.movidasst.com/" class="glass-card p-8 rounded-2xl group block border-dashed border-slate-300 hover:border-brand">
+                <div class="w-14 h-14 bg-pink-50 border border-pink-100 rounded-xl flex items-center justify-center mb-6 text-pink-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Perfil del Fundador</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Conecta con David Linares Brea. Biografía, visión del proyecto y contacto directo con el creador del ecosistema.
+                </p>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-200 py-10 mt-auto relative z-10 bg-white/50 backdrop-blur-sm">
+        <div class="max-w-screen-xl mx-auto px-4 flex flex-col items-center">
+            
+            <!-- BARRA DE REDES SOCIALES -->
+            <div class="flex flex-wrap justify-center gap-6 mb-8">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/movidasst/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#E1306C] hover:scale-110 transition-all duration-300" aria-label="Instagram">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.37c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-black hover:scale-110 transition-all duration-300" aria-label="TikTok">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#FF0000] hover:scale-110 transition-all duration-300" aria-label="YouTube">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 01-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 011.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418zM15.194 12 10 15V9l5.194 3z" clip-rule="evenodd" /></svg>
+                </a>
+
+                <!-- X (Twitter) -->
+                <a href="https://x.com/movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-black hover:scale-110 transition-all duration-300" aria-label="Twitter X">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+
+                <!-- Roblox (Icono Estilizado) -->
+                <a href="https://www.roblox.com/es/communities/65493783/Movida-de-SST-DAO-Network#!/about" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#000000] hover:scale-110 transition-all duration-300" aria-label="Roblox">
+                   <!-- Roblox Square Logo aproximado en SVG -->
+                   <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.166 2.5L2.5 5.166v13.668L5.166 21.5h13.668L21.5 18.834V5.166L18.834 2.5H5.166zm3.5 6.5h6.668v6.668H8.666V9z" /></svg>
+                </a>
+            </div>
+
+            <p class="text-slate-500 text-sm">
+                © 2026 La Movida de SST DAO Network. Infraestructura descentralizada.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
