@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Movida de SST | De la Reacción a la Prevención</title>
-    <meta name="description" content="Hub central del ecosistema descentralizado de seguridad y salud en el trabajo.">
+    <title>La Movida de SST | Ecosistema de Seguridad y Salud en el Trabajo</title>
+    <meta name="description" content="Hub central del ecosistema descentralizado de seguridad y salud en el trabajo (SST) en Venezuela. Fórmate, gestiona y encuentra servicios profesionales.">
+    <meta name="keywords" content="SST, seguridad y salud en el trabajo, LOPCYMAT, INPSASEL, Venezuela, formación SST, academia SST, consultoría SST, profesionales SST">
+    <meta name="author" content="David Linares Brea">
+    <meta name="p:domain_verify" content="61ef13e879518ab1c41985a5685a0f1b"/>
 
-    <!-- SOCIAL SHARING: Open Graph -->
-    <meta property="og:title" content="La Movida de SST | De la Reacción a la Prevención">
-    <meta property="og:description" content="Hub Central: Formación, gestión y servicios profesionales en Seguridad y Salud en el Trabajo.">
-    <!-- Actualizado con el nuevo logo -->
+    <!-- SOCIAL SHARING: Open Graph (Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:title" content="La Movida de SST | Ecosistema Profesional">
+    <meta property="og:description" content="Únete al ecosistema de Seguridad y Salud en el Trabajo más completo: formación, gestión y conexión profesional.">
+    <!-- RECOMENDACIÓN WHATSAPP: La imagen debe ser idealmente de 1200x630px y pesar menos de 300kb para que cargue rápido en la previsualización -->
     <meta property="og:image" content="https://assets.poap.xyz/8177a96d-b12a-4175-ab07-e28a5ff15962.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://www.movidasst.com">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="La Movida de SST">
+
+    <!-- Twitter Card (Twitter/X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="La Movida de SST | Ecosistema Profesional">
+    <meta name="twitter:description" content="Únete al ecosistema de Seguridad y Salud en el Trabajo más completo: formación, gestión y conexión profesional.">
+    <meta name="twitter:image" content="https://assets.poap.xyz/8177a96d-b12a-4175-ab07-e28a5ff15962.png">
 
     <!-- ICONO DE PESTAÑA (Favicon) -->
-    <!-- Actualizado con el nuevo logo -->
     <link rel="icon" type="image/png" href="https://assets.poap.xyz/8177a96d-b12a-4175-ab07-e28a5ff15962.png">
 
     <!-- OPTIMIZACIÓN DE CARGA -->
@@ -39,12 +50,17 @@
                         sans: ['Outfit', 'sans-serif'],
                     },
                     animation: {
-                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'pulse-glow': 'pulse-glow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
                     },
                     keyframes: {
                         'pulse-glow': {
-                            '0%, 100%': { opacity: '0.3' },
-                            '50%': { opacity: '0.6' },
+                            '0%, 100%': { opacity: '0.2' },
+                            '50%': { opacity: '0.5' },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
                         }
                     }
                 }
@@ -55,145 +71,123 @@
     <style>
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #ffffff;
+            background-color: #f8fafc; /* Ligerísimo tono frío para resaltar el blanco de las tarjetas */
             color: #0f172a;
             overflow-x: hidden;
         }
 
         /* Scrollbar Personalizado */
-        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f1f5f9; transition: background 0.3s; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; transition: background 0.3s; }
         ::-webkit-scrollbar-thumb:hover { background: #00b050; }
         html { scrollbar-width: thin; scrollbar-color: #cbd5e1 #f1f5f9; }
 
-        /* Fondo Grid */
+        /* Fondo Grid - Más sutil y elegante */
         .tech-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
             height: 100vh; width: 100%; position: fixed; z-index: -1; top: 0;
         }
 
-        /* Efectos Tarjetas */
+        /* Efectos Tarjetas Ultra-Premium */
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; 
+            overflow: hidden;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
         }
         .glass-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             background: #ffffff;
-            border-color: #00b050; 
-            box-shadow: 0 20px 25px -5px rgba(0, 176, 80, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 176, 80, 0.3); 
+            box-shadow: 0 25px 40px -10px rgba(0, 176, 80, 0.12), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
         }
+        
+        /* Línea superior mágica en hover */
         .glass-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, #00b050, transparent);
-            opacity: 0; transition: opacity 0.3s ease;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, #00b050, #10b981, transparent);
+            opacity: 0; transition: opacity 0.4s ease;
         }
         .glass-card:hover::before { opacity: 1; }
 
-        /* Efecto Deslumbrante para el Logo */
-        .logo-container {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            border-radius: 50%; /* Asumiendo que el logo es circular, ajusta si es necesario */
+        /* Resplandor sutil interno en tarjetas */
+        .glass-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at top right, rgba(0,176,80,0.03), transparent 70%);
+            opacity: 0; transition: opacity 0.4s ease;
+            pointer-events: none;
         }
-
-        .logo-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            animation: shine 6s infinite;
-            pointer-events: none; /* Para que no interfiera con los clics */
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 200%; }
-            100% { left: 200%; }
-        }
-
-        @keyframes logo-entrance {
-            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); filter: drop-shadow(0 0 0 rgba(0, 176, 80, 0)); }
-            50% { filter: drop-shadow(0 0 25px rgba(0, 176, 80, 0.8)); }
-            100% { opacity: 1; transform: scale(1) rotate(0); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); }
-        }
-
-        .animate-logo {
-            animation: logo-entrance 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .glass-card:hover::after { opacity: 1; }
     </style>
 </head>
 <body class="antialiased selection:bg-brand selection:text-white">
 
     <div class="tech-grid"></div>
     
-    <!-- Luces de Fondo -->
-    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-brand/5 blur-[100px] rounded-full pointer-events-none z-[-1] animate-pulse-glow"></div>
-    <div class="fixed bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none z-[-1]"></div>
+    <!-- Luces de Fondo (Más sofisticadas) -->
+    <div class="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-brand/10 blur-[120px] rounded-full pointer-events-none z-[-1] animate-pulse-glow"></div>
+    <div class="fixed bottom-0 right-[-10%] w-[700px] h-[700px] bg-teal-500/5 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
 
     <!-- NAVBAR -->
-    <nav class="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 md:py-3">
-            <a href="#" class="flex items-center space-x-3 sm:space-x-4 rtl:space-x-reverse group">
-                <!-- Contenedor para el efecto de brillo y la imagen actualizada -->
-                <div class="logo-container rounded-full shadow-[0_0_15px_rgba(0,176,80,0.3)] hover:shadow-[0_0_25px_rgba(0,176,80,0.6)] transition-shadow duration-500">
-                    <img src="https://assets.poap.xyz/8177a96d-b12a-4175-ab07-e28a5ff15962.png" alt="Logo Movida 2026" class="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain animate-logo group-hover:scale-110 group-hover:brightness-110 group-hover:contrast-125 transition-all duration-500 ease-out p-1">
-                </div>
+            <a href="#" class="flex items-center space-x-4 sm:space-x-5 rtl:space-x-reverse group">
+                <!-- Imagen redonda con efecto bella (Mantenida intacta según tu solicitud) -->
+                <img src="https://assets.poap.xyz/8177a96d-b12a-4175-ab07-e28a5ff15962.png" alt="Logo Movida 2026" class="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32 rounded-full object-cover shadow-[0_8px_20px_rgba(0,176,80,0.25)] group-hover:shadow-[0_15px_35px_rgba(0,176,80,0.5)] group-hover:scale-105 group-hover:rotate-3 transition-all duration-500 ease-out animate-float">
                 <div class="flex flex-col">
-                    <span class="self-center text-2xl md:text-3xl font-bold whitespace-nowrap tracking-tight text-slate-900 leading-none group-hover:text-brand transition-colors">Movida SST</span>
-                    <span class="text-[10px] sm:text-xs text-brand font-medium tracking-widest uppercase mt-1">De la Reacción a la Prevención</span>
+                    <span class="self-center text-2xl md:text-3xl font-extrabold whitespace-nowrap tracking-tight text-slate-900 leading-none group-hover:text-brand transition-colors duration-300">Movida SST</span>
+                    <span class="text-[10px] sm:text-xs text-brand font-bold tracking-[0.2em] uppercase mt-1.5 opacity-90">De la Reacción a la Prevención</span>
                 </div>
             </a>
             
             <!-- CONTENEDOR DE BOTONES (Desktop) -->
             <div class="hidden md:flex md:order-2 items-center space-x-4">
-                <a href="https://servicios.movidasst.com/" target="_blank" class="text-white bg-brand hover:bg-brandDark focus:ring-4 focus:outline-none focus:ring-brand/30 font-bold rounded-lg text-sm px-6 py-2.5 text-center transition-all duration-300 flex items-center gap-2 shadow-[0_4px_15px_rgba(0,176,80,0.35)] hover:shadow-[0_8px_25px_rgba(0,176,80,0.45)] transform hover:-translate-y-0.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <a href="https://servicios.movidasst.com/" target="_blank" class="relative overflow-hidden text-white bg-gradient-to-r from-brand to-brandDark hover:from-brandDark hover:to-brand focus:ring-4 focus:outline-none focus:ring-brand/30 font-bold rounded-xl text-sm px-7 py-3 text-center transition-all duration-300 flex items-center gap-2 shadow-[0_8px_20px_rgba(0,176,80,0.3)] hover:shadow-[0_12px_25px_rgba(0,176,80,0.5)] transform hover:-translate-y-0.5 group/btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/btn:scale-110 transition-transform"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                     Formación Corporativa
                 </a>
 
-                <a href="https://movidasst.org/login/index.php" class="text-slate-700 bg-white hover:bg-slate-50 focus:ring-4 focus:outline-none focus:ring-slate-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-slate-200 transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md">
+                <a href="https://movidasst.org/login/index.php" class="text-slate-700 bg-white hover:bg-slate-50 focus:ring-4 focus:outline-none focus:ring-slate-200 font-semibold rounded-xl text-sm px-6 py-3 text-center border border-slate-200 hover:border-slate-300 transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                    Ingresar a la Academia
+                    Ingresar
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- HEADER -->
-    <header class="pt-32 sm:pt-40 md:pt-48 pb-12 px-4 text-center relative z-10">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/20 bg-brand/5 text-brand text-xs font-bold uppercase tracking-wider mb-6 animate-pulse-glow">
-            <span class="w-2 h-2 rounded-full bg-brand"></span>
+    <header class="pt-36 sm:pt-44 md:pt-52 pb-16 px-4 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand/20 bg-white/60 backdrop-blur-md shadow-sm text-brand text-xs font-bold uppercase tracking-widest mb-8 animate-pulse-glow hover:bg-brand/5 transition-colors cursor-default">
+            <span class="w-2 h-2 rounded-full bg-brand shadow-[0_0_8px_rgba(0,176,80,0.8)]"></span>
             Ecosistema Profesional de Seguridad Laboral
         </div>
         
-        <h1 class="mb-8 text-4xl font-extrabold tracking-tight leading-tight md:text-6xl lg:text-7xl text-slate-900">
+        <h1 class="mb-8 text-5xl font-extrabold tracking-tighter leading-tight md:text-6xl lg:text-7xl text-slate-900 drop-shadow-sm">
             La Movida de SST <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-emerald-500 block text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-3 md:mt-4">De la Reacción a la Prevención</span>
+            <!-- Gradiente enriquecido para el eslogan -->
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand via-emerald-500 to-teal-400 block text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-4 md:mt-6 pb-2">De la Reacción a la Prevención</span>
         </h1>
         
         <div class="mb-12 max-w-4xl mx-auto relative group cursor-default">
-            <div class="absolute -inset-1 bg-gradient-to-r from-brand/20 via-slate-200 to-brand/20 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-700"></div>
-            <div class="relative bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <!-- Glow detrás del texto -->
+            <div class="absolute -inset-2 bg-gradient-to-r from-brand/10 via-slate-200/50 to-teal-400/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition duration-700"></div>
+            
+            <div class="relative bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-8 md:p-10 shadow-[0_8px_40px_rgb(0,0,0,0.03)] transition-transform duration-500 group-hover:scale-[1.01]">
                 <p class="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
-                    Tu punto de acceso al <span class="font-semibold text-slate-800">ecosistema profesional y descentralizado</span> más completo. 
+                    Tu punto de acceso al <span class="font-bold text-slate-800">ecosistema profesional y descentralizado</span> más completo. 
                     Fórmate en nuestra Academia, impulsa tu carrera con mentoría experta, explora herramientas de Inteligencia Artificial, consulta la biblioteca normativa y conecta con los mejores especialistas en SST.
                 </p>
-                <div class="mt-5 pt-5 border-t border-slate-200/60 flex flex-col md:flex-row items-center justify-center gap-2 text-sm font-medium text-slate-500">
-                    <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>Todo en un entorno <span class="text-slate-700">seguro</span>, <span class="text-slate-700">transparente</span> y <span class="text-slate-700">profesional</span>.</span>
+                <div class="mt-8 pt-6 border-t border-slate-200/60 flex flex-col md:flex-row items-center justify-center gap-3 text-sm font-semibold text-slate-500">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-brand/10 text-brand">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    </span>
+                    <span>Todo en un entorno <span class="text-slate-800">seguro</span>, <span class="text-slate-800">transparente</span> y <span class="text-slate-800">profesional</span>.</span>
                 </div>
             </div>
         </div>
@@ -201,181 +195,247 @@
 
     <!-- GRID DE TARJETAS -->
     <main class="max-w-screen-xl mx-auto px-4 pb-24 relative z-10">
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
             
             <!-- FILA 1: PRIORIDAD SUPERIOR -->
             <!-- 1. ACADEMIA MOVIDA SST -->
-            <a href="https://movidasst.org" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-orange-50 border border-orange-100 rounded-xl flex items-center justify-center mb-6 text-orange-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <a href="https://movidasst.org" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-orange-200">
+                <div class="w-16 h-16 bg-orange-50/80 border border-orange-100 rounded-2xl flex items-center justify-center mb-8 text-orange-500 group-hover:bg-gradient-to-br group-hover:from-orange-400 group-hover:to-orange-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-orange-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Academia LMS</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-orange-600 transition-colors">Academia LMS</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Plataforma educativa Moodle. Cursos blended learning, recursos web y grupos de estudio especializados en SST.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-orange-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Explorar la Academia
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- 2. INSCRIPCIONES CURSOS -->
-            <a href="https://inscripciones.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center mb-6 text-red-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <a href="https://inscripciones.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-red-200">
+                <div class="w-16 h-16 bg-red-50/80 border border-red-100 rounded-2xl flex items-center justify-center mb-8 text-red-500 group-hover:bg-gradient-to-br group-hover:from-red-400 group-hover:to-red-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-red-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Inscripciones Cursos</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-red-600 transition-colors">Inscripciones Cursos</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Reserva tu cupo. Proceso de inscripción para formación técnica en materia de seguridad y salud en el trabajo.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-red-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Inscribirse ahora
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
-            <!-- 3. MENTORÍA Y ASESORÍA (NUEVA PRIORIDAD) -->
-            <a href="https://mentoring.movidasst.com/" class="glass-card p-8 rounded-2xl group block border-amber-200 hover:border-brand">
-                <div class="w-14 h-14 bg-amber-50 border border-amber-100 rounded-xl flex items-center justify-center mb-6 text-amber-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <!-- 3. MENTORÍA Y ASESORÍA -->
+            <a href="https://mentoring.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-amber-200 hover:border-amber-300">
+                <div class="w-16 h-16 bg-amber-50/80 border border-amber-100 rounded-2xl flex items-center justify-center mb-8 text-amber-500 group-hover:bg-gradient-to-br group-hover:from-amber-400 group-hover:to-amber-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-amber-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Mentoría y Asesoría</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Mentoría y Asesoría</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Sesiones 1 a 1 y Consultoría B2B. Orientación experta para fortalecer conocimientos y resolver dudas críticas en SST.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-amber-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Solicitar mentoría
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- FILA 2 -->
             <!-- 4. IA MOVIDA SST -->
-            <a href="https://ia.movidasst.com/" class="glass-card p-8 rounded-2xl group block border-sky-200">
-                <div class="w-14 h-14 bg-sky-50 border border-sky-100 rounded-xl flex items-center justify-center mb-6 text-sky-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 7v5l3 3"/></svg>
+            <a href="https://ia.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-sky-200">
+                <div class="w-16 h-16 bg-sky-50/80 border border-sky-100 rounded-2xl flex items-center justify-center mb-8 text-sky-500 group-hover:bg-gradient-to-br group-hover:from-sky-400 group-hover:to-sky-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-sky-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 7v5l3 3"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">IA Movida SST</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-sky-600 transition-colors">IA Movida SST</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Explora, utiliza y comparte aplicaciones web y estudios creados con Inteligencia Artificial por talento venezolano y latinoamericano.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-sky-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Descubrir herramientas IA
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
-            
-            <!-- 6. BIBLIOTECA COLABORATIVA -->
-            <a href="https://drive.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-teal-50 border border-teal-100 rounded-xl flex items-center justify-center mb-6 text-teal-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <!-- 5. GOBERNANZA DAO -->
+            <a href="https://gobernanza.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-fuchsia-200">
+                <div class="w-16 h-16 bg-fuchsia-50/80 border border-fuchsia-100 rounded-2xl flex items-center justify-center mb-8 text-fuchsia-600 group-hover:bg-gradient-to-br group-hover:from-fuchsia-400 group-hover:to-fuchsia-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-fuchsia-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="m9 12 2 2 4-4"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Biblioteca Colaborativa</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-fuchsia-600 transition-colors">Gobernanza DAO</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
-                    Acceso al Drive compartido. Biblioteca de documentos, normas y formatos editables para la gestión técnica.
+                    Dashboard con los resultados de las votaciones. Establecemos las normas de participación de la comunidad de forma 100% transparente y colaborativa.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-fuchsia-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Ver tablero de votaciones
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
+            </a>
+
+            <!-- 6. BIBLIOTECA COLABORATIVA -->
+            <a href="https://drive.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-teal-200">
+                <div class="w-16 h-16 bg-teal-50/80 border border-teal-100 rounded-2xl flex items-center justify-center mb-8 text-teal-500 group-hover:bg-gradient-to-br group-hover:from-teal-400 group-hover:to-teal-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-teal-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-teal-600 transition-colors">Biblioteca Colaborativa</h3>
+                <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
+                    Acceso al Drive compartido. Biblioteca de documentos, normas y formatos editables para la gestión técnica en SST.
+                </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-teal-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Acceder al Drive
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- FILA 3 -->
             <!-- 7. DIRECTORIO DE PROFESIONALES -->
-            <a href="https://directorio.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-cyan-50 border border-cyan-100 rounded-xl flex items-center justify-center mb-6 text-cyan-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <a href="https://directorio.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-cyan-200">
+                <div class="w-16 h-16 bg-cyan-50/80 border border-cyan-100 rounded-2xl flex items-center justify-center mb-8 text-cyan-500 group-hover:bg-gradient-to-br group-hover:from-cyan-400 group-hover:to-cyan-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-cyan-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Directorio Profesional</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">Directorio Profesional</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
-                    Mapa de talento profesional. Encuentra especialistas en SST con perfiles verificados en nuestro buscador.
+                    Mapa de talento profesional. Encuentra especialistas en SST con perfiles verificados en nuestro potente buscador.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-cyan-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Buscar especialistas
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- 8. DIRECTORIO DE PROVEEDORES -->
-            <a href="https://proveedores.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-violet-50 border border-violet-100 rounded-xl flex items-center justify-center mb-6 text-violet-600 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.72 9.002a2 2 0 0 0-1.72-1H7a2 2 0 0 0-1.72 1L2.2 17.58a2 2 0 0 0 1.8 2.42h16a2 2 0 0 0 1.8-2.42z"/><path d="M7 13v-3"/><path d="M17 13v-3"/></svg>
+            <a href="https://proveedores.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-violet-200">
+                <div class="w-16 h-16 bg-violet-50/80 border border-violet-100 rounded-2xl flex items-center justify-center mb-8 text-violet-600 group-hover:bg-gradient-to-br group-hover:from-violet-400 group-hover:to-violet-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-violet-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.72 9.002a2 2 0 0 0-1.72-1H7a2 2 0 0 0-1.72 1L2.2 17.58a2 2 0 0 0 1.8 2.42h16a2 2 0 0 0 1.8-2.42z"/><path d="M7 13v-3"/><path d="M17 13v-3"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Directorio de Proveedores</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-violet-600 transition-colors">Directorio Proveedores</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Conecta con proveedores confiables de equipos, servicios y suministros de Seguridad y Salud Laboral en Venezuela.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-violet-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Ver proveedores
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- 9. SST MANCOMUNADOS VENEZUELA -->
-            <a href="https://mancomunados.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center justify-center mb-6 text-brand group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+            <a href="https://mancomunados.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-emerald-200">
+                <div class="w-16 h-16 bg-emerald-50/80 border border-emerald-100 rounded-2xl flex items-center justify-center mb-8 text-brand group-hover:bg-gradient-to-br group-hover:from-emerald-400 group-hover:to-emerald-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-emerald-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">SST Mancomunados</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">SST Mancomunados</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Directorio de servicios de seguridad y salud tipo I y II. Registra tu SST y busca por estados y municipios del país.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-brand opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Ir al directorio SST
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- FILA 4 -->
             <!-- 10. PORTAL DEL INTEGRANTE -->
-            <a href="https://portal.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center mb-6 text-blue-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10h2"/><path d="M16 14h2"/><path d="M6.17 15a3 3 0 0 1 5.66 0"/><circle cx="9" cy="9" r="2"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg>
+            <a href="https://portal.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-blue-200">
+                <div class="w-16 h-16 bg-blue-50/80 border border-blue-100 rounded-2xl flex items-center justify-center mb-8 text-blue-500 group-hover:bg-gradient-to-br group-hover:from-blue-400 group-hover:to-blue-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-blue-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10h2"/><path d="M16 14h2"/><path d="M6.17 15a3 3 0 0 1 5.66 0"/><circle cx="9" cy="9" r="2"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Portal del Integrante</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Portal del Integrante</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Primer paso. Regístrate, únete a los grupos oficiales y obtén tu Credencial Oficial con verificación digital.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-blue-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Ingresar al Portal
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
              <!-- 11. ESTUDIA MOVIDA SST -->
-             <a href="https://estudia.movidasst.com" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center justify-center mb-6 text-indigo-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+             <a href="https://estudia.movidasst.com" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-indigo-200">
+                <div class="w-16 h-16 bg-indigo-50/80 border border-indigo-100 rounded-2xl flex items-center justify-center mb-8 text-indigo-500 group-hover:bg-gradient-to-br group-hover:from-indigo-400 group-hover:to-indigo-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-indigo-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Estudio Normativa Legal</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">Estudio Normativa Legal</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Gestión de estudio colaborativo de leyes, reglamentos, NT e Inpsasel en Venezuela para profesionales de SST.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-indigo-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Comenzar a estudiar
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- 12. TABLERO DE SALARIOS -->
-            <a href="https://salarios.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center justify-center mb-6 text-emerald-600 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <a href="https://salarios.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-emerald-300">
+                <div class="w-16 h-16 bg-emerald-50/80 border border-emerald-100 rounded-2xl flex items-center justify-center mb-8 text-emerald-600 group-hover:bg-gradient-to-br group-hover:from-emerald-400 group-hover:to-emerald-600 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-emerald-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Tabulador Salarial SST</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">Tabulador Salarial SST</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Inteligencia de negocios (BI) con referencias actualizadas sobre honorarios y salarios profesionales en Venezuela.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-emerald-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Revisar tabulador
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- FILA 5 -->
             <!-- 13. NORMAS DE CONVIVENCIA -->
-            <a href="https://normas.movidasst.com/" class="glass-card p-8 rounded-2xl group block">
-                <div class="w-14 h-14 bg-lime-50 border border-lime-100 rounded-xl flex items-center justify-center mb-6 text-lime-600 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 10h6"/><path d="M9 14h3"/></svg>
+            <a href="https://normas.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-transparent hover:border-lime-200">
+                <div class="w-16 h-16 bg-lime-50/80 border border-lime-100 rounded-2xl flex items-center justify-center mb-8 text-lime-600 group-hover:bg-gradient-to-br group-hover:from-lime-400 group-hover:to-lime-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-lime-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 10h6"/><path d="M9 14h3"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Normas de Convivencia</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-lime-600 transition-colors">Normas de Convivencia</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Pautas de respeto y netiqueta oficial para los grupos de WhatsApp y canales de la comunidad Movida SST.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-lime-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Leer normas
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
             <!-- 14. PERFIL DEL FUNDADOR -->
-            <a href="https://davidlinares.movidasst.com/" class="glass-card p-8 rounded-2xl group block border-dashed border-slate-300 hover:border-brand">
-                <div class="w-14 h-14 bg-pink-50 border border-pink-100 rounded-xl flex items-center justify-center mb-6 text-pink-500 group-hover:bg-brand group-hover:border-brand group-hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <a href="https://davidlinares.movidasst.com/" class="glass-card p-8 md:p-10 rounded-3xl group block border-dashed border-slate-300 hover:border-pink-300">
+                <div class="w-16 h-16 bg-pink-50/80 border border-pink-100 rounded-2xl flex items-center justify-center mb-8 text-pink-500 group-hover:bg-gradient-to-br group-hover:from-pink-400 group-hover:to-pink-500 group-hover:border-transparent group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-pink-500/30 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 </div>
-                <h3 class="mb-3 text-2xl font-bold text-slate-800 group-hover:text-brand transition-colors">Perfil del Fundador</h3>
+                <h3 class="mb-4 text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">Perfil del Fundador</h3>
                 <p class="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">
                     Conecta con David Linares Brea. Biografía, visión estratégica del proyecto y contacto directo con el creador.
                 </p>
+                <div class="mt-6 flex items-center text-sm font-bold text-pink-600 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300">
+                    Conocer más
+                    <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </div>
             </a>
 
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="border-t border-slate-200 py-10 mt-auto relative z-10 bg-white/50 backdrop-blur-sm">
+    <footer class="border-t border-slate-200/60 py-12 mt-auto relative z-10 bg-white/40 backdrop-blur-md">
         <div class="max-w-screen-xl mx-auto px-4 flex flex-col items-center">
             
             <!-- REDES SOCIALES -->
             <div class="flex flex-wrap justify-center gap-6 mb-8">
-                <a href="https://www.instagram.com/movidasst/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#E1306C] hover:scale-110 transition-all duration-300">
+                <a href="https://www.instagram.com/movidasst/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#E1306C] hover:scale-125 transition-all duration-300 hover:drop-shadow-[0_4px_8px_rgba(225,48,108,0.3)]">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.37c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="https://www.tiktok.com/@movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-black hover:scale-110 transition-all duration-300">
+                <a href="https://www.tiktok.com/@movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-black hover:scale-125 transition-all duration-300 hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)]">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
                 </a>
-                <a href="https://www.youtube.com/@movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#FF0000] hover:scale-110 transition-all duration-300">
+                <a href="https://www.youtube.com/@movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-[#FF0000] hover:scale-125 transition-all duration-300 hover:drop-shadow-[0_4px_8px_rgba(255,0,0,0.3)]">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 01-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 011.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418zM15.194 12 10 15V9l5.194 3z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="https://x.com/movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-black hover:scale-110 transition-all duration-300">
+                <a href="https://x.com/movidasst" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-black hover:scale-125 transition-all duration-300 hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)]">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
             </div>
 
-            <p class="text-slate-500 text-sm text-center">
+            <p class="text-slate-500 text-sm font-medium text-center">
                 © 2026 La Movida de SST. De la Reacción a la Prevención.
             </p>
         </div>
