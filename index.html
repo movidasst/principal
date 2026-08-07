@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>La Movida de SST Plus | Registro, Directorio y Academia</title>
-  <meta name="description" content="Accede al registro nacional, directorio profesional, Academia Movida SST y herramientas para profesionales de Seguridad y Salud en el Trabajo en Venezuela.">
-  <meta name="keywords" content="SST Venezuela, registro profesionales SST, directorio SST, Academia Movida SST, LOPCYMAT, INPSASEL">
+  <title>La Movida SST | Registro, Directorio y Academia SST Venezuela</title>
+  <meta name="description" content="Regístrate en La Movida SST, forma parte del Directorio Nacional y accede a la Academia y herramientas para profesionales de SST en Venezuela.">
   <meta name="author" content="David Linares Brea">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.movidasst.com/">
-  <meta name="theme-color" content="#00205b">
+  <meta name="theme-color" content="#003477">
 
   <meta property="og:site_name" content="La Movida de SST Plus">
-  <meta property="og:title" content="La Movida de SST Plus | Registro, Directorio y Academia">
-  <meta property="og:description" content="El ecosistema digital de los profesionales de Seguridad y Salud en el Trabajo en Venezuela.">
+  <meta property="og:title" content="La Movida SST | Registro, Directorio y Academia SST Venezuela">
+  <meta property="og:description" content="Registro nacional, directorio profesional, Academia Movida SST y herramientas para la comunidad de Seguridad y Salud en el Trabajo en Venezuela.">
   <meta property="og:image" content="https://lh3.googleusercontent.com/d/1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s=w1200">
+  <meta property="og:image:alt" content="La Movida de SST Plus: registro, directorio y academia SST en Venezuela">
   <meta property="og:url" content="https://www.movidasst.com/">
   <meta property="og:type" content="website">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="La Movida de SST Plus">
-  <meta name="twitter:description" content="Registro, directorio, academia y herramientas para profesionales SST.">
+  <meta name="twitter:title" content="La Movida SST | Registro, Directorio y Academia">
+  <meta name="twitter:description" content="Registro, directorio, Academia Movida SST y herramientas para profesionales de Seguridad y Salud en el Trabajo en Venezuela.">
   <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s=w1200">
 
   <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1MjVa3JxeKC95xEdlcZ5ZFMCKlatbrU2s=w1200">
@@ -47,6 +47,17 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"La Movida de SST Plus",
+    "alternateName":["La Movida SST","Movida SST Plus"],
+    "url":"https://www.movidasst.com/",
+    "inLanguage":"es-VE"
+  }
+  </script>
+
   <style>
     :root{
       --navy:#00205b;
@@ -55,7 +66,10 @@
       --teal-light:#00a7ad;
       --green:#70ad47;
       --yellow:#ffb600;
-      --surface:#f4f8fb;
+      --ven-yellow:#f8c300;
+      --ven-blue:#003da5;
+      --ven-red:#cf142b;
+      --surface:#f6f9fc;
       --ink:#10233f;
       --muted:#61738b;
     }
@@ -69,9 +83,11 @@
       font-family:'Manrope',sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(circle at 8% 4%,rgba(0,123,133,.12),transparent 28rem),
-        radial-gradient(circle at 95% 8%,rgba(255,182,0,.10),transparent 24rem),
-        linear-gradient(180deg,#fbfdff 0%,#f4f8fb 62%,#eef5f8 100%);
+        radial-gradient(circle at 10% 3%,rgba(248,195,0,.075),transparent 24rem),
+        radial-gradient(circle at 92% 8%,rgba(0,61,165,.085),transparent 29rem),
+        radial-gradient(circle at 8% 84%,rgba(207,20,43,.035),transparent 21rem),
+        radial-gradient(circle at 74% 70%,rgba(0,123,133,.055),transparent 30rem),
+        linear-gradient(180deg,#fcfdff 0%,#f6f9fc 58%,#eff5f8 100%);
     }
 
     h1,h2,h3,.display{font-family:'Outfit',sans-serif}
@@ -79,8 +95,9 @@
     ::selection{background:rgba(0,123,133,.18);color:var(--navy)}
 
     .top-flag{
-      height:4px;
-      background:linear-gradient(90deg,#ffcc00 0 33.3%,#00247d 33.3% 66.6%,#cf142b 66.6% 100%);
+      height:5px;
+      background:linear-gradient(90deg,var(--ven-yellow) 0 33.3%,var(--ven-blue) 33.3% 66.6%,var(--ven-red) 66.6% 100%);
+      box-shadow:0 2px 10px rgba(0,32,91,.12);
     }
 
     .shell{width:min(1180px,calc(100% - 2rem));margin-inline:auto}
@@ -96,18 +113,58 @@
     .header-shadow{box-shadow:0 14px 40px rgba(0,32,91,.08)}
 
     .logo-ring{
-      border:1px solid rgba(0,123,133,.16);
+      border:2px solid transparent;
+      background:
+        linear-gradient(#fff,#fff) padding-box,
+        linear-gradient(135deg,var(--ven-yellow),var(--ven-blue) 58%,var(--ven-red)) border-box;
       box-shadow:
         0 0 0 4px rgba(255,255,255,.96),
-        0 0 0 6px rgba(0,123,133,.15),
-        0 14px 32px rgba(0,32,91,.20);
+        0 14px 32px rgba(0,32,91,.18);
     }
 
     .hero-grid{
       background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-      background-size:26px 26px;
+        linear-gradient(rgba(151,204,255,.026) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(151,204,255,.026) 1px,transparent 1px);
+      background-size:36px 36px;
+      background-position:center;
+    }
+
+    .tricolor-edge{
+      position:relative;
+    }
+
+    .tricolor-edge::before{
+      content:'';
+      position:absolute;
+      z-index:6;
+      right:0;
+      bottom:0;
+      left:0;
+      height:5px;
+      background:linear-gradient(90deg,var(--ven-yellow) 0 33.3%,var(--ven-blue) 33.3% 66.6%,var(--ven-red) 66.6% 100%);
+      opacity:.92;
+      pointer-events:none;
+    }
+
+    .flag-dots{
+      display:inline-flex;
+      align-items:center;
+      gap:.28rem;
+    }
+
+    .flag-dots span{
+      width:.48rem;
+      height:.48rem;
+      border-radius:999px;
+      box-shadow:0 0 0 1px rgba(255,255,255,.18);
+    }
+
+    .soft-blue-mesh{
+      background-image:
+        linear-gradient(rgba(0,61,165,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,61,165,.025) 1px,transparent 1px);
+      background-size:42px 42px;
     }
 
     .primary-card{
@@ -256,24 +313,30 @@
       <div class="absolute right-[-8rem] top-24 h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" aria-hidden="true"></div>
 
       <div class="shell">
-        <div class="hero-grid relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#001337] via-[#00205b] to-[#007b85] px-5 py-8 text-white shadow-[0_28px_70px_rgba(0,32,91,.25)] sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(255,182,0,.20),transparent_28%)]" aria-hidden="true"></div>
+        <div class="hero-grid tricolor-edge relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#00183f] via-[#003477] to-[#007b85] px-5 py-8 text-white shadow-[0_28px_70px_rgba(0,32,91,.25)] sm:px-8 sm:py-12 lg:px-12 lg:py-14">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_85%_12%,rgba(248,195,0,.18),transparent_28%)]" aria-hidden="true"></div>
+          <div class="absolute -left-16 bottom-[-5rem] h-52 w-52 rounded-full bg-[#003da5]/16 blur-3xl" aria-hidden="true"></div>
+          <div class="absolute right-[-4rem] bottom-[-6rem] h-44 w-44 rounded-full bg-[#cf142b]/10 blur-3xl" aria-hidden="true"></div>
           <div class="relative z-10 max-w-3xl">
             <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[.66rem] font-extrabold uppercase tracking-[.14em] text-cyan-50 backdrop-blur-md sm:text-xs">
-              <span class="h-2 w-2 rounded-full bg-[#ffb600] shadow-[0_0_12px_rgba(255,182,0,.9)]"></span>
+              <span class="flag-dots" aria-hidden="true">
+                <span class="bg-[#f8c300]"></span>
+                <span class="bg-[#3b82f6]"></span>
+                <span class="bg-[#e04b5f]"></span>
+              </span>
               Ecosistema profesional SST de Venezuela
             </div>
 
             <h1 class="display mt-5 text-[2.35rem] font-extrabold leading-[1.02] tracking-[-.035em] sm:text-5xl lg:text-[4.2rem]">
-              Tu acceso a la comunidad, el conocimiento y las oportunidades en SST.
+              El ecosistema de Seguridad y Salud en el Trabajo en Venezuela.
             </h1>
 
             <p class="mt-5 max-w-2xl text-[.98rem] leading-7 text-slate-200 sm:text-lg">
-              Regístrate, forma parte del Directorio Nacional y accede a la Academia Movida SST desde un solo ecosistema digital.
+              Regístrate en La Movida SST, forma parte del Directorio Nacional de profesionales y accede a la Academia Movida SST desde un solo ecosistema digital.
             </p>
 
             <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a href="https://registro.movidasst.com/" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#ffb600] px-6 py-3.5 font-extrabold text-[#00205b] shadow-xl shadow-black/10 transition active:scale-[.985]">
+              <a href="https://registro.movidasst.com/" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#f8c300] px-6 py-3.5 font-extrabold text-[#00205b] shadow-[0_12px_30px_rgba(248,195,0,.22)] transition hover:bg-[#ffd43b] active:scale-[.985]">
                 Comenzar mi registro
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
               </a>
@@ -286,7 +349,7 @@
       </div>
     </section>
 
-    <section id="accesos-principales" class="shell scroll-mt-28 py-8 sm:py-10">
+    <section id="accesos-principales" class="soft-blue-mesh shell scroll-mt-28 rounded-[2rem] py-8 sm:py-10">
       <div class="mb-5 flex items-end justify-between gap-4">
         <div>
           <span class="text-xs font-extrabold uppercase tracking-[.16em] text-[#007b85]">Empieza por aquí</span>
@@ -296,39 +359,39 @@
       </div>
 
       <div class="grid gap-4 lg:grid-cols-3">
-        <a href="https://registro.movidasst.com/" class="primary-card hero-grid bg-gradient-to-br from-[#001337] via-[#00205b] to-[#007b85] p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.22)] sm:p-7">
+        <a href="https://registro.movidasst.com/" class="primary-card hero-grid tricolor-edge bg-gradient-to-br from-[#00183f] via-[#003477] to-[#007b85] p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.22)] sm:p-7">
           <div class="relative z-10 flex h-full flex-col">
             <div class="flex items-start justify-between gap-3">
-              <span class="rounded-full bg-[#ffb600] px-3 py-1.5 text-[.65rem] font-extrabold uppercase tracking-[.13em] text-[#00205b]">Paso 1</span>
+              <span class="rounded-full bg-[#f8c300] px-3 py-1.5 text-[.65rem] font-extrabold uppercase tracking-[.13em] text-[#00205b]">Paso 1</span>
               <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white/12 text-white backdrop-blur-md">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v4"/><path d="M9 21H5a2 2 0 0 1-2-2v-4"/><path d="M16 8a4 4 0 1 1-8 0"/><path d="M4 20c.7-4.2 3.2-6 8-6s7.3 1.8 8 6"/></svg>
               </div>
             </div>
             <div class="mt-auto pt-8">
               <h3 class="display text-3xl font-extrabold">Registro Nacional</h3>
-              <p class="mt-2 max-w-sm text-sm leading-6 text-slate-200">Crea o actualiza tu perfil, obtén tu código de integrante y habilita tu acceso a la Academia.</p>
-              <div class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#ffcf4a]">Registrarme ahora <span aria-hidden="true">→</span></div>
+              <p class="mt-2 max-w-sm text-sm leading-6 text-slate-200">Registra o actualiza tu perfil profesional, recibe tu código único, obtén tu credencial digital y habilita tu acceso a la Academia.</p>
+              <div class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#ffe06a]">Registrarme ahora <span aria-hidden="true">→</span></div>
             </div>
           </div>
         </a>
 
-        <a href="https://directorio.movidasst.com/" class="primary-card glass border border-cyan-100 p-6 sm:p-7">
+        <a href="https://directorio.movidasst.com/" class="primary-card glass border border-blue-100 p-6 sm:p-7">
           <div class="relative z-10 flex h-full flex-col">
             <div class="flex items-start justify-between gap-3">
-              <span class="rounded-full bg-cyan-50 px-3 py-1.5 text-[.65rem] font-extrabold uppercase tracking-[.13em] text-[#007b85]">Red profesional</span>
-              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-cyan-50 text-[#007b85]">
+              <span class="rounded-full bg-blue-50 px-3 py-1.5 text-[.65rem] font-extrabold uppercase tracking-[.13em] text-[#003da5]">Red profesional</span>
+              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-50 text-[#003da5]">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0"/><path d="M19 8h2"/><path d="M20 7v2"/><path d="M3 8h2"/><path d="M4 7v2"/></svg>
               </div>
             </div>
             <div class="mt-auto pt-8">
               <h3 class="display text-3xl font-extrabold text-[#00205b]">Directorio Profesional</h3>
-              <p class="mt-2 max-w-sm text-sm leading-6 text-slate-600">Encuentra profesionales por estado, municipio, formación y situación laboral.</p>
-              <div class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#007b85]">Abrir directorio <span aria-hidden="true">→</span></div>
+              <p class="mt-2 max-w-sm text-sm leading-6 text-slate-600">Consulta profesionales de SST por estado, municipio, profesión, formación académica y situación laboral.</p>
+              <div class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#003da5]">Abrir directorio <span aria-hidden="true">→</span></div>
             </div>
           </div>
         </a>
 
-        <a href="https://movidasst.org/login/index.php" class="primary-card overflow-hidden border border-slate-800 bg-gradient-to-br from-[#101c33] to-[#00205b] p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.18)] sm:p-7">
+        <a href="https://movidasst.org/login/index.php" class="primary-card overflow-hidden border border-slate-800 bg-gradient-to-br from-[#10274f] via-[#002f6c] to-[#005a78] p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.18)] sm:p-7">
           <div class="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(0,207,192,.22),transparent_35%)]" aria-hidden="true"></div>
           <div class="relative z-10 flex h-full flex-col">
             <div class="flex items-start justify-between gap-3">
@@ -339,7 +402,7 @@
             </div>
             <div class="mt-auto pt-8">
               <h3 class="display text-3xl font-extrabold">Academia Movida SST</h3>
-              <p class="mt-2 max-w-sm text-sm leading-6 text-slate-200">Ingresa a Moodle, estudia, participa en actividades y consulta tus cursos.</p>
+              <p class="mt-2 max-w-sm text-sm leading-6 text-slate-200">Accede a Moodle, participa en cursos y actividades, y mantén tu actualización profesional continua en SST.</p>
               <div class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-cyan-300">Ingresar a la Academia <span aria-hidden="true">→</span></div>
             </div>
           </div>
@@ -348,7 +411,7 @@
     </section>
 
     <section id="ecosistema" class="shell scroll-mt-28 pb-12 pt-2 sm:pb-16">
-      <div class="rounded-[1.7rem] border border-slate-200/80 bg-white/76 p-4 shadow-[0_18px_45px_rgba(0,32,91,.07)] backdrop-blur-xl sm:p-6">
+      <div class="soft-blue-mesh rounded-[1.7rem] border border-blue-100/70 bg-white/82 p-4 shadow-[0_18px_45px_rgba(0,32,91,.07)] backdrop-blur-xl sm:p-6">
         <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span class="text-xs font-extrabold uppercase tracking-[.16em] text-[#007b85]">Más recursos</span>
@@ -462,13 +525,13 @@
     </section>
 
     <section class="shell pb-12 sm:pb-16">
-      <div class="overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#001337] via-[#00205b] to-[#007b85] p-6 text-white shadow-[0_26px_65px_rgba(0,32,91,.20)] sm:p-9 lg:flex lg:items-center lg:justify-between lg:gap-10">
+      <div class="tricolor-edge overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#00183f] via-[#003477] to-[#007b85] p-6 text-white shadow-[0_26px_65px_rgba(0,32,91,.20)] sm:p-9 lg:flex lg:items-center lg:justify-between lg:gap-10">
         <div class="max-w-2xl">
           <span class="text-xs font-extrabold uppercase tracking-[.16em] text-cyan-200">Comunidad profesional</span>
           <h2 class="display mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Haz visible tu experiencia y continúa creciendo.</h2>
           <p class="mt-4 text-sm leading-7 text-slate-200 sm:text-base">El registro conecta tu perfil profesional con el directorio, tu credencial digital y el acceso a la Academia Movida SST.</p>
         </div>
-        <a href="https://registro.movidasst.com/" class="mt-6 inline-flex min-h-13 w-full items-center justify-center rounded-2xl bg-[#ffb600] px-7 py-4 font-extrabold text-[#00205b] shadow-xl lg:mt-0 lg:w-auto">Completar mi registro</a>
+        <a href="https://registro.movidasst.com/" class="mt-6 inline-flex min-h-13 w-full items-center justify-center rounded-2xl bg-[#f8c300] px-7 py-4 font-extrabold text-[#00205b] hover:bg-[#ffd43b] shadow-xl lg:mt-0 lg:w-auto">Completar mi registro</a>
       </div>
     </section>
 
@@ -487,7 +550,7 @@
     </section>
   </main>
 
-  <footer class="border-t border-slate-200/80 bg-white/70 pb-10 pt-10 backdrop-blur-md">
+  <footer class="relative border-t border-slate-200/80 bg-white/76 pb-10 pt-10 backdrop-blur-md before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-[linear-gradient(90deg,#f8c300_0_33.3%,#003da5_33.3%_66.6%,#cf142b_66.6%_100%)]">
     <div class="shell">
       <div class="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
