@@ -258,10 +258,48 @@
     .fade-up.visible{opacity:1;transform:none}
 
     .mobile-dock{
-      padding-bottom:max(.55rem,env(safe-area-inset-bottom));
-      box-shadow:0 -16px 38px rgba(0,32,91,.13);
+      padding: .55rem .45rem max(.55rem,env(safe-area-inset-bottom));
+      background:#ffffff;
+      border-top:1px solid rgba(203,213,225,.95);
+      box-shadow:0 -14px 34px rgba(0,32,91,.10);
     }
-    .dock-item.active{color:var(--teal);background:#eef8f9}
+    .dock-item{
+      color:#52657f;
+      transition:background .18s ease,color .18s ease,transform .18s ease;
+    }
+    .dock-item:active{transform:scale(.97)}
+    .dock-item .dock-icon{
+      width:2.3rem;
+      height:2.3rem;
+      display:grid;
+      place-items:center;
+      border-radius:.95rem;
+      background:#f4f7fb;
+      border:1px solid #dbe5ee;
+      color:#29405f;
+      box-shadow:0 3px 10px rgba(0,32,91,.05);
+    }
+    .dock-item svg{
+      width:1.15rem;
+      height:1.15rem;
+      display:block;
+      stroke:currentColor;
+    }
+    .dock-item .dock-label{
+      display:block;
+      line-height:1;
+      letter-spacing:.01em;
+    }
+    .dock-item.active{
+      color:var(--teal);
+      background:#eef8f9;
+    }
+    .dock-item.active .dock-icon{
+      background:linear-gradient(135deg,#e6f7f8,#ffffff);
+      border-color:#b7e3e7;
+      color:var(--teal);
+      box-shadow:0 6px 16px rgba(0,123,133,.14);
+    }
 
     @media (hover:hover){
       .pillar-card:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,32,91,.18)}
@@ -673,26 +711,41 @@
   </footer>
 
   <!-- MOBILE DOCK: 5 DESTINOS CLAVE -->
-  <nav class="mobile-dock fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-slate-200 bg-white/96 px-1.5 pt-2 backdrop-blur-xl md:hidden" aria-label="Navegación móvil principal">
-    <a href="#inicio" class="dock-item active flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-xl text-[.61rem] font-extrabold">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
-      Inicio
+  
+  <nav class="mobile-dock fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 backdrop-blur-xl md:hidden" aria-label="Navegación móvil principal">
+    <a href="#inicio" class="dock-item active flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
+      <span class="dock-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+      </span>
+      <span class="dock-label">Inicio</span>
     </a>
-    <a href="https://registro.movidasst.com/" class="dock-item flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-xl text-[.61rem] font-extrabold text-slate-500">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6 21a6 6 0 0 1 12 0"/><path d="M19 5v6"/><path d="M16 8h6"/></svg>
-      Registro
+
+    <a href="https://registro.movidasst.com/" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
+      <span class="dock-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6 21a6 6 0 0 1 12 0"/><path d="M19 5v6"/><path d="M16 8h6"/></svg>
+      </span>
+      <span class="dock-label">Registro</span>
     </a>
-    <a href="https://directorio.movidasst.com/" class="dock-item flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-xl text-[.61rem] font-extrabold text-slate-500">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="9" r="2"/><circle cx="19" cy="9" r="2"/></svg>
-      Directorio
+
+    <a href="https://directorio.movidasst.com/" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
+      <span class="dock-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="9" r="2"/><circle cx="19" cy="9" r="2"/></svg>
+      </span>
+      <span class="dock-label">Directorio</span>
     </a>
-    <a href="https://movidasst.org/login/index.php" class="dock-item flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-xl text-[.61rem] font-extrabold text-slate-500">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 10 10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      Academia
+
+    <a href="https://movidasst.org/login/index.php" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
+      <span class="dock-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 10 10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </span>
+      <span class="dock-label">Academia</span>
     </a>
-    <a href="https://aplicaciones.movidasst.com/" class="dock-item flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-xl text-[.61rem] font-extrabold text-slate-500">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Apps
+
+    <a href="https://aplicaciones.movidasst.com/" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
+      <span class="dock-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </span>
+      <span class="dock-label">Apps</span>
     </a>
   </nav>
 
