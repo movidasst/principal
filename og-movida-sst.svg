@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#001337"/>
+      <stop offset=".55" stop-color="#00205B"/>
+      <stop offset="1" stop-color="#007B85"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#FFFFFF" stroke-opacity=".055"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1060" cy="88" r="320" fill="#00A7AD" opacity=".18"/>
+  <circle cx="1080" cy="530" r="230" fill="#70AD47" opacity=".12"/>
+  <rect x="0" y="0" width="400" height="9" fill="#F8C300"/>
+  <rect x="400" y="0" width="400" height="9" fill="#003DA5"/>
+  <rect x="800" y="0" width="400" height="9" fill="#CF142B"/>
+
+  <g transform="translate(72 66)">
+    <rect width="92" height="92" rx="26" fill="#FFFFFF"/>
+    <text x="46" y="45" text-anchor="middle" font-family="Outfit, Arial, sans-serif" font-size="22" font-weight="800" fill="#00205B">SST</text>
+    <text x="46" y="70" text-anchor="middle" font-family="Outfit, Arial, sans-serif" font-size="20" font-weight="800" fill="#007B85">PLUS</text>
+  </g>
+  <text x="190" y="104" font-family="Outfit, Arial, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">La Movida de SST Plus</text>
+  <text x="191" y="139" font-family="Manrope, Arial, sans-serif" font-size="18" font-weight="800" letter-spacing="2.5" fill="#FFDD64">DE LA REACCIÓN A LA PREVENCIÓN</text>
+
+  <text x="72" y="260" font-family="Outfit, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.6" fill="#FFFFFF">Seguridad y Salud</text>
+  <text x="72" y="333" font-family="Outfit, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.6" fill="#FFFFFF">en el Trabajo</text>
+  <text x="73" y="394" font-family="Manrope, Arial, sans-serif" font-size="29" font-weight="800" fill="#73D7BE">Venezuela · Latinoamérica</text>
+  <text x="74" y="446" font-family="Manrope, Arial, sans-serif" font-size="21" font-weight="500" fill="#D8E4F0">Comunidad · Formación · Recursos · Aplicaciones SST</text>
+
+  <g transform="translate(72 495)">
+    <rect width="210" height="68" rx="20" fill="#FFFFFF" fill-opacity=".09" stroke="#FFFFFF" stroke-opacity=".17"/>
+    <text x="22" y="29" font-family="Manrope, Arial, sans-serif" font-size="23" font-weight="800" fill="#FFDD64">1.700+</text>
+    <text x="22" y="51" font-family="Manrope, Arial, sans-serif" font-size="13" font-weight="700" fill="#D8E4F0">profesionales conectados</text>
+  </g>
+  <g transform="translate(300 495)">
+    <rect width="210" height="68" rx="20" fill="#FFFFFF" fill-opacity=".09" stroke="#FFFFFF" stroke-opacity=".17"/>
+    <text x="22" y="29" font-family="Manrope, Arial, sans-serif" font-size="23" font-weight="800" fill="#FFDD64">23 estados</text>
+    <text x="22" y="51" font-family="Manrope, Arial, sans-serif" font-size="13" font-weight="700" fill="#D8E4F0">red nacional en Venezuela</text>
+  </g>
+  <text x="72" y="604" font-family="Manrope, Arial, sans-serif" font-size="17" font-weight="800" fill="#73D7BE">www.movidasst.com</text>
+</svg>
