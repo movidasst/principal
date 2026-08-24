@@ -1,0 +1,36 @@
+# La Movida de SST Plus
+
+> Red y ecosistema digital para profesionales de Seguridad y Salud en el Trabajo, salud ocupacional y prevención de riesgos laborales en Venezuela y Latinoamérica.
+
+## Sitio canónico
+
+- Página principal: https://www.movidasst.com/
+- Responsable: David Linares Brea
+- Contacto: info@movidasst.com
+- Lema: De la reacción a la prevención
+
+## Áreas principales
+
+- Seguridad y Salud en el Trabajo en Venezuela
+- Salud ocupacional
+- Prevención de riesgos laborales
+- Capacitación y actualización SST
+- Normativa técnica venezolana
+- Higiene ocupacional
+- Gestión de emergencias y riesgos
+- Aprendizaje colaborativo para profesionales SST
+
+## Ecosistema
+
+- Registro profesional: https://registro.movidasst.com/
+- Directorio Nacional: https://directorio.movidasst.com/
+- Academia: https://movidasst.org/login/index.php
+- Aplicaciones SST: https://aplicaciones.movidasst.com/
+- Guías de estudio: https://estudia.movidasst.com/
+- Biblioteca colaborativa: https://drive.movidasst.com/
+- Grupos y canales: https://grupos.movidasst.com/
+
+## Alcance
+
+La Movida conecta una red de más de 1.700 profesionales de Seguridad y Salud en el Trabajo, con presencia en los 23 estados de Venezuela y alcance digital hacia Latinoamérica. Comparte formación, aplicaciones, guías, recursos técnicos y espacios de colaboración.
+

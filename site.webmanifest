@@ -1,0 +1,20 @@
+{
+  "name": "La Movida de SST Plus",
+  "short_name": "La Movida SST",
+  "description": "Seguridad y Salud en el Trabajo para Venezuela y Latinoamérica.",
+  "lang": "es-VE",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f9fc",
+  "theme_color": "#00205b",
+  "icons": [
+    {
+      "src": "/logo-movida-sst-plus.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
+
