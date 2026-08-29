@@ -1,0 +1,43 @@
+name: Promote corporate offer at top
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Add above-fold corporate banner
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          t=p.read_text(encoding='utf-8')
+          if 'id="corporate-top-cta"' not in t:
+              anchor='    <section class="relative overflow-hidden pt-[108px] sm:pt-[124px]">'
+              if anchor not in t: raise SystemExit('hero anchor not found')
+              block='''\n      <div id="corporate-top-cta" class="shell mb-3 sm:mb-4">\n        <a href="https://presupuesto.movidasst.com/" class="group flex flex-col gap-3 overflow-hidden rounded-2xl border border-[#f8c300]/35 bg-gradient-to-r from-[#00183f] via-[#003477] to-[#007b85] px-4 py-3.5 text-white shadow-[0_14px_34px_rgba(0,32,91,.18)] sm:flex-row sm:items-center sm:justify-between sm:px-5">\n          <div class="flex min-w-0 items-center gap-3">\n            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 ring-1 ring-white/15">\n              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>\n            </div>\n            <div class="min-w-0">\n              <div class="text-[.62rem] font-extrabold uppercase tracking-[.16em] text-cyan-200">Para empresas</div>\n              <div class="mt-0.5 text-sm font-extrabold leading-tight sm:text-base">Capacitación corporativa SST para tu equipo</div>\n              <div class="mt-0.5 text-[.7rem] font-semibold text-slate-200 sm:text-xs">Cotiza participantes y cursos · propuesta formal · seguimiento e informes</div>\n            </div>\n          </div>\n          <span class="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#f8c300] px-4 py-2.5 text-xs font-extrabold text-[#00205b] shadow-lg transition group-hover:bg-[#ffd43b]">Cotizar ahora <span aria-hidden="true">→</span></span>\n        </a>\n      </div>\n'''
+              t=t.replace(anchor,anchor+block,1)
+              p.write_text(t,encoding='utf-8')
+          PY
+      - name: Verify
+        run: |
+          grep -q 'id="corporate-top-cta"' index.html
+          grep -q 'Cotizar ahora' index.html
+      - name: Commit
+        run: |
+          if git diff --quiet -- index.html; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "feat: surface corporate offer above fold"
+          git push
