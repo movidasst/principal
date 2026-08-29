@@ -113,7 +113,7 @@
         "about":{"@id":"https://www.movidasst.com/#organization"},
         "primaryImageOfPage":{"@id":"https://www.movidasst.com/#primaryimage"},
         "inLanguage":"es-VE",
-        "dateModified":"2026-08-24",
+        "dateModified":"2026-08-29",
         "keywords":["Seguridad y Salud en el Trabajo Venezuela","SST Venezuela","salud ocupacional","prevención de riesgos laborales","capacitación SST","profesionales SST","Latinoamérica"]
       },
       {
@@ -129,12 +129,13 @@
         "@type":"ItemList",
         "@id":"https://www.movidasst.com/#ecosystem",
         "name":"Ecosistema profesional de La Movida SST",
-        "numberOfItems":4,
+        "numberOfItems":5,
         "itemListElement":[
           {"@type":"ListItem","position":1,"name":"Registro profesional SST","url":"https://registro.movidasst.com/"},
           {"@type":"ListItem","position":2,"name":"Directorio de profesionales SST","url":"https://directorio.movidasst.com/"},
           {"@type":"ListItem","position":3,"name":"Academia Movida SST","url":"https://movidasst.org/login/index.php"},
-          {"@type":"ListItem","position":4,"name":"Aplicaciones para Seguridad y Salud en el Trabajo","url":"https://aplicaciones.movidasst.com/"}
+          {"@type":"ListItem","position":4,"name":"Aplicaciones para Seguridad y Salud en el Trabajo","url":"https://aplicaciones.movidasst.com/"},
+          {"@type":"ListItem","position":5,"name":"Capacitación corporativa SST para empresas","url":"https://presupuesto.movidasst.com/"}
         ]
       },
       {
@@ -460,6 +461,7 @@
         <a href="https://registro.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Registro</a>
         <a href="https://directorio.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Directorio</a>
         <a href="https://movidasst.org/login/index.php" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Academia</a>
+        <a href="https://presupuesto.movidasst.com/" class="rounded-xl bg-gradient-to-r from-[#007b85]/10 to-[#00205b]/10 px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] ring-1 ring-[#007b85]/15 hover:from-[#007b85]/15 hover:to-[#00205b]/15">Empresas</a>
         <a href="https://aplicaciones.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Aplicaciones</a>
         <a href="#donar" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#8a5a00] hover:bg-amber-50">Donar</a>
       </nav>
@@ -774,6 +776,36 @@
       </div>
     </section>
 
+    <!-- SOLUCIONES CORPORATIVAS -->
+    <section id="empresas" class="shell scroll-mt-28 pb-10 sm:pb-14" aria-labelledby="empresas-title">
+      <div class="relative overflow-hidden rounded-[2rem] border border-[#007b85]/20 bg-gradient-to-br from-[#00183f] via-[#002f67] to-[#007b85] p-6 text-white shadow-[0_26px_65px_rgba(0,32,91,.18)] sm:p-8 lg:p-10">
+        <div class="absolute -right-16 -top-20 h-64 w-64 rounded-full bg-cyan-300/10 blur-2xl" aria-hidden="true"></div>
+        <div class="relative grid gap-8 lg:grid-cols-[1.35fr_.65fr] lg:items-center">
+          <div>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[.7rem] font-extrabold uppercase tracking-[.16em] text-cyan-100">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/></svg>
+              Soluciones para empresas
+            </span>
+            <h2 id="empresas-title" class="display mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Capacitación SST para equipos, con seguimiento real.</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">Diseña una propuesta corporativa según la cantidad de participantes y cursos. La Academia acompaña la formación con matrícula organizada, seguimiento del avance, certificados e informes para la empresa.</p>
+            <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold text-cyan-50">
+              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Sin mínimo de participantes</span>
+              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Tarifa progresiva por escala</span>
+              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Seguimiento e informes</span>
+            </div>
+          </div>
+          <div class="rounded-[1.55rem] border border-white/15 bg-white/10 p-5 backdrop-blur-sm sm:p-6">
+            <div class="text-xs font-extrabold uppercase tracking-[.15em] text-cyan-200">Oferta corporativa</div>
+            <div class="display mt-2 text-2xl font-extrabold">Cotiza en línea</div>
+            <p class="mt-2 text-sm leading-6 text-slate-200">Calcula el plan para tu empresa y solicita una propuesta formal de capacitación.</p>
+            <a href="https://presupuesto.movidasst.com/" class="mt-5 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[#f8c300] px-5 py-4 text-sm font-extrabold text-[#00205b] shadow-xl transition hover:bg-[#ffd43b] active:scale-[.99]">
+              Cotizar capacitación corporativa <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section id="preguntas" class="shell scroll-mt-28 pb-10 sm:pb-14" aria-labelledby="preguntas-title">
       <div class="mb-5 max-w-3xl">
@@ -914,6 +946,7 @@
             <a href="https://registro.movidasst.com/">Registro</a>
             <a href="https://directorio.movidasst.com/">Directorio</a>
             <a href="https://movidasst.org/login/index.php">Academia</a>
+            <a href="https://presupuesto.movidasst.com/" class="font-extrabold text-[#007b85]">Capacitación para empresas</a>
             <a href="https://aplicaciones.movidasst.com/">Aplicaciones SST</a>
           </div>
         </div>
