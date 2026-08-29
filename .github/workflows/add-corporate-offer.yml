@@ -1,0 +1,103 @@
+name: Add corporate offer entry
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Integrate corporate offer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_bytes().decode('utf-8')
+          nl = '\r\n' if '\r\n' in text else '\n'
+          url = 'https://presupuesto.movidasst.com/'
+
+          if url not in text:
+              text = text.replace('"dateModified":"2026-08-24"', '"dateModified":"2026-08-29"', 1)
+              text = text.replace('"numberOfItems":4,', '"numberOfItems":5,', 1)
+              app_item = '          {"@type":"ListItem","position":4,"name":"Aplicaciones para Seguridad y Salud en el Trabajo","url":"https://aplicaciones.movidasst.com/"}'
+              corp_item = '          {"@type":"ListItem","position":5,"name":"Capacitación corporativa SST para empresas","url":"https://presupuesto.movidasst.com/"}'
+              if app_item not in text:
+                  raise SystemExit('No se encontró el ItemList de aplicaciones')
+              text = text.replace(app_item, app_item + ',' + nl + corp_item, 1)
+
+              academy_nav = '        <a href="https://movidasst.org/login/index.php" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Academia</a>'
+              corporate_nav = '        <a href="https://presupuesto.movidasst.com/" class="rounded-xl bg-gradient-to-r from-[#007b85]/10 to-[#00205b]/10 px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] ring-1 ring-[#007b85]/15 hover:from-[#007b85]/15 hover:to-[#00205b]/15">Empresas</a>'
+              if academy_nav not in text:
+                  raise SystemExit('No se encontró navegación de Academia')
+              text = text.replace(academy_nav, academy_nav + nl + corporate_nav, 1)
+
+              section = '''    <!-- SOLUCIONES CORPORATIVAS -->
+    <section id="empresas" class="shell scroll-mt-28 pb-10 sm:pb-14" aria-labelledby="empresas-title">
+      <div class="relative overflow-hidden rounded-[2rem] border border-[#007b85]/20 bg-gradient-to-br from-[#00183f] via-[#002f67] to-[#007b85] p-6 text-white shadow-[0_26px_65px_rgba(0,32,91,.18)] sm:p-8 lg:p-10">
+        <div class="absolute -right-16 -top-20 h-64 w-64 rounded-full bg-cyan-300/10 blur-2xl" aria-hidden="true"></div>
+        <div class="relative grid gap-8 lg:grid-cols-[1.35fr_.65fr] lg:items-center">
+          <div>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[.7rem] font-extrabold uppercase tracking-[.16em] text-cyan-100">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/></svg>
+              Soluciones para empresas
+            </span>
+            <h2 id="empresas-title" class="display mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Capacitación SST para equipos, con seguimiento real.</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">Diseña una propuesta corporativa según la cantidad de participantes y cursos. La Academia acompaña la formación con matrícula organizada, seguimiento del avance, certificados e informes para la empresa.</p>
+            <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold text-cyan-50">
+              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Sin mínimo de participantes</span>
+              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Tarifa progresiva por escala</span>
+              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Seguimiento e informes</span>
+            </div>
+          </div>
+          <div class="rounded-[1.55rem] border border-white/15 bg-white/10 p-5 backdrop-blur-sm sm:p-6">
+            <div class="text-xs font-extrabold uppercase tracking-[.15em] text-cyan-200">Oferta corporativa</div>
+            <div class="display mt-2 text-2xl font-extrabold">Cotiza en línea</div>
+            <p class="mt-2 text-sm leading-6 text-slate-200">Calcula el plan para tu empresa y solicita una propuesta formal de capacitación.</p>
+            <a href="https://presupuesto.movidasst.com/" class="mt-5 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[#f8c300] px-5 py-4 text-sm font-extrabold text-[#00205b] shadow-xl transition hover:bg-[#ffd43b] active:scale-[.99]">
+              Cotizar capacitación corporativa
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+'''.replace('\n', nl)
+              marker = '    <!-- FAQ -->'
+              if marker not in text:
+                  raise SystemExit('No se encontró marcador FAQ')
+              text = text.replace(marker, section + marker, 1)
+
+              footer_academy = '            <a href="https://movidasst.org/login/index.php">Academia</a>'
+              footer_corp = '            <a href="https://presupuesto.movidasst.com/" class="font-extrabold text-[#007b85]">Capacitación para empresas</a>'
+              if footer_academy in text:
+                  text = text.replace(footer_academy, footer_academy + nl + footer_corp, 1)
+
+              path.write_bytes(text.encode('utf-8'))
+          PY
+      - name: Verify integration
+        run: |
+          grep -q 'https://presupuesto.movidasst.com/' index.html
+          grep -q 'Capacitación SST para equipos' index.html
+          grep -q 'Cotizar capacitación corporativa' index.html
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "feat: add corporate training offer"
+          git push
