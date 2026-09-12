@@ -1,7 +1,7 @@
 {
   "name": "La Movida de SST Plus",
   "short_name": "La Movida SST",
-  "description": "Seguridad y Salud en el Trabajo para Venezuela y Latinoamérica.",
+  "description": "Red Internacional de Profesionales de Seguridad y Salud en el Trabajo.",
   "lang": "es-VE",
   "start_url": "/",
   "scope": "/",
@@ -17,4 +17,3 @@
     }
   ]
 }
-

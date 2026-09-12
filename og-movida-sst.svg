@@ -13,9 +13,9 @@
   <rect width="1200" height="630" fill="url(#grid)"/>
   <circle cx="1060" cy="88" r="320" fill="#00A7AD" opacity=".18"/>
   <circle cx="1080" cy="530" r="230" fill="#70AD47" opacity=".12"/>
-  <rect x="0" y="0" width="400" height="9" fill="#F8C300"/>
-  <rect x="400" y="0" width="400" height="9" fill="#003DA5"/>
-  <rect x="800" y="0" width="400" height="9" fill="#CF142B"/>
+  <rect x="0" y="0" width="500" height="9" fill="#007B85"/>
+  <rect x="500" y="0" width="400" height="9" fill="#00205B"/>
+  <rect x="900" y="0" width="300" height="9" fill="#70AD47"/>
 
   <g transform="translate(72 66)">
     <rect width="92" height="92" rx="26" fill="#FFFFFF"/>
@@ -27,7 +27,7 @@
 
   <text x="72" y="260" font-family="Outfit, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.6" fill="#FFFFFF">Seguridad y Salud</text>
   <text x="72" y="333" font-family="Outfit, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.6" fill="#FFFFFF">en el Trabajo</text>
-  <text x="73" y="394" font-family="Manrope, Arial, sans-serif" font-size="29" font-weight="800" fill="#73D7BE">Venezuela · Latinoamérica</text>
+  <text x="73" y="394" font-family="Manrope, Arial, sans-serif" font-size="29" font-weight="800" fill="#73D7BE">Red Internacional de Profesionales SST</text>
   <text x="74" y="446" font-family="Manrope, Arial, sans-serif" font-size="21" font-weight="500" fill="#D8E4F0">Comunidad · Formación · Recursos · Aplicaciones SST</text>
 
   <g transform="translate(72 495)">
@@ -37,8 +37,8 @@
   </g>
   <g transform="translate(300 495)">
     <rect width="210" height="68" rx="20" fill="#FFFFFF" fill-opacity=".09" stroke="#FFFFFF" stroke-opacity=".17"/>
-    <text x="22" y="29" font-family="Manrope, Arial, sans-serif" font-size="23" font-weight="800" fill="#FFDD64">23 estados</text>
-    <text x="22" y="51" font-family="Manrope, Arial, sans-serif" font-size="13" font-weight="700" fill="#D8E4F0">red nacional en Venezuela</text>
+    <text x="22" y="29" font-family="Manrope, Arial, sans-serif" font-size="23" font-weight="800" fill="#FFDD64">Alcance global</text>
+    <text x="22" y="51" font-family="Manrope, Arial, sans-serif" font-size="13" font-weight="700" fill="#D8E4F0">profesionales sin fronteras</text>
   </g>
   <text x="72" y="604" font-family="Manrope, Arial, sans-serif" font-size="17" font-weight="800" fill="#73D7BE">www.movidasst.com</text>
 </svg>

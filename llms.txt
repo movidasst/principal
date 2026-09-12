@@ -1,6 +1,6 @@
 # La Movida de SST Plus
 
-> Red y ecosistema digital para profesionales de Seguridad y Salud en el Trabajo, salud ocupacional y prevención de riesgos laborales en Venezuela y Latinoamérica.
+> Red internacional y ecosistema digital para profesionales de Seguridad y Salud en el Trabajo, salud ocupacional y prevención de riesgos laborales.
 
 ## Sitio canónico
 
@@ -33,4 +33,4 @@
 
 ## Alcance
 
-La Movida conecta una red de más de 1.700 profesionales de Seguridad y Salud en el Trabajo, con presencia en los 23 estados de Venezuela y alcance digital hacia Latinoamérica. Comparte formación, aplicaciones, guías, recursos técnicos y espacios de colaboración.
+La Movida conecta una Red Internacional de Profesionales de Seguridad y Salud en el Trabajo. Nació en Venezuela y comparte formación, aplicaciones, guías, simuladores, recursos técnicos y espacios de aprendizaje colaborativo con profesionales de distintos países.
