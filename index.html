@@ -409,6 +409,38 @@
       *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
       .fade-up{opacity:1;transform:none}
     }
+
+    /* Encabezado de escritorio: identidad y registro arriba; navegación debajo. */
+    @media (min-width:768px){
+      .main-header .header-layout{
+        display:grid;
+        height:120px;
+        grid-template-columns:minmax(0,1fr) auto;
+        grid-template-rows:76px 44px;
+        column-gap:24px;
+        row-gap:0;
+      }
+      .main-header .header-brand{grid-column:1;grid-row:1;min-width:0}
+      .main-header .header-brand img{width:64px;height:64px}
+      .main-header .header-brand .truncate{overflow:visible;text-overflow:clip;white-space:nowrap}
+      .main-header .header-register{grid-column:2;grid-row:1}
+      .main-header .desktop-nav{
+        display:flex;
+        grid-column:1 / -1;
+        grid-row:2;
+        justify-content:center;
+        gap:8px;
+        border-top:1px solid #e2e8f0;
+      }
+      .main-header .desktop-nav a{
+        flex-shrink:0;
+        white-space:nowrap;
+        padding:8px 12px;
+        font-size:13px;
+        line-height:20px;
+      }
+      main > section:first-child{padding-top:148px}
+    }
   </style>
 </head>
 
@@ -420,9 +452,9 @@
   </a>
 
   <!-- HEADER -->
-  <header class="fixed inset-x-0 top-1 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 header-shadow">
-    <div class="shell flex h-[84px] items-center justify-between gap-3 sm:h-[96px]">
-      <a href="#inicio" class="flex min-w-0 items-center gap-3" aria-label="Ir al inicio">
+  <header class="fixed inset-x-0 top-1 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 header-shadow main-header">
+    <div class="shell header-layout flex h-[84px] items-center justify-between gap-3 sm:h-[96px]">
+      <a href="#inicio" class="header-brand flex min-w-0 items-center gap-3" aria-label="Ir al inicio">
         <img
           src="/logo-oficial-movida-sst-plus.png"
           alt="Logo La Movida de SST Plus"
@@ -443,17 +475,17 @@
         </div>
       </a>
 
-      <nav class="hidden items-center gap-1 xl:flex" aria-label="Navegación principal">
+      <nav class="desktop-nav hidden items-center gap-1 xl:flex" aria-label="Navegación principal">
         <a href="#pilares" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Ecosistema</a>
-        <a href="https://registro.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Registro</a>
-        <a href="https://directorio.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Directorio Int.</a>
+        <a href="https://directorio.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Directorio</a>
         <a href="https://movidasst.org/login/index.php" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Academia</a>
         <a href="https://presupuesto.movidasst.com/" class="rounded-xl bg-gradient-to-r from-[#007b85]/10 to-[#00205b]/10 px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] ring-1 ring-[#007b85]/15 hover:from-[#007b85]/15 hover:to-[#00205b]/15">Empresas</a>
         <a href="https://aplicaciones.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Aplicaciones</a>
+        <a href="https://participa.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Participa</a>
         <a href="#donar" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#8a5a00] hover:bg-amber-50">Donar</a>
       </nav>
 
-      <a href="https://registro.movidasst.com/" class="shrink-0 rounded-xl bg-gradient-to-r from-[#007b85] to-[#00205b] px-4 py-3 text-xs font-extrabold text-white shadow-lg shadow-cyan-900/15 sm:px-5 sm:text-sm">
+      <a href="https://registro.movidasst.com/" class="header-register shrink-0 rounded-xl bg-gradient-to-r from-[#007b85] to-[#00205b] px-4 py-3 text-xs font-extrabold text-white shadow-lg shadow-cyan-900/15 sm:px-5 sm:text-sm">
         Registrarme
       </a>
     </div>
