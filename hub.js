@@ -60,7 +60,7 @@ function product(i){const favorite=favorites.has(i.id);return '<article class="p
 '<h3><a href="'+safeUrl(i.url)+'" target="_blank" rel="noopener noreferrer">'+safeText(i.title)+'</a></h3>'+
 '<p>'+safeText(i.description)+'</p>'+
 '<div class="product-foot"><a href="'+safeUrl(i.url)+'" target="_blank" rel="noopener noreferrer" aria-label="Abrir '+safeText(i.title)+'">Abrir '+svg("arrow")+'</a><button class="favorite-btn" type="button" data-favorite="'+safeText(i.id)+'" aria-label="'+(favorite?"Quitar de":"Guardar en")+' favoritos: '+safeText(i.title)+'" aria-pressed="'+favorite+'">'+svg("star")+'</button></div></article>'}
-function setCategory(next){category=next;onlyFavs=next==="favoritos";page=1;render();const el=$("#explorar");if(el)el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}
+function setCategory(next){category=next;onlyFavs=next==="favoritos";page=1;render();}
 function renderChips(){if(!chips)return;const a=[["all","Todo"],["favoritos","★ Favoritos"],...Object.entries(label)];chips.innerHTML=a.map(([key,title])=>'<button type="button" class="chip" data-category="'+key+'" aria-pressed="'+(category===key)+'">'+safeText(title)+'</button>').join("")}
 function renderCats(){if(!cats)return;cats.innerHTML=Object.entries(label).map(([key,title])=>'<button class="category-tile" type="button" data-category="'+key+'"><span class="icon">'+svg(groupIcons[key])+'</span>'+safeText(title)+'</button>').join("")}
 function currentItems(){let list=catalog.filter(i=>(category==="all"||onlyFavs||i.category===category) && (!onlyFavs||favorites.has(i.id)));if(term)list=list.filter(i=>normalize([i.title,i.description,i.keywords,i.group,label[i.category]].join(" ")).includes(normalize(term)));return list}
@@ -75,9 +75,6 @@ if(clear)clear.addEventListener("click",()=>{term="";search.value="";render();se
 if(more)more.addEventListener("click",()=>{page++;render()});
 const menu=$("#menuTrigger"),menuPane=$("#mobileMenu");
 if(menu&&menuPane){menu.addEventListener("click",()=>{menuPane.hidden=!menuPane.hidden;menu.setAttribute("aria-expanded",String(!menuPane.hidden))});menuPane.addEventListener("click",e=>{if(e.target.closest("a")){menuPane.hidden=true;menu.setAttribute("aria-expanded","false")}});}
-const navLinks=$$(".bottom-nav a[data-section]");
-function updateNav(){let closest="inicio";let min=Number.POSITIVE_INFINITY;for(const a of navLinks){const target=$("#"+a.dataset.section);if(!target)continue;const y=target.getBoundingClientRect().top;if(y<=innerHeight*.50 && Math.abs(y)<min){min=Math.abs(y);closest=a.dataset.section}}navLinks.forEach(a=>{const active=a.dataset.section===closest;a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")})}
-let scheduled=false;addEventListener("scroll",()=>{if(!scheduled){scheduled=true;requestAnimationFrame(()=>{updateNav();scheduled=false})}},{passive:true});updateNav();
 const dialog=$("#supportDialog"),openBtns=$$("[data-support]"),closeBtn=$("#closeSupport");let previousFocus=null, loadedPayPal=false;
 function openSupport(){if(!dialog)return;previousFocus=document.activeElement;dialog.hidden=false;closeBtn?.focus();document.body.style.overflow="hidden";if(!loadedPayPal)loadPayPal();}
 function closeSupport(){if(!dialog)return;dialog.hidden=true;document.body.style.overflow="";previousFocus?.focus()}
