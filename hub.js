@@ -70,11 +70,48 @@ document.addEventListener("click",e=>{
 const cat=e.target.closest("[data-category]");if(cat){setCategory(cat.dataset.category);return}
 const fav=e.target.closest("[data-favorite]");if(fav){const id=fav.dataset.favorite;if(favorites.has(id)){favorites.delete(id);showToast("Quitado de favoritos")}else{favorites.add(id);showToast("Guardado en favoritos")}store();render();}
 });
-if(search){search.addEventListener("input",()=>{term=search.value.trim();page=1;render()});document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();search.focus();$("#explorar")?.scrollIntoView({behavior:"smooth"})}})}
+if(search){search.addEventListener("input",()=>{term=search.value.trim();page=1;render()});document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();if(viewPanels.length)showView("explorar");search.focus()}})}
 if(clear)clear.addEventListener("click",()=>{term="";search.value="";render();search.focus()});
 if(more)more.addEventListener("click",()=>{page++;render()});
+
+/* Pestañas internas del HUB: cambiar de pantalla sin abrir aplicaciones ni saltar a anclas. */
+const viewNames=["inicio","explorar","aprender","comunidad","mi-movida","empresas"];
+const viewLabel={"inicio":"Inicio","explorar":"Explorar","aprender":"Aprender","comunidad":"Comunidad","mi-movida":"Mi Movida","empresas":"Empresas"};
+const viewPanels=$("[data-hub-view]");
+function readCurrentView(){
+  try{const name=new URL(window.location.href).searchParams.get("vista");return viewNames.includes(name)?name:"inicio"}catch{return "inicio"}
+}
+function showView(name,updateUrl=true){
+  if(!viewPanels.length||!viewNames.includes(name))return;
+  const current=viewPanels.find(p=>!p.hidden)?.dataset.hubView||"inicio";
+  viewPanels.forEach(panel=>{const active=panel.dataset.hubView===name;panel.hidden=!active;panel.classList.toggle("is-active",active)});
+  $("[data-hub-tab]").forEach(tab=>{
+    const selected=tab.dataset.hubTab===name;
+    tab.classList.toggle("active",selected);
+    tab.setAttribute("aria-pressed",String(selected));
+    if(tab.closest(".bottom-nav")){if(selected)tab.setAttribute("aria-current","location");else tab.removeAttribute("aria-current")}
+  });
+  const pane=$("#mobileMenu"),trigger=$("#menuTrigger");
+  if(pane){pane.hidden=true;trigger?.setAttribute("aria-expanded","false")}
+  if(updateUrl&&name!==current){
+    try{const next=new URL(window.location.href);if(name==="inicio")next.searchParams.delete("vista");else next.searchParams.set("vista",name);history.pushState({hubView:name},"",next.pathname+next.search)}catch{}
+  }
+  const announce=$("#hubViewStatus");if(announce)announce.textContent="Sección abierta: "+viewLabel[name];
+  if(name!==current){window.scrollTo(0,0)}
+}
+if(viewPanels.length){
+  showView(readCurrentView(),false);
+  window.addEventListener("popstate",()=>showView(readCurrentView(),false));
+  document.addEventListener("click",event=>{
+    const control=event.target.closest("button[data-hub-tab]");
+    if(!control)return;
+    if(control.dataset.hubCategory)setCategory(control.dataset.hubCategory);
+    showView(control.dataset.hubTab);
+  });
+}
+
 const menu=$("#menuTrigger"),menuPane=$("#mobileMenu");
-if(menu&&menuPane){menu.addEventListener("click",()=>{menuPane.hidden=!menuPane.hidden;menu.setAttribute("aria-expanded",String(!menuPane.hidden))});menuPane.addEventListener("click",e=>{if(e.target.closest("a")){menuPane.hidden=true;menu.setAttribute("aria-expanded","false")}});}
+if(menu&&menuPane){menu.addEventListener("click",()=>{menuPane.hidden=!menuPane.hidden;menu.setAttribute("aria-expanded",String(!menuPane.hidden))});menuPane.addEventListener("click",e=>{if(e.target.closest("a,button[data-hub-tab]")){menuPane.hidden=true;menu.setAttribute("aria-expanded","false")}});}
 const dialog=$("#supportDialog"),openBtns=$$("[data-support]"),closeBtn=$("#closeSupport");let previousFocus=null, loadedPayPal=false;
 function openSupport(){if(!dialog)return;previousFocus=document.activeElement;dialog.hidden=false;closeBtn?.focus();document.body.style.overflow="hidden";if(!loadedPayPal)loadPayPal();}
 function closeSupport(){if(!dialog)return;dialog.hidden=true;document.body.style.overflow="";previousFocus?.focus()}
