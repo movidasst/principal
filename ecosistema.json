@@ -41,18 +41,6 @@
       "icon": "trophy"
     },
     {
-      "id": "insignias",
-      "title": "Insignias y certificaciones",
-      "category": "comunidad",
-      "group": "Reconocimiento",
-      "description": "Explora reconocimientos digitales y credenciales de aprendizaje.",
-      "url": "https://dao.movidasst.com/",
-      "keywords": "insignias reconocimiento certificados wallet",
-      "status": "experimental",
-      "featured": 0,
-      "icon": "award"
-    },
-    {
       "id": "participa",
       "title": "PARTICIPA",
       "category": "comunidad",
