@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Explorar herramientas y recursos SST | La Movida de SST+</title>
+<meta name="description" content="Encuentra y explora las aplicaciones, estudios, simuladores y recursos del ecosistema digital de La Movida de SST+.">
+<meta name="theme-color" content="#00205b">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.movidasst.com/explorar.html">
+<link rel="icon" type="image/png" href="/logo-oficial-movida-sst-plus.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/hub.css?v=20261018">
+<style>
+.explore-hero{background:linear-gradient(120deg,#00205b,#006d79);color:#fff;padding:53px 0 50px;}
+.explore-hero h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:10px 0 12px}
+.explore-hero p{color:#dceef4;line-height:1.65;font-size:.97rem;max-width:700px}
+.explore-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.explore-hero .eyebrow{color:#b5ecd8}
+.explore-intro{display:flex;gap:12px;flex-wrap:wrap}
+.explore-intro .btn{border:1px solid rgba(255,255,255,.25)}
+.explore-tools{padding:40px 0 10px}
+.explore-tools .group-label{margin-top:28px}
+.explore-note{background:#ecf6f6;border:1px solid #cfebe7;color:#325467;padding:15px 18px;border-radius:15px;font-size:.83rem;line-height:1.6;margin:24px 0 0}
+@media(max-width:760px){.explore-hero{padding:36px 0 42px}.explore-tools{padding-top:28px}}
+</style>
+</head>
+<body>
+<div class="top-stripe" aria-hidden="true"></div>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header"><div class="container header-inner">
+<a class="brand" href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir inicio de La Movida en otra pestaña">
+<img src="/logo-oficial-movida-sst-plus.png" alt="Logo de La Movida de SST+" width="56" height="56">
+<span><strong>La Movida de SST <span style="color:#007b85">Plus</span></strong><small>De la Reacción a la Prevención</small></span>
+</a>
+<a class="btn btn-primary" href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer">Inicio del HUB <span data-icon="external"></span></a>
+</div></header>
+<main id="contenido">
+<section class="explore-hero" aria-labelledby="exploreHeading"><div class="container explore-top">
+<div><span class="eyebrow">Todos los recursos en un solo catálogo</span>
+<h1 id="exploreHeading">Explora La Movida de SST+</h1>
+<p>Encuentra herramientas por tema, necesidad o especialidad. Desde aquí puedes abrir la plataforma que elijas en una pestaña nueva, sin perder tu lugar en el catálogo.</p></div>
+<div class="explore-intro"><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer" class="btn btn-accent">Regístrate gratis <span data-icon="external"></span></a></div>
+</div></section>
+<section class="container explore-tools" id="explorar" aria-labelledby="catalogHeading">
+<div class="section-head"><div><span class="eyebrow">Tu buscador del ecosistema</span>
+<h2 id="catalogHeading">¿Qué recurso estás buscando?</h2>
+<p>Busca por nombre, tema, norma o tipo de actividad. Marca tus favoritos para encontrarlos más fácilmente en este dispositivo.</p></div></div>
+<div class="search-shell">
+  <div class="search-line"><div class="searchbox"><span data-icon="search"></span>
+  <input type="search" id="searchInput" aria-label="Buscar herramientas del ecosistema" placeholder="Ej.: ruido, IPERC, contratistas, normas..." autocomplete="off">
+  <button type="button" class="clear" id="clearSearch" aria-label="Borrar búsqueda" hidden>×</button></div></div>
+  <div id="categoryChips" class="chip-row" aria-label="Filtrar por categoría">
+    <button type="button" class="chip" data-category="all" aria-pressed="true">Todo</button><button type="button" class="chip" data-category="favoritos">★ Favoritos</button>
+  </div>
+  <p id="resultCount" class="result-meta" aria-live="polite" role="status">Preparando el catálogo...</p>
+</div>
+<div class="group-label">Explorar por área</div>
+<div class="category-strip" id="categoryRow" aria-label="Áreas del ecosistema"></div>
+<div class="group-label">Herramientas y recursos</div>
+<p id="loadingCatalog" class="subtle" style="font-size:.83rem">Cargando recursos del ecosistema...</p>
+<div id="productGrid" class="product-grid" aria-label="Herramientas y recursos de La Movida"></div>
+<div id="emptyState" class="empty" hidden><h3>Sin coincidencias</h3><p>Prueba otra palabra clave o selecciona una categoría diferente.</p></div>
+<div style="display:flex;justify-content:center;margin-top:22px"><button type="button" class="btn btn-light" id="moreButton" hidden>Ver más recursos</button></div>
+<p class="explore-note">Los simuladores son herramientas de aprendizaje y no sustituyen instrumentos de medición reales. Los productos identificados como «En prueba» pueden estar sujetos a mejoras o cambios de disponibilidad.</p>
+</section>
+<section class="container section" aria-labelledby="routeTitle">
+<div class="route-strip"><div><span class="eyebrow">¿Aún no eres integrante?</span>
+<h2 id="routeTitle">Una identidad, muchas oportunidades para aprender.</h2>
+<p>Regístrate gratis en la comunidad y descubre los espacios que hemos creado para compartir y practicar SST.</p></div>
+<a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Ir al registro <span data-icon="external"></span></a>
+</div></section>
+</main>
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div><img class="footer-logo" src="/logo-oficial-movida-sst-plus.png" alt="" loading="lazy" width="66" height="66"><h3>La Movida de SST+</h3><p>Aprendizaje colaborativo, práctica y desarrollo profesional. De la Reacción a la Prevención.</p></div>
+<div><h3>Accesos</h3><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia</a><a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Directorio</a><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a></div>
+<div><h3>Comunidad</h3><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="https://grupos.movidasst.com/" target="_blank" rel="noopener noreferrer">Grupos y canales</a><a href="mailto:info@movidasst.com">Contacto</a></div>
+</div>
+<div class="footer-base">© 2026 La Movida de SST+ · Elaborado por David Linares Brea · www.movidasst.com</div>
+</div></footer>
+<nav class="bottom-nav" aria-label="Accesos de La Movida en pestañas nuevas">
+<a href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="home"></span>Inicio</a>
+<a class="active" aria-current="page" href="https://www.movidasst.com/explorar.html" target="_blank" rel="noopener noreferrer"><span data-icon="grid"></span>Explorar</a>
+<a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="graduation"></span>Aprender</a>
+<a href="https://grupos.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="users"></span>Comunidad</a>
+<a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="user"></span>Mi Movida</a>
+</nav>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script defer src="/hub.js?v=20261018"></script>
+</body></html>
