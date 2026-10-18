@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <title>Red Internacional de Profesionales SST | La Movida SST Plus</title>
+  <title>La Movida SST+ | Tu HUB de aprendizaje y herramientas SST</title>
   <meta name="description" content="Red Internacional de Profesionales de Seguridad y Salud en el Trabajo: formación, recursos, aplicaciones, simuladores y aprendizaje colaborativo.">
   <meta name="author" content="David Linares Brea">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
@@ -43,13 +43,13 @@
   <link rel="icon" type="image/png" href="/logo-oficial-movida-sst-plus.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
-  <link rel="preconnect" href="https://www.paypal.com">
-  <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
-  <link rel="dns-prefetch" href="//www.paypal.com">
+
+
+
+
   <link rel="preload" as="image" href="/logo-oficial-movida-sst-plus.png" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  
 
   <script type="application/ld+json">
   {
@@ -110,7 +110,7 @@
         "about":{"@id":"https://www.movidasst.com/#organization"},
         "primaryImageOfPage":{"@id":"https://www.movidasst.com/#primaryimage"},
         "inLanguage":"es-VE",
-        "dateModified":"2026-09-12",
+        "dateModified":"2026-10-18",
         "keywords":["Red Internacional de Profesionales SST","Seguridad y Salud en el Trabajo","salud ocupacional","prevención de riesgos laborales","capacitación SST","profesionales SST","comunidad internacional SST"]
       },
       {
@@ -166,1044 +166,115 @@
   }
   </script>
 
-  <style>
-    :root{
-      --navy:#00205b;
-      --navy-deep:#001337;
-      --teal:#007b85;
-      --teal-light:#00a7ad;
-      --green:#70ad47;
-      --yellow:#ffb600;
-      --surface:#f8fafc;
-      --ink:#10233f;
-      --muted:#61738b;
-    }
-
-    *{box-sizing:border-box}
-    html{background:var(--surface)}
-    body{
-      margin:0;
-      min-height:100vh;
-      overflow-x:hidden;
-      font-family:'Manrope',sans-serif;
-      color:var(--ink);
-      background:#f8fafc;
-    }
-
-    h1,h2,h3,.display{font-family:'Outfit',sans-serif}
-    a{-webkit-tap-highlight-color:transparent}
-    ::selection{background:rgba(0,123,133,.18);color:var(--navy)}
-
-    .top-flag{
-      height:5px;
-      background:linear-gradient(90deg,var(--teal),var(--navy) 68%,var(--green));
-      box-shadow:0 2px 10px rgba(0,32,91,.12);
-    }
-
-    .shell{width:min(1180px,calc(100% - 1.65rem));margin-inline:auto}
-    .glass{
-      background:rgba(255,255,255,.86);
-      border:1px solid rgba(255,255,255,.9);
-      box-shadow:0 18px 55px rgba(0,32,91,.10);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-    }
-
-    .header-shadow{box-shadow:0 14px 40px rgba(0,32,91,.075)}
-
-    .logo-ring{
-      border:2px solid transparent;
-      background:
-        linear-gradient(#fff,#fff) padding-box,
-        linear-gradient(135deg,var(--teal),var(--navy) 65%,var(--green)) border-box;
-      box-shadow:
-        0 0 0 4px rgba(255,255,255,.96),
-        0 14px 32px rgba(0,32,91,.18);
-    }
-
-    .hero-grid{
-      background-image:none;
-    }
-
-    .tricolor-edge{position:relative}
-    .tricolor-edge::before{
-      content:'';
-      position:absolute;
-      z-index:6;
-      right:0;
-      bottom:0;
-      left:0;
-      height:5px;
-      background:linear-gradient(90deg,var(--teal),var(--green));
-      opacity:.88;
-      pointer-events:none;
-    }
-
-    .flag-dots{display:inline-flex;align-items:center;gap:.28rem}
-    .flag-dots span{
-      width:.48rem;height:.48rem;border-radius:999px;
-      box-shadow:0 0 0 1px rgba(255,255,255,.18);
-    }
-
-    .soft-blue-mesh{
-      background-image:
-        linear-gradient(rgba(0,61,165,.024) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,61,165,.024) 1px,transparent 1px);
-      background-size:42px 42px;
-    }
-
-    .pillar-card{
-      position:relative;
-      overflow:hidden;
-      min-height:220px;
-      border-radius:1.65rem;
-      transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
-    }
-    .pillar-card:active{transform:scale(.985)}
-    .pillar-card::after{
-      content:'';
-      position:absolute;
-      width:12rem;height:12rem;
-      right:-5rem;top:-5.5rem;
-      border-radius:999px;
-      background:rgba(255,255,255,.075);
-      pointer-events:none;
-    }
-
-    .service-card{
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      min-height:210px;
-      padding:1.3rem;
-      border:1px solid rgba(218,228,239,.94);
-      border-radius:1.4rem;
-      background:rgba(255,255,255,.92);
-      box-shadow:0 10px 35px rgba(0,32,91,.055);
-      transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
-    }
-    .service-card:active{transform:scale(.985)}
-    .service-card.hidden-card{display:none!important}
-
-    .icon-box{
-      width:3.1rem;height:3.1rem;
-      display:grid;place-items:center;
-      border-radius:1rem;
-      background:#eef7f8;
-      color:var(--teal);
-      border:1px solid #d6ecee;
-    }
-
-    .section-kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:.5rem;
-      color:var(--teal);
-      font-size:.7rem;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.15em;
-    }
-
-    .chip{
-      flex:0 0 auto;
-      border:1px solid #dbe5ee;
-      background:rgba(255,255,255,.9);
-      color:#5a6e85;
-      padding:.72rem 1rem;
-      border-radius:999px;
-      font-size:.79rem;
-      font-weight:800;
-      line-height:1;
-      transition:.18s ease;
-      white-space:nowrap;
-    }
-    .chip.active{
-      border-color:transparent;
-      color:#fff;
-      background:linear-gradient(135deg,var(--navy),var(--teal));
-      box-shadow:0 8px 18px rgba(0,123,133,.22);
-    }
-
-    .app-feature{background:linear-gradient(135deg,var(--navy),var(--teal))}
-
-    .main-hero{
-      background:linear-gradient(135deg,#ffffff 0%,#f1f9f9 58%,#e8f4f5 100%);
-      border:1px solid #d9eaec;
-      box-shadow:0 22px 55px rgba(0,32,91,.12);
-    }
-
-    .mini-route{
-      display:grid;
-      grid-template-columns:auto 1fr;
-      gap:.75rem;
-      align-items:start;
-    }
-    .route-number{
-      width:2rem;height:2rem;border-radius:.8rem;
-      display:grid;place-items:center;
-      background:#eef7f8;color:var(--teal);
-      font-weight:900;font-size:.78rem;
-      border:1px solid #d6ecee;
-    }
-
-    .fade-up{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
-    .fade-up.visible{opacity:1;transform:none}
-
-    .mobile-dock{
-      padding: .55rem .45rem max(.55rem,env(safe-area-inset-bottom));
-      background:#ffffff;
-      border-top:1px solid rgba(203,213,225,.95);
-      box-shadow:0 -14px 34px rgba(0,32,91,.10);
-    }
-    .dock-item{
-      color:#52657f;
-      transition:background .18s ease,color .18s ease,transform .18s ease;
-    }
-    .dock-item:active{transform:scale(.97)}
-    .dock-item .dock-icon{
-      width:2.3rem;
-      height:2.3rem;
-      display:grid;
-      place-items:center;
-      border-radius:.95rem;
-      background:#f4f7fb;
-      border:1px solid #dbe5ee;
-      color:#29405f;
-      box-shadow:0 3px 10px rgba(0,32,91,.05);
-    }
-    .dock-item svg{
-      width:1.15rem;
-      height:1.15rem;
-      display:block;
-      stroke:currentColor;
-    }
-    .dock-item .dock-label{
-      display:block;
-      line-height:1;
-      letter-spacing:.01em;
-    }
-    .dock-item.active{
-      color:var(--teal);
-      background:#eef8f9;
-    }
-    .dock-item.active .dock-icon{
-      background:linear-gradient(135deg,#e6f7f8,#ffffff);
-      border-color:#b7e3e7;
-      color:var(--teal);
-      box-shadow:0 6px 16px rgba(0,123,133,.14);
-    }
-
-    @media (hover:hover){
-      .pillar-card:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,32,91,.18)}
-      .service-card:hover{transform:translateY(-5px);border-color:rgba(0,123,133,.30);box-shadow:0 22px 48px rgba(0,32,91,.11)}
-    }
-
-    @media (min-width:768px){
-      .shell{width:min(1180px,calc(100% - 3rem))}
-      .pillar-card{min-height:250px}
-      .service-card{min-height:230px;padding:1.55rem}
-    }
-
-    @media (prefers-reduced-motion:reduce){
-      *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
-      .fade-up{opacity:1;transform:none}
-    }
-
-    /* Encabezado de escritorio: identidad y registro arriba; navegación debajo. */
-    @media (min-width:768px){
-      .main-header .header-layout{
-        display:grid;
-        height:120px;
-        grid-template-columns:minmax(0,1fr) auto;
-        grid-template-rows:76px 44px;
-        column-gap:24px;
-        row-gap:0;
-      }
-      .main-header .header-brand{grid-column:1;grid-row:1;min-width:0}
-      .main-header .header-brand img{width:64px;height:64px}
-      .main-header .header-brand .truncate{overflow:visible;text-overflow:clip;white-space:nowrap}
-      .main-header .header-register{grid-column:2;grid-row:1}
-      .main-header .desktop-nav{
-        display:flex;
-        grid-column:1 / -1;
-        grid-row:2;
-        justify-content:center;
-        gap:8px;
-        border-top:1px solid #e2e8f0;
-      }
-      .main-header .desktop-nav a{
-        flex-shrink:0;
-        white-space:nowrap;
-        padding:8px 12px;
-        font-size:13px;
-        line-height:20px;
-      }
-      main > section:first-child{padding-top:148px}
-    }
-  </style>
-</head>
-
-<body id="inicio" class="pb-24 md:pb-0">
-  <div class="fixed inset-x-0 top-0 z-[90] top-flag" aria-hidden="true"></div>
-
-  <a href="#pilares" class="sr-only focus:not-sr-only fixed top-4 left-4 z-[100] rounded-xl bg-white px-4 py-3 font-bold text-[#00205b] shadow-xl">
-    Saltar a los accesos principales
-  </a>
-
-  <!-- HEADER -->
-  <header class="fixed inset-x-0 top-1 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 header-shadow main-header">
-    <div class="shell header-layout flex h-[84px] items-center justify-between gap-3 sm:h-[96px]">
-      <a href="#inicio" class="header-brand flex min-w-0 items-center gap-3" aria-label="Ir al inicio">
-        <img
-          src="/logo-oficial-movida-sst-plus.png"
-          alt="Logo La Movida de SST Plus"
-          width="104"
-          height="104"
-          loading="eager"
-          class="h-16 w-16 shrink-0 rounded-full bg-white object-contain sm:h-20 sm:w-20"
-          fetchpriority="high"
-          decoding="async"
-        >
-        <div class="min-w-0">
-          <div class="display truncate text-[1rem] font-extrabold leading-none text-[#00205b] sm:text-xl">
-            La Movida de SST <span class="text-[#007b85]">Plus</span>
-          </div>
-          <div class="mt-1 truncate text-[.55rem] font-extrabold uppercase tracking-[.16em] text-[#65778c] sm:text-[.64rem]">
-            De la reacción a la prevención
-          </div>
-        </div>
-      </a>
-
-      <nav class="desktop-nav hidden items-center gap-1 xl:flex" aria-label="Navegación principal">
-        <a href="#pilares" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Ecosistema</a>
-        <a href="https://directorio.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Directorio</a>
-        <a href="https://movidasst.org/login/index.php" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Academia</a>
-        <a href="https://presupuesto.movidasst.com/" class="rounded-xl bg-gradient-to-r from-[#007b85]/10 to-[#00205b]/10 px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] ring-1 ring-[#007b85]/15 hover:from-[#007b85]/15 hover:to-[#00205b]/15">Empresas</a>
-        <a href="https://aplicaciones.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Aplicaciones</a>
-        <a href="https://participa.movidasst.com/" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#00205b] hover:bg-slate-100">Participa</a>
-        <a href="#donar" class="rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-[#8a5a00] hover:bg-amber-50">Donar</a>
-      </nav>
-
-      <a href="https://registro.movidasst.com/" class="header-register shrink-0 rounded-xl bg-gradient-to-r from-[#007b85] to-[#00205b] px-4 py-3 text-xs font-extrabold text-white shadow-lg shadow-cyan-900/15 sm:px-5 sm:text-sm">
-        Registrarme
-      </a>
-    </div>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="relative overflow-hidden pt-[108px] sm:pt-[124px]">
-      <div id="corporate-top-cta" class="shell relative z-10 mb-3 sm:mb-4">
-        <a href="https://presupuesto.movidasst.com/" class="group flex flex-col gap-3 overflow-hidden rounded-2xl border border-[#f8c300]/35 bg-gradient-to-r from-[#00183f] via-[#003477] to-[#007b85] px-4 py-3.5 text-white shadow-[0_14px_34px_rgba(0,32,91,.18)] sm:flex-row sm:items-center sm:justify-between sm:px-5">
-          <div class="flex min-w-0 items-center gap-3">
-            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 ring-1 ring-white/15">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>
-            </div>
-            <div class="min-w-0">
-              <div class="text-[.62rem] font-extrabold uppercase tracking-[.16em] text-cyan-200">Para empresas</div>
-              <div class="mt-0.5 text-sm font-extrabold leading-tight sm:text-base">Capacitación corporativa SST para tu equipo</div>
-              <div class="mt-0.5 text-[.7rem] font-semibold text-slate-200 sm:text-xs">Cotiza participantes y cursos · propuesta formal · seguimiento e informes</div>
-            </div>
-          </div>
-          <span class="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#f8c300] px-4 py-2.5 text-xs font-extrabold text-[#00205b] shadow-lg transition group-hover:bg-[#ffd43b]">Cotizar ahora <span aria-hidden="true">→</span></span>
-        </a>
-      </div>
-
-      <div class="shell">
-        <div class="main-hero tricolor-edge relative overflow-hidden rounded-[2rem] px-5 py-8 text-[#00205b] sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-
-          <div class="relative z-10 max-w-3xl">
-            <div class="inline-flex items-center gap-2 rounded-full border border-[#007b85]/20 bg-white px-3 py-2 text-[.64rem] font-extrabold uppercase tracking-[.14em] text-[#007b85] shadow-sm sm:text-xs">
-              <span class="h-2 w-2 rounded-full bg-[#70ad47]" aria-hidden="true"></span>
-              Comunidad profesional internacional
-            </div>
-
-            <h1 class="display mt-5 text-[2.35rem] font-extrabold leading-[1.02] tracking-[-.035em] sm:text-5xl lg:text-[4.15rem]">
-              Red Internacional de Profesionales de Seguridad y Salud en el Trabajo
-            </h1>
-
-            <p class="mt-5 max-w-2xl text-[.97rem] leading-7 text-slate-600 sm:text-lg">
-              Conectamos profesionales, formación, herramientas, simuladores y aprendizaje colaborativo para avanzar de la reacción a la prevención. Una comunidad nacida en Venezuela y abierta a profesionales de todos los países.
-            </p>
-
-            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a href="https://registro.movidasst.com/" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#007b85] to-[#00205b] px-6 py-3.5 font-extrabold text-white shadow-[0_12px_30px_rgba(0,123,133,.20)] transition active:scale-[.985]">
-                Comenzar mi registro
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-              </a>
-              <a href="https://aplicaciones.movidasst.com/" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#007b85]/25 bg-white px-6 py-3.5 font-extrabold text-[#00205b] shadow-sm transition active:scale-[.985]">
-                Explorar Aplicaciones SST
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SEO POSITIONING -->
-    <section id="sst-venezuela" class="shell scroll-mt-28 pt-9 sm:pt-12" aria-labelledby="sst-venezuela-title">
-      <div class="glass rounded-[2rem] p-6 sm:p-9 lg:grid lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-12">
-        <div>
-          <span class="section-kicker">Comunidad profesional internacional</span>
-          <h2 id="sst-venezuela-title" class="display mt-2 text-3xl font-extrabold tracking-tight text-[#00205b] sm:text-4xl">
-            Profesionales de SST conectados sin fronteras
-          </h2>
-        </div>
-        <div class="mt-5 lg:mt-0">
-          <p class="text-sm leading-7 text-slate-600 sm:text-base">
-            Reunimos conocimientos, herramientas y personas para mejorar la gestión de la <strong>Seguridad y Salud en el Trabajo</strong>. Desde Venezuela impulsamos capacitación, actualización normativa, salud ocupacional, prevención y aprendizaje colaborativo con alcance internacional.
-          </p>
-          <div class="mt-5 flex flex-wrap gap-2" aria-label="Temas principales">
-            <span class="rounded-full bg-[#eef7f8] px-3 py-2 text-xs font-extrabold text-[#007b85]">Capacitación SST</span>
-            <span class="rounded-full bg-blue-50 px-3 py-2 text-xs font-extrabold text-[#003da5]">Salud ocupacional</span>
-            <span class="rounded-full bg-amber-50 px-3 py-2 text-xs font-extrabold text-[#8a5a00]">Prevención de riesgos</span>
-            <span class="rounded-full bg-green-50 px-3 py-2 text-xs font-extrabold text-[#4d7f2f]">Normativa y herramientas</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PILLARS -->
-    <section id="pilares" class="shell scroll-mt-28 py-9 sm:py-12">
-      <div class="mb-5">
-        <span class="section-kicker">Tu punto de entrada</span>
-        <h2 class="display mt-1 text-2xl font-extrabold tracking-tight text-[#00205b] sm:text-3xl">Cuatro espacios principales</h2>
-        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">La página principal queda simple: primero eliges qué necesitas y luego exploras el resto del ecosistema.</p>
-      </div>
-
-      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <a href="https://registro.movidasst.com/" class="pillar-card hero-grid tricolor-edge bg-gradient-to-br from-[#00183f] via-[#003477] to-[#007b85] p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.22)]">
-          <div class="relative z-10 flex h-full flex-col">
-            <div class="flex items-start justify-between gap-3">
-              <span class="rounded-full bg-[#f8c300] px-3 py-1.5 text-[.64rem] font-extrabold uppercase tracking-[.13em] text-[#00205b]">Empieza aquí</span>
-              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white/12 text-white backdrop-blur-md">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6 21a6 6 0 0 1 12 0"/><path d="M19 5v6"/><path d="M16 8h6"/></svg>
-              </div>
-            </div>
-            <div class="mt-auto pt-8">
-              <h3 class="display text-2xl font-extrabold">Registro</h3>
-              <p class="mt-2 text-sm leading-6 text-slate-200">Crea o actualiza tu perfil, recibe tu código de integrante y accede a tu credencial digital.</p>
-              <div class="mt-5 text-sm font-extrabold text-[#ffe06a]">Ir al registro →</div>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://directorio.movidasst.com/" class="pillar-card glass border border-blue-100 p-6">
-          <div class="relative z-10 flex h-full flex-col">
-            <div class="flex items-start justify-between gap-3">
-              <span class="rounded-full bg-blue-50 px-3 py-1.5 text-[.64rem] font-extrabold uppercase tracking-[.13em] text-[#003da5]">Red profesional</span>
-              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-50 text-[#003da5]">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="9" r="2"/><circle cx="19" cy="9" r="2"/></svg>
-              </div>
-            </div>
-            <div class="mt-auto pt-8">
-              <h3 class="display text-2xl font-extrabold text-[#00205b]">Directorio</h3>
-              <p class="mt-2 text-sm leading-6 text-slate-600">Encuentra profesionales por estado, municipio, profesión, formación académica y situación laboral.</p>
-              <div class="mt-5 text-sm font-extrabold text-[#003da5]">Abrir directorio →</div>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://movidasst.org/login/index.php" class="pillar-card overflow-hidden border border-slate-800 bg-gradient-to-br from-[#10274f] via-[#002f6c] to-[#005a78] p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.18)]">
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(0,207,192,.22),transparent_35%)]" aria-hidden="true"></div>
-          <div class="relative z-10 flex h-full flex-col">
-            <div class="flex items-start justify-between gap-3">
-              <span class="rounded-full bg-white/10 px-3 py-1.5 text-[.64rem] font-extrabold uppercase tracking-[.13em] text-cyan-100">Formación continua</span>
-              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-white">
-                <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 10 10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/></svg>
-              </div>
-            </div>
-            <div class="mt-auto pt-8">
-              <h3 class="display text-2xl font-extrabold">Academia</h3>
-              <p class="mt-2 text-sm leading-6 text-slate-200">Cursos, actividades y actualización profesional continua dentro de la Academia Movida SST.</p>
-              <div class="mt-5 text-sm font-extrabold text-cyan-300">Ingresar a la Academia →</div>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://aplicaciones.movidasst.com/" class="pillar-card app-feature tricolor-edge p-6 text-white shadow-[0_18px_45px_rgba(0,32,91,.22)]">
-          <div class="relative z-10 flex h-full flex-col">
-            <div class="flex items-start justify-between gap-3">
-              <span class="rounded-full bg-[#f8c300] px-3 py-1.5 text-[.64rem] font-extrabold uppercase tracking-[.13em] text-[#00205b]">Herramientas digitales</span>
-              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white/12 text-white">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-              </div>
-            </div>
-            <div class="mt-auto pt-8">
-              <h3 class="display text-2xl font-extrabold">Aplicaciones SST</h3>
-              <p class="mt-2 text-sm leading-6 text-slate-200">Centro de aplicaciones para proyectos, indicadores, riesgos, estadísticas, PSST y otras tareas profesionales.</p>
-              <div class="mt-5 text-sm font-extrabold text-[#ffe06a]">Explorar aplicaciones →</div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- FEATURE APPLICATIONS -->
-    <section class="shell pb-10 sm:pb-14">
-      <div class="app-feature tricolor-edge relative overflow-hidden rounded-[2rem] p-6 text-white shadow-[0_25px_65px_rgba(0,32,91,.19)] sm:p-9 lg:grid lg:grid-cols-[1.45fr_.8fr] lg:items-center lg:gap-12">
-        <div>
-          <span class="text-xs font-extrabold uppercase tracking-[.16em] text-cyan-200">Centro de Aplicaciones SST</span>
-          <h2 class="display mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Herramientas para pasar de la información a la acción.</h2>
-          <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">
-            En lugar de llenar la página principal con cada aplicación, el catálogo especializado concentra todas las herramientas, categorías y nuevas incorporaciones en un solo lugar.
-          </p>
-          <a href="https://aplicaciones.movidasst.com/" class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-[#f8c300] px-6 py-3.5 font-extrabold text-[#00205b] shadow-xl sm:w-auto">
-            Abrir Aplicaciones SST
-          </a>
-        </div>
-
-        <div class="mt-7 grid gap-3 lg:mt-0">
-          <div class="rounded-2xl border border-white/12 bg-white/10 p-4 backdrop-blur-md">
-            <strong class="text-sm">Busca por necesidad</strong>
-            <p class="mt-1 text-xs leading-5 text-slate-200">Encuentra rápidamente la herramienta adecuada para la tarea que necesitas resolver.</p>
-          </div>
-          <div class="rounded-2xl border border-white/12 bg-white/10 p-4 backdrop-blur-md">
-            <strong class="text-sm">Catálogo dinámico</strong>
-            <p class="mt-1 text-xs leading-5 text-slate-200">Las nuevas aplicaciones aparecen en el portal sin recargar esta página principal.</p>
-          </div>
-          <div class="rounded-2xl border border-white/12 bg-white/10 p-4 backdrop-blur-md">
-            <strong class="text-sm">Una identidad común</strong>
-            <p class="mt-1 text-xs leading-5 text-slate-200">Todas las herramientas mantienen el estilo y la experiencia de La Movida SST Plus.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ROUTE -->
-    <section class="shell pb-10 sm:pb-14">
-      <div class="glass rounded-[1.8rem] p-5 sm:p-7">
-        <div class="grid gap-7 lg:grid-cols-[.9fr_1.4fr] lg:items-center">
-          <div>
-            <span class="section-kicker">Si eres nuevo</span>
-            <h2 class="display mt-1 text-2xl font-extrabold text-[#00205b] sm:text-3xl">Una ruta simple para comenzar</h2>
-            <p class="mt-3 text-sm leading-6 text-slate-600">No necesitas conocer todas las plataformas desde el primer día.</p>
-          </div>
-          <div class="grid gap-4 sm:grid-cols-3">
-            <div class="mini-route"><div class="route-number">1</div><div><strong class="text-sm text-[#00205b]">Regístrate</strong><p class="mt-1 text-xs leading-5 text-slate-600">Crea tu identidad dentro del ecosistema.</p></div></div>
-            <div class="mini-route"><div class="route-number">2</div><div><strong class="text-sm text-[#00205b]">Conecta</strong><p class="mt-1 text-xs leading-5 text-slate-600">Forma parte del Directorio y la comunidad.</p></div></div>
-            <div class="mini-route"><div class="route-number">3</div><div><strong class="text-sm text-[#00205b]">Crece</strong><p class="mt-1 text-xs leading-5 text-slate-600">Aprende en la Academia y utiliza las aplicaciones.</p></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- REST OF ECOSYSTEM -->
-    <section id="ecosistema" class="shell scroll-mt-28 pb-12 sm:pb-16">
-      <div class="soft-blue-mesh rounded-[1.8rem] border border-blue-100/70 bg-white/82 p-4 shadow-[0_18px_45px_rgba(0,32,91,.07)] backdrop-blur-xl sm:p-6">
-        <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <span class="section-kicker">Más del ecosistema</span>
-            <h2 class="display mt-1 text-2xl font-extrabold tracking-tight text-[#00205b] sm:text-3xl">Recursos, comunidad y servicios</h2>
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">El resto de La Movida SST queda organizado por categorías para que la página principal no se convierta en un directorio interminable.</p>
-          </div>
-
-          <div class="relative w-full lg:max-w-md">
-            <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <input id="searchInput" type="search" placeholder="Buscar recursos..." aria-label="Buscar recursos" class="h-13 w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-12 pr-12 text-sm font-semibold text-slate-800 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100">
-            <button id="clearSearchBtn" type="button" class="absolute right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-slate-100 text-slate-500" aria-label="Limpiar búsqueda">×</button>
-          </div>
-        </div>
-
-        <div id="filterBar" class="mt-5 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Filtrar recursos">
-          <button class="chip active" data-filter="all" role="tab" aria-selected="true">Todos</button>
-          <button class="chip" data-filter="formacion" role="tab" aria-selected="false">Formación</button>
-          <button class="chip" data-filter="herramientas" role="tab" aria-selected="false">Herramientas</button>
-          <button class="chip" data-filter="comunidad" role="tab" aria-selected="false">Comunidad</button>
-          <button class="chip" data-filter="servicios" role="tab" aria-selected="false">Servicios</button>
-        </div>
-      </div>
-
-      <div id="cardsContainer" class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <a href="https://participa.movidasst.com/" class="service-card ecosystem-card" data-category="comunidad" data-search="participa encuestas consultas octubre fest actividades propuestas comunidad">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 2 2 5-5"/><path d="M8 15h8"/><path d="M8 18h5"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Participa</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Tu voz ayuda a construir La Movida. Responde encuestas, propone ideas y elige las actividades del Octubre Fest.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Participar en las consultas →</span>
-        </a>
-
-        <!-- Formación -->
-        <a href="https://inscripciones.movidasst.com/" class="service-card ecosystem-card" data-category="formacion" data-search="inscripciones cursos cupos formación técnica">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M12 12v6"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Inscripciones a Cursos</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Consulta actividades abiertas y reserva tu cupo en formación y actualización profesional.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Ver inscripciones →</span>
-        </a>
-
-        <a href="https://estudia.movidasst.com/" class="service-card ecosystem-card" data-category="formacion" data-search="estudio normativa legal leyes reglamentos inpsasel">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Estudio de Normativa</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Guías de estudio y actualización sobre normas, reglamentos y documentos técnicos de SST.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Comenzar a estudiar →</span>
-        </a>
-
-        <!-- Herramientas -->
-        <a href="https://laboratorio.movidasst.com/" class="service-card ecosystem-card" data-category="herramientas" data-search="laboratorio virtual higiene ocupacional movidalab simuladores instrumentos sonómetro vibrómetro geiger radiaciones ruido medición">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M8 15h8"/><path d="M9.5 18h.01"/><path d="M14.5 17h.01"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Laboratorio Virtual de Higiene Ocupacional</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Practica el uso y la configuración de instrumentos mediante simuladores didácticos antes de medir en campo.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Entrar a MovidaLab HO →</span>
-        </a>
-
-        <a href="https://drive.movidasst.com/" class="service-card ecosystem-card" data-category="herramientas" data-search="biblioteca documentos normas formatos drive">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Biblioteca Colaborativa</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Documentos, normas y formatos editables para apoyar el trabajo técnico.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Abrir biblioteca →</span>
-        </a>
-
-        <a href="https://salarios.movidasst.com/" class="service-card ecosystem-card" data-category="herramientas" data-search="salarios honorarios tabulador observatorio salarial">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Tabulador Salarial SST</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Referencias para salarios, honorarios y análisis del mercado profesional SST.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Consultar referencias →</span>
-        </a>
-
-        <a href="https://metricas.movidasst.com/" class="service-card ecosystem-card" data-category="herramientas" data-search="métricas estadísticas ecosistema dashboard">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 17v-4"/><path d="M13 17V8"/><path d="M18 17v-7"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Métricas del Ecosistema</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Visualiza crecimiento, alcance y actividad de las plataformas de La Movida SST.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Ver métricas →</span>
-        </a>
-
-        <!-- Comunidad -->
-        <a href="https://normas.movidasst.com/" class="service-card ecosystem-card" data-category="comunidad" data-search="normas convivencia respeto netiqueta comunidad">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8"/><path d="M8 16h5"/><path d="M6 3h12a2 2 0 0 1 2 2v14l-4-3H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Normas de Convivencia</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Pautas de participación, respeto, colaboración, comunicación y netiqueta.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Leer las normas →</span>
-        </a>
-
-        <a href="https://davidlinares.movidasst.com/" class="service-card ecosystem-card" data-category="comunidad" data-search="fundador david linares contacto biografía">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Perfil del Fundador</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Conoce la visión del proyecto y los canales de contacto de David Linares Brea.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Conocer el perfil →</span>
-        </a>
-
-        <!-- Servicios -->
-        <a href="https://proveedores.movidasst.com/" class="service-card ecosystem-card" data-category="servicios" data-search="proveedores equipos servicios suministros epp">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 16 4-4 3 3 5-6"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Directorio de Proveedores</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Conecta con proveedores de equipos, servicios y soluciones relacionadas con SST.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Buscar proveedores →</span>
-        </a>
-
-        <a href="https://mentoring.movidasst.com/" class="service-card ecosystem-card" data-category="servicios" data-search="mentoría asesoría consultoría orientación profesional">
-          <div class="icon-box"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m16 8 4-4"/><path d="M17 4h3v3"/></svg></div>
-          <h3 class="display mt-5 text-xl font-extrabold text-[#00205b]">Mentoría y Asesoría</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Orientación técnica y estratégica para profesionales, equipos y organizaciones.</p>
-          <span class="mt-auto pt-5 text-sm font-extrabold text-[#007b85]">Solicitar orientación →</span>
-        </a>
-      </div>
-
-      <div id="noResults" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-white/70 px-6 py-12 text-center">
-        <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-slate-100 text-slate-400">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        </div>
-        <h3 class="display mt-4 text-xl font-extrabold text-[#00205b]">No encontramos ese recurso</h3>
-        <p class="mt-2 text-sm text-slate-600">Prueba con otra palabra o vuelve a mostrar todo el ecosistema.</p>
-        <button id="resetSearchBtn" type="button" class="mt-5 rounded-xl bg-[#00205b] px-5 py-3 text-sm font-extrabold text-white">Mostrar todos</button>
-      </div>
-    </section>
-
-    <!-- SOLUCIONES CORPORATIVAS -->
-    <section id="empresas" class="shell scroll-mt-28 pb-10 sm:pb-14" aria-labelledby="empresas-title">
-      <div class="relative overflow-hidden rounded-[2rem] border border-[#007b85]/20 bg-gradient-to-br from-[#00183f] via-[#002f67] to-[#007b85] p-6 text-white shadow-[0_26px_65px_rgba(0,32,91,.18)] sm:p-8 lg:p-10">
-        <div class="absolute -right-16 -top-20 h-64 w-64 rounded-full bg-cyan-300/10 blur-2xl" aria-hidden="true"></div>
-        <div class="relative grid gap-8 lg:grid-cols-[1.35fr_.65fr] lg:items-center">
-          <div>
-            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[.7rem] font-extrabold uppercase tracking-[.16em] text-cyan-100">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/></svg>
-              Soluciones para empresas
-            </span>
-            <h2 id="empresas-title" class="display mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Capacitación SST para equipos, con seguimiento real.</h2>
-            <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">Diseña una propuesta corporativa según la cantidad de participantes y cursos. La Academia acompaña la formación con matrícula organizada, seguimiento del avance, certificados e informes para la empresa.</p>
-            <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold text-cyan-50">
-              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Sin mínimo de participantes</span>
-              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Tarifa progresiva por escala</span>
-              <span class="rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">Seguimiento e informes</span>
-            </div>
-          </div>
-          <div class="rounded-[1.55rem] border border-white/15 bg-white/10 p-5 backdrop-blur-sm sm:p-6">
-            <div class="text-xs font-extrabold uppercase tracking-[.15em] text-cyan-200">Oferta corporativa</div>
-            <div class="display mt-2 text-2xl font-extrabold">Cotiza en línea</div>
-            <p class="mt-2 text-sm leading-6 text-slate-200">Calcula el plan para tu empresa y solicita una propuesta formal de capacitación.</p>
-            <a href="https://presupuesto.movidasst.com/" class="mt-5 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[#f8c300] px-5 py-4 text-sm font-extrabold text-[#00205b] shadow-xl transition hover:bg-[#ffd43b] active:scale-[.99]">
-              Cotizar capacitación corporativa <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="preguntas" class="shell scroll-mt-28 pb-10 sm:pb-14" aria-labelledby="preguntas-title">
-      <div class="mb-5 max-w-3xl">
-        <span class="section-kicker">Preguntas frecuentes</span>
-        <h2 id="preguntas-title" class="display mt-2 text-3xl font-extrabold tracking-tight text-[#00205b] sm:text-4xl">
-          Seguridad y Salud en el Trabajo con acceso simple y colaborativo
-        </h2>
-        <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">Respuestas rápidas para profesionales, estudiantes, organizaciones y personas interesadas en el ecosistema SST.</p>
-      </div>
-
-      <div class="grid gap-3 lg:grid-cols-2">
-        <details class="group rounded-[1.4rem] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,32,91,.05)]">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-[#00205b]">
-            ¿Qué es La Movida de SST Plus?
-            <span class="text-xl text-[#007b85] transition group-open:rotate-45" aria-hidden="true">+</span>
-          </summary>
-          <p class="mt-4 text-sm leading-7 text-slate-600">Es una red y ecosistema digital que conecta profesionales, formación, recursos técnicos, aplicaciones y espacios de colaboración sobre Seguridad y Salud en el Trabajo.</p>
-        </details>
-
-        <details class="group rounded-[1.4rem] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,32,91,.05)]">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-[#00205b]">
-            ¿Qué recursos ofrece para profesionales de SST en Venezuela?
-            <span class="text-xl text-[#007b85] transition group-open:rotate-45" aria-hidden="true">+</span>
-          </summary>
-          <p class="mt-4 text-sm leading-7 text-slate-600">Ofrece registro profesional, Directorio Nacional, Academia, guías de estudio, aplicaciones, biblioteca colaborativa, grupos y recursos para la práctica profesional.</p>
-        </details>
-
-        <details class="group rounded-[1.4rem] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,32,91,.05)]">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-[#00205b]">
-            ¿Pueden participar profesionales de cualquier país?
-            <span class="text-xl text-[#007b85] transition group-open:rotate-45" aria-hidden="true">+</span>
-          </summary>
-          <p class="mt-4 text-sm leading-7 text-slate-600">Sí. La Movida de SST Plus es una Red Internacional abierta a profesionales de Seguridad y Salud en el Trabajo de todos los países.</p>
-        </details>
-
-        <details class="group rounded-[1.4rem] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,32,91,.05)]">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-[#00205b]">
-            ¿Cómo puedo comenzar en La Movida SST?
-            <span class="text-xl text-[#007b85] transition group-open:rotate-45" aria-hidden="true">+</span>
-          </summary>
-          <p class="mt-4 text-sm leading-7 text-slate-600">El primer paso es completar el registro profesional. Desde allí puedes acceder al directorio, la credencial digital, la Academia y las aplicaciones del ecosistema.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="shell pb-12 sm:pb-16">
-      <div class="tricolor-edge overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#00183f] via-[#003477] to-[#007b85] p-6 text-white shadow-[0_26px_65px_rgba(0,32,91,.20)] sm:p-9 lg:flex lg:items-center lg:justify-between lg:gap-10">
-        <div class="max-w-2xl">
-          <span class="text-xs font-extrabold uppercase tracking-[.16em] text-cyan-200">Comunidad profesional</span>
-          <h2 class="display mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Haz visible tu experiencia y sigue creciendo.</h2>
-          <p class="mt-4 text-sm leading-7 text-slate-200 sm:text-base">El registro es la puerta de entrada al Directorio, la credencial digital, la Academia y otras experiencias del ecosistema.</p>
-        </div>
-        <a href="https://registro.movidasst.com/" class="mt-6 inline-flex min-h-13 w-full items-center justify-center rounded-2xl bg-[#f8c300] px-7 py-4 font-extrabold text-[#00205b] hover:bg-[#ffd43b] shadow-xl lg:mt-0 lg:w-auto">Completar mi registro</a>
-      </div>
-    </section>
-
-    <!-- DONATION SECTION -->
-    <section id="donar" class="shell scroll-mt-28 pb-12 sm:pb-16" aria-labelledby="donar-title">
-      <div class="overflow-hidden rounded-[2rem] border border-amber-200/80 bg-gradient-to-br from-[#fffdf6] via-white to-[#eef9fa] p-6 shadow-[0_22px_58px_rgba(0,32,91,.10)] sm:p-9">
-        <div class="mx-auto max-w-3xl text-center">
-          <span class="section-kicker">Aporte voluntario</span>
-          <h2 id="donar-title" class="display mt-2 text-3xl font-extrabold tracking-tight text-[#00205b] sm:text-4xl">Apoya La Movida de SST Plus</h2>
-          <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">Tu donación ayuda a sostener las aplicaciones, materiales y recursos gratuitos que compartimos con la comunidad de Seguridad y Salud en el Trabajo.</p>
-        </div>
-
-        <div class="mx-auto mt-7 grid max-w-4xl gap-4 md:grid-cols-2">
-          <article class="rounded-[1.6rem] border border-[#dbe5ee] bg-white p-5 shadow-[0_12px_32px_rgba(0,32,91,.06)] sm:p-6">
-            <div class="flex items-center gap-3">
-              <div class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#eef7f8] text-[#007b85]">
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h8.5a4.5 4.5 0 0 1 0 9H10l-1.2 7H5.5L8 4Z"/><path d="M10 8h5"/></svg>
-              </div>
-              <div>
-                <h3 class="display text-xl font-extrabold text-[#00205b]">Donar con PayPal</h3>
-                <p class="mt-1 text-xs leading-5 text-slate-500">Pago seguro en USD mediante PayPal.</p>
-              </div>
-            </div>
-            <div id="paypal-container-L8JZJ944K29T2" class="mt-5 min-h-[48px]" aria-label="Botón de donación PayPal"></div>
-          </article>
-
-          <article class="rounded-[1.6rem] border border-amber-200 bg-white p-5 shadow-[0_12px_32px_rgba(0,32,91,.06)] sm:p-6">
-            <div class="flex items-center gap-3">
-              <div class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#fff7dc] text-[#8a5a00]">
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 3 3-3 3-3-3 3-3Z"/><path d="m6 9 3 3-3 3-3-3 3-3Z"/><path d="m18 9 3 3-3 3-3-3 3-3Z"/><path d="m12 15 3 3-3 3-3-3 3-3Z"/><path d="m12 9 3 3-3 3-3-3 3-3Z"/></svg>
-              </div>
-              <div>
-                <h3 class="display text-xl font-extrabold text-[#00205b]">Donar USDT con Binance</h3>
-                <p class="mt-1 text-xs leading-5 text-slate-500">Usa exactamente la red indicada.</p>
-              </div>
-            </div>
-
-            <dl class="mt-5 grid gap-3 text-sm">
-              <div class="flex items-center justify-between gap-4 rounded-xl bg-slate-50 px-4 py-3"><dt class="font-bold text-slate-500">Red</dt><dd class="font-extrabold text-[#00205b]">BEP20 (BSC)</dd></div>
-              <div class="flex items-center justify-between gap-4 rounded-xl bg-slate-50 px-4 py-3"><dt class="font-bold text-slate-500">ID</dt><dd class="font-extrabold text-[#00205b]">176067584</dd></div>
-              <div class="rounded-xl bg-slate-50 px-4 py-3"><dt class="font-bold text-slate-500">Correo</dt><dd class="mt-1 break-all font-extrabold text-[#00205b]">david.linaresb@gmail.com</dd></div>
-            </dl>
-
-            <button id="copyBinanceDonationMain" type="button" class="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#f0b90b] px-5 py-3 font-extrabold text-[#1e2329] shadow-lg shadow-amber-900/10 transition active:scale-[.985]">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copiar datos de Binance
-            </button>
-            <p id="binanceCopyStatusMain" class="mt-2 min-h-5 text-center text-xs font-bold text-[#007b85]" aria-live="polite"></p>
-          </article>
-        </div>
-
-        <p class="mx-auto mt-5 max-w-3xl text-center text-xs leading-5 text-slate-500">La donación es totalmente voluntaria y no es necesaria para utilizar nuestras herramientas gratuitas. Antes de enviar USDT, confirma que la red seleccionada sea <strong>BEP20 (BSC)</strong>.</p>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contacto" class="shell scroll-mt-28 pb-14 sm:pb-20">
-      <div class="glass rounded-[2rem] p-6 sm:p-9 lg:flex lg:items-center lg:justify-between lg:gap-10">
-        <div class="max-w-2xl">
-          <span class="section-kicker">Atención directa</span>
-          <h2 class="display mt-2 text-2xl font-extrabold text-[#00205b] sm:text-3xl">¿Tienes una duda o propuesta?</h2>
-          <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">Comunícate con La Movida SST por WhatsApp o correo institucional.</p>
-        </div>
-        <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:mt-0">
-          <a href="https://wa.me/56968615650" class="inline-flex min-h-13 items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-6 py-4 font-extrabold text-white shadow-lg shadow-green-900/10">WhatsApp</a>
-          <a href="mailto:info@movidasst.com" class="inline-flex min-h-13 items-center justify-center gap-2 rounded-2xl bg-[#00205b] px-6 py-4 font-extrabold text-white shadow-lg shadow-blue-950/10">Correo</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="relative border-t border-slate-200/80 bg-white pb-10 pt-10 before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-[linear-gradient(90deg,#007b85,#00205b_68%,#70ad47)]">
-    <div class="shell">
-      <div class="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div>
-          <div class="display text-xl font-extrabold text-[#00205b]">La Movida de SST <span class="text-[#007b85]">Plus</span></div>
-          <p class="mt-3 max-w-md text-sm leading-6 text-slate-600">Red Internacional de Profesionales SST: comunidad, formación, herramientas y aplicaciones para avanzar de la reacción a la prevención.</p>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-extrabold uppercase tracking-[.13em] text-[#00205b]">Accesos</h3>
-          <div class="mt-3 grid gap-2 text-sm font-semibold text-slate-600">
-            <a href="https://registro.movidasst.com/">Registro</a>
-            <a href="https://directorio.movidasst.com/">Directorio Internacional</a>
-            <a href="https://movidasst.org/login/index.php">Academia</a>
-            <a href="https://presupuesto.movidasst.com/" class="font-extrabold text-[#007b85]">Capacitación para empresas</a>
-            <a href="https://aplicaciones.movidasst.com/">Aplicaciones SST</a>
-            <a href="https://laboratorio.movidasst.com/">Laboratorio Virtual HO</a>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-extrabold uppercase tracking-[.13em] text-[#00205b]">Comunidad</h3>
-          <div class="mt-3 grid gap-2 text-sm font-semibold text-slate-600">
-            <a href="https://participa.movidasst.com/">Participa · Encuestas y propuestas</a>
-            <a href="https://normas.movidasst.com/">Normas de convivencia</a>
-            <a href="#preguntas">Preguntas frecuentes</a>
-            <a href="#contacto">Contacto</a>
-            <a href="#donar">Donar</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-9 border-t border-slate-200 pt-6 text-center text-xs leading-6 text-slate-500 sm:flex sm:items-center sm:justify-between sm:text-left">
-        <span>© 2026 La Movida de SST Plus.</span>
-        <span>De la reacción a la prevención · Red Internacional de Profesionales SST</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- MOBILE DOCK: 5 DESTINOS CLAVE -->
   
-  <nav class="mobile-dock fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 backdrop-blur-xl md:hidden" aria-label="Navegación móvil principal">
-    <a href="#inicio" class="dock-item active flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
-      <span class="dock-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
-      </span>
-      <span class="dock-label">Inicio</span>
-    </a>
-
-    <a href="https://registro.movidasst.com/" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
-      <span class="dock-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6 21a6 6 0 0 1 12 0"/><path d="M19 5v6"/><path d="M16 8h6"/></svg>
-      </span>
-      <span class="dock-label">Registro</span>
-    </a>
-
-    <a href="https://directorio.movidasst.com/" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
-      <span class="dock-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="9" r="2"/><circle cx="19" cy="9" r="2"/></svg>
-      </span>
-      <span class="dock-label">Directorio</span>
-    </a>
-
-    <a href="https://movidasst.org/login/index.php" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
-      <span class="dock-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 10 10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      </span>
-      <span class="dock-label">Academia</span>
-    </a>
-
-    <a href="https://aplicaciones.movidasst.com/" class="dock-item flex min-h-[62px] flex-col items-center justify-center gap-1 rounded-2xl text-[.61rem] font-extrabold">
-      <span class="dock-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      </span>
-      <span class="dock-label">Apps</span>
-    </a>
-  </nav>
-
-  <a href="#donar" class="fixed bottom-24 left-4 z-40 inline-flex min-h-12 items-center gap-2 rounded-full bg-[#f0b90b] px-4 py-3 text-sm font-extrabold text-[#1e2329] shadow-[0_12px_30px_rgba(30,35,41,.22)] md:hidden" aria-label="Ir a las opciones de donación">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.35-9.33-8.32C.9 9.67 2.08 6 5.5 5.18 7.42 4.72 9.14 5.5 12 8c2.86-2.5 4.58-3.28 6.5-2.82 3.42.82 4.6 4.49 2.83 7.5C19 16.65 12 21 12 21Z"/></svg>
-    Donar
-  </a>
-
-  <button id="backToTop" type="button" class="fixed bottom-24 right-4 z-40 hidden h-12 w-12 place-items-center rounded-full bg-[#00205b] text-white shadow-xl md:bottom-8 md:right-8" aria-label="Volver arriba">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const cards = [...document.querySelectorAll('.ecosystem-card')];
-      const chips = [...document.querySelectorAll('.chip')];
-      const searchInput = document.getElementById('searchInput');
-      const clearSearchBtn = document.getElementById('clearSearchBtn');
-      const resetSearchBtn = document.getElementById('resetSearchBtn');
-      const noResults = document.getElementById('noResults');
-      const backToTop = document.getElementById('backToTop');
-      const homeDock = document.querySelector('.dock-item[href="#inicio"]');
-      let activeFilter = 'all';
-
-      const normalize = value => String(value || '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase();
-
-      function applyFilters() {
-        const term = normalize(searchInput.value.trim());
-        let visible = 0;
-
-        cards.forEach(card => {
-          const haystack = normalize([
-            card.dataset.search,
-            card.textContent
-          ].join(' '));
-
-          const categoryMatches = activeFilter === 'all' || card.dataset.category === activeFilter;
-          const textMatches = !term || haystack.includes(term);
-          const show = categoryMatches && textMatches;
-
-          card.classList.toggle('hidden-card', !show);
-          if (show) visible += 1;
-        });
-
-        noResults.classList.toggle('hidden', visible !== 0);
-        clearSearchBtn.classList.toggle('hidden', !searchInput.value);
-        clearSearchBtn.classList.toggle('grid', !!searchInput.value);
-      }
-
-      chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-          activeFilter = chip.dataset.filter;
-          chips.forEach(item => {
-            const selected = item === chip;
-            item.classList.toggle('active', selected);
-            item.setAttribute('aria-selected', selected ? 'true' : 'false');
-          });
-          applyFilters();
-        });
-      });
-
-      searchInput.addEventListener('input', applyFilters);
-
-      clearSearchBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        applyFilters();
-        searchInput.focus();
-      });
-
-      resetSearchBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        activeFilter = 'all';
-        chips.forEach((item, index) => {
-          item.classList.toggle('active', index === 0);
-          item.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
-        });
-        applyFilters();
-      });
-
-      const revealItems = document.querySelectorAll('.pillar-card,.service-card,.glass,.app-feature');
-      revealItems.forEach(item => item.classList.add('fade-up'));
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {threshold:.08});
-
-      revealItems.forEach(item => observer.observe(item));
-
-      window.addEventListener('scroll', () => {
-        const show = window.scrollY > 500;
-        backToTop.classList.toggle('hidden', !show);
-        backToTop.classList.toggle('grid', show);
-
-        if (homeDock) {
-          homeDock.classList.toggle('active', window.scrollY < 420);
-        }
-      }, {passive:true});
-
-      backToTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-    });
-  </script>
-  <script src="https://www.paypal.com/sdk/js?client-id=BAAJLihJtqy1l8ByU5kM-5xUoRD7QhOIzMXEHYka6QMgJrgtidkjum4hZxfZjxGeFbb1EtfpIjKw8v-NXs&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
-  <script>
-    (() => {
-      const paypalTarget = document.getElementById('paypal-container-L8JZJ944K29T2');
-      if (paypalTarget) {
-        if (window.paypal && typeof window.paypal.HostedButtons === 'function') {
-          try {
-            const renderResult = window.paypal.HostedButtons({
-              hostedButtonId: 'L8JZJ944K29T2'
-            }).render('#paypal-container-L8JZJ944K29T2');
-            if (renderResult && typeof renderResult.catch === 'function') {
-              renderResult.catch(() => {
-                paypalTarget.innerHTML = '<p class="rounded-xl bg-amber-50 px-4 py-3 text-center text-sm font-bold text-amber-800">PayPal no pudo cargarse. Recarga la página o intenta nuevamente.</p>';
-              });
-            }
-          } catch (error) {
-            paypalTarget.innerHTML = '<p class="rounded-xl bg-amber-50 px-4 py-3 text-center text-sm font-bold text-amber-800">PayPal no pudo cargarse. Recarga la página o intenta nuevamente.</p>';
-          }
-        } else {
-          paypalTarget.innerHTML = '<p class="rounded-xl bg-amber-50 px-4 py-3 text-center text-sm font-bold text-amber-800">PayPal no pudo cargarse. Revisa tu conexión e intenta nuevamente.</p>';
-        }
-      }
-
-      const copyButton = document.getElementById('copyBinanceDonationMain');
-      const copyStatus = document.getElementById('binanceCopyStatusMain');
-      const binanceData = 'BINANCE (USDT)\nRed: BEP20 (BSC)\nID: 176067584\nCorreo: david.linaresb@gmail.com';
-
-      async function copyText(value) {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(value);
-          return;
-        }
-        const field = document.createElement('textarea');
-        field.value = value;
-        field.setAttribute('readonly', '');
-        field.style.position = 'fixed';
-        field.style.opacity = '0';
-        document.body.appendChild(field);
-        field.select();
-        const copied = document.execCommand('copy');
-        field.remove();
-        if (!copied) throw new Error('copy_failed');
-      }
-
-      if (copyButton) {
-        copyButton.addEventListener('click', async () => {
-          try {
-            await copyText(binanceData);
-            copyStatus.textContent = '¡Datos copiados!';
-          } catch (error) {
-            copyStatus.textContent = 'No se pudo copiar. Usa los datos mostrados arriba.';
-          }
-          window.setTimeout(() => { copyStatus.textContent = ''; }, 3500);
-        });
-      }
-    })();
-  </script>
-</body>
-</html>
+  <link rel="stylesheet" href="/hub.css?v=20261018">
+</head>
+<body id="inicio">
+<div class="top-stripe" aria-hidden="true"></div>
+<a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" aria-label="La Movida de SST Plus: inicio"><img src="/logo-oficial-movida-sst-plus.png" alt="La Movida de SST+" width="56" height="56" fetchpriority="high"><span><strong>La Movida de SST <span style="color:#007b85">Plus</span></strong><small>De la Reacción a la Prevención</small></span></a>
+    <nav class="desktop-nav" aria-label="Navegación principal"><a href="#explorar">Explorar</a><a href="#aprender">Aprender</a><a href="#comunidad">Comunidad</a><a href="#mi-movida">Mi Movida</a><a href="#empresas">Empresas</a></nav>
+    <a class="btn btn-primary header-join" href="https://registro.movidasst.com/">Ser integrante <span data-icon="arrow"></span></a>
+    <button id="menuTrigger" class="menu-trigger" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileMenu"><span data-icon="menu"></span></button>
+  </div>
+  <nav id="mobileMenu" class="mobile-top-menu container" aria-label="Menú de navegación" hidden><a href="#explorar">Explorar herramientas</a><a href="#aprender">Aprender y practicar</a><a href="#comunidad">Comunidad</a><a href="#mi-movida">Mi Movida</a><a href="#empresas">Empresas</a><a href="https://registro.movidasst.com/">Registrarme</a></nav>
+</header>
+<main id="contenido">
+  <section class="hero-wrap" aria-labelledby="heroTitle"><div class="container hero">
+    <div><span class="eyebrow">Tu espacio de SST, en un solo lugar</span>
+      <h1 id="heroTitle">Un ecosistema para <em>conectar, aprender y prevenir.</em></h1>
+      <p class="hero-description">La Movida de SST+ reúne profesionales, estudios, simuladores de higiene ocupacional y aplicaciones para llevar el conocimiento técnico a la práctica. Explora lo que necesitas, desde tu teléfono o computadora.</p>
+      <div class="hero-buttons"><a class="btn btn-accent" href="#explorar"><span data-icon="search"></span> Encontrar una herramienta</a><a class="btn btn-light" href="https://registro.movidasst.com/">Únete gratis <span data-icon="arrow"></span></a></div>
+      <div class="hero-points"><span><span data-icon="check"></span> Comunidad internacional</span><span><span data-icon="check"></span> Aprendizaje colaborativo</span><span><span data-icon="check"></span> Recursos prácticos SST</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="hero-tile"><span class="bigicon" data-icon="users"></span><span><b>Comunidad</b><small>Personas que aprenden juntas</small></span></div>
+      <div class="hero-tile"><span class="bigicon" data-icon="graduation"></span><span><b>Aprendizaje</b><small>Estudia, Academia y competencias</small></span></div>
+      <div class="hero-tile"><span class="bigicon" data-icon="flask"></span><span><b>MovidaLab HO</b><small>Simuladores y práctica técnica</small></span></div>
+      <div class="hero-tile"><span class="bigicon" data-icon="shield"></span><span><b>Aplicaciones SST</b><small>Herramientas para la gestión preventiva</small></span></div>
+      <span class="hero-stamp" data-icon="spark"></span>
+    </div>
+  </div></section>
+  <div class="container quick-nav"><div class="quick-shell">
+    <a class="quick-action" href="https://estudia.movidasst.com/"><span class="quick-icon" data-icon="book"></span><span><strong>Estudia</strong><small>Guías, ranking y XP</small></span></a>
+    <a class="quick-action" href="https://directorio.movidasst.com/"><span class="quick-icon" data-icon="users"></span><span><strong>Directorio</strong><small>Perfiles y conexiones</small></span></a>
+    <a class="quick-action" href="https://laboratorio.movidasst.com/"><span class="quick-icon" data-icon="flask"></span><span><strong>MovidaLab HO</strong><small>Práctica con instrumentos</small></span></a>
+    <a class="quick-action" href="https://movidasst.org/login/index.php"><span class="quick-icon" data-icon="graduation"></span><span><strong>Academia</strong><small>Cursos y certificados</small></span></a>
+  </div></div>
+  <section class="section container" aria-labelledby="featuredTitle">
+    <div class="section-head"><div><span class="eyebrow">Comienza por aquí</span><h2 id="featuredTitle">Lo más destacado de La Movida</h2><p>Accesos esenciales para descubrir, estudiar, practicar y utilizar nuestras herramientas.</p></div><a class="link-more" href="#explorar">Ver catálogo completo <span data-icon="arrow"></span></a></div>
+    <div class="product-grid" id="featuredGrid" aria-label="Herramientas destacadas">
+      <article class="product-card"><div class="product-icon" data-icon="book"></div><h3><a href="https://estudia.movidasst.com/">Estudia Movida SST</a></h3><p>Guías, aprendizaje colaborativo, ranking y XP.</p><div class="product-foot"><a href="https://estudia.movidasst.com/">Abrir <span data-icon="arrow"></span></a></div></article>
+      <article class="product-card"><div class="product-icon" data-icon="flask"></div><h3><a href="https://laboratorio.movidasst.com/">MovidaLab HO</a></h3><p>Práctica virtual con instrumentos.</p><div class="product-foot"><a href="https://laboratorio.movidasst.com/">Abrir <span data-icon="arrow"></span></a></div></article>
+      <article class="product-card"><div class="product-icon" data-icon="users"></div><h3><a href="https://directorio.movidasst.com/">Directorio internacional</a></h3><p>Encuentra otros profesionales de SST.</p><div class="product-foot"><a href="https://directorio.movidasst.com/">Abrir <span data-icon="arrow"></span></a></div></article>
+      <article class="product-card"><div class="product-icon" data-icon="shield"></div><h3><a href="https://pp.movidasst.com/">IPERC multimétodo</a></h3><p>Del peligro al control con criterio técnico.</p><div class="product-foot"><a href="https://pp.movidasst.com/">Abrir <span data-icon="arrow"></span></a></div></article>
+    </div>
+  </section>
+  <section class="section container" id="explorar" aria-labelledby="exploreTitle">
+    <div class="section-head"><div><span class="eyebrow">Tu buscador SST</span><h2 id="exploreTitle">¿Qué necesitas hacer hoy?</h2><p>Busca por tema, herramienta, método o necesidad. Puedes guardar tus favoritas en este dispositivo.</p></div></div>
+    <div class="search-shell">
+      <div class="search-line"><div class="searchbox"><span data-icon="search"></span><input type="search" id="searchInput" placeholder="Ej.: ruido, contratistas, ISO, emergencias..." autocomplete="off" aria-label="Buscar herramientas del ecosistema"><button type="button" class="clear" id="clearSearch" aria-label="Borrar búsqueda" hidden>×</button></div></div>
+      <div id="categoryChips" class="chip-row" aria-label="Filtrar recursos por categoría"><button type="button" class="chip" data-category="all" aria-pressed="true">Todo</button><button type="button" class="chip" data-category="aprendizaje" aria-pressed="false">Aprender</button><button type="button" class="chip" data-category="laboratorio" aria-pressed="false">MovidaLab HO</button><button type="button" class="chip" data-category="herramientas" aria-pressed="false">Aplicaciones SST</button><button type="button" class="chip" data-category="comunidad" aria-pressed="false">Comunidad</button></div>
+      <p class="result-meta" id="resultCount" role="status" aria-live="polite">Preparando el catálogo...</p>
+    </div>
+    <div class="group-label">Explorar por área</div>
+    <div class="category-strip" id="categoryRow" aria-label="Categorías del ecosistema">
+      <a class="category-tile" href="https://aplicaciones.movidasst.com/">Aplicaciones SST</a><a class="category-tile" href="https://laboratorio.movidasst.com/">Laboratorio</a><a class="category-tile" href="https://estudia.movidasst.com/">Aprender</a><a class="category-tile" href="https://participa.movidasst.com/">Comunidad</a>
+    </div>
+    <div class="group-label">Recursos del ecosistema</div>
+    <p id="loadingCatalog" class="subtle" style="font-size:.82rem">Cargando inventario de herramientas y recursos...</p>
+    <div id="productGrid" class="product-grid" aria-label="Catálogo completo de La Movida"></div>
+    <div id="emptyState" class="empty" hidden><h3>Sin coincidencias</h3><p>Intenta con otra palabra o selecciona otra categoría.</p></div>
+    <div style="display:flex;justify-content:center;margin-top:20px"><button type="button" class="btn btn-light" id="moreButton" hidden>Ver más recursos</button></div>
+    <p class="disclaimer" style="margin:22px 0 0">Los simuladores son recursos didácticos: no sustituyen instrumentos reales, capacitación exigible ni juicio profesional. Los desarrollos experimentales están identificados.</p>
+  </section>
+  <section class="section container" id="aprender" aria-labelledby="learningTitle">
+    <div class="route-strip"><div><span class="eyebrow">Aprendizaje justo a tiempo</span><h2 id="learningTitle">Conecta el estudio con la práctica.</h2><p>Consulta estudios colaborativos, realiza cursos, entrena competencias y practica en el Laboratorio Virtual de Higiene Ocupacional.</p><div class="route-nodes" style="margin-top:15px"><span>Estudia</span><span>Academia</span><span>Desarrolla SST</span><span>MovidaLab HO</span></div></div>
+    <a class="btn btn-primary" href="https://estudia.movidasst.com/">Ir a Estudia <span data-icon="arrow"></span></a></div>
+  </section>
+  <section class="section container" id="comunidad" aria-labelledby="communityTitle">
+    <div class="section-head"><div><span class="eyebrow">Una red que aprende contigo</span><h2 id="communityTitle">Participar también es construir conocimiento.</h2><p>Tu experiencia suma a la comunidad. Participa, comparte y sigue el trabajo colectivo.</p></div></div>
+    <div class="split"><div class="panel dark"><span class="eyebrow" style="color:#a6f2d3">Comunidad internacional</span><h2>De la conversación a la colaboración.</h2><p>Formamos una red de profesionales con acceso a estudios, herramientas, consultas y reconocimiento por contribuciones técnicas.</p><a class="btn btn-accent" href="https://participa.movidasst.com/">Participar <span data-icon="arrow"></span></a></div>
+      <div class="panel"><h2>Más formas de conectar</h2><div class="link-stack">
+        <a href="https://directorio.movidasst.com/">Directorio profesional<span data-icon="arrow"></span></a>
+        <a href="https://estudia.movidasst.com/">Ranking y mis puntos<span data-icon="arrow"></span></a>
+        <a href="https://grupos.movidasst.com/">Grupos y canales<span data-icon="arrow"></span></a>
+        <a href="https://drive.movidasst.com/">Biblioteca colaborativa<span data-icon="arrow"></span></a>
+        <a href="https://novedades.movidasst.com/">Radar de novedades ISO<span data-icon="arrow"></span></a>
+      </div></div>
+    </div>
+  </section>
+  <section class="section container" id="mi-movida" aria-labelledby="profileTitle">
+    <div class="section-head"><div><span class="eyebrow">Tu identidad en el ecosistema</span><h2 id="profileTitle">Mi Movida</h2><p>Accede a tu registro, credencial, puntos y cursos desde un solo lugar. La información privada permanece en sus respectivas plataformas.</p></div></div>
+    <div class="quick-shell" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+      <a class="quick-action" href="https://registro.movidasst.com/"><span class="quick-icon" data-icon="user-plus"></span><span><strong>Mi registro</strong><small>Actualizar mis datos</small></span></a>
+      <a class="quick-action" href="https://directorio.movidasst.com/"><span class="quick-icon" data-icon="user"></span><span><strong>Mi credencial</strong><small>Perfil profesional</small></span></a>
+      <a class="quick-action" href="https://estudia.movidasst.com/"><span class="quick-icon" data-icon="trophy"></span><span><strong>Mis puntos</strong><small>XP, ranking e histórico</small></span></a>
+      <a class="quick-action" href="https://movidasst.org/login/index.php"><span class="quick-icon" data-icon="graduation"></span><span><strong>Mis cursos</strong><small>Academia Movida SST</small></span></a>
+    </div>
+  </section>
+  <section class="section container" id="empresas" aria-labelledby="companiesTitle">
+    <div class="panel company-panel" style="background:linear-gradient(115deg,#edf7f6,#fff);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap"><div style="max-width:720px"><span class="eyebrow">Para organizaciones</span><h2 id="companiesTitle">Capacitación y desarrollo de equipos SST</h2><p style="margin-bottom:0">Programas corporativos, formación organizada, seguimiento, certificados e informes de aprendizaje.</p></div><a class="btn btn-primary" href="https://presupuesto.movidasst.com/">Conocer propuesta <span data-icon="arrow"></span></a></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="container">
+  <div class="footer-grid">
+    <div><img class="footer-logo" src="/logo-oficial-movida-sst-plus.png" alt="" loading="lazy" width="66" height="66"><h3>La Movida de SST+</h3><p>Comunidad internacional y ecosistema digital de Seguridad y Salud en el Trabajo.<br>De la Reacción a la Prevención.</p><p><a href="https://www.movidasst.com/">www.movidasst.com</a></p></div>
+    <div><h3>Explorar</h3><a href="https://registro.movidasst.com/">Registro</a><a href="https://directorio.movidasst.com/">Directorio</a><a href="https://estudia.movidasst.com/">Estudia y ranking</a><a href="https://laboratorio.movidasst.com/">MovidaLab HO</a><a href="https://aplicaciones.movidasst.com/">Aplicaciones SST</a><a href="https://movidasst.org/login/index.php">Academia</a></div>
+    <div><h3>Comunidad y contacto</h3><a href="https://participa.movidasst.com/">Participa</a><a href="https://normas.movidasst.com/">Normas de convivencia</a><a href="https://grupos.movidasst.com/">Grupos</a><a href="https://wa.me/56968615650">WhatsApp</a><a href="mailto:info@movidasst.com">info@movidasst.com</a><a href="https://davidlinares.movidasst.com/">Fundador</a><button type="button" data-support class="btn btn-light" style="margin-top:12px">Apoyar el proyecto <span data-icon="heart"></span></button></div>
+  </div><div class="footer-base">© 2026 La Movida de SST+. Elaborado por David Linares Brea. · Comunidad de aprendizaje colaborativo.</div>
+</div></footer>
+<button class="support-fab" data-support type="button" title="Apoyar voluntariamente a La Movida" aria-label="Apoyar el proyecto"><span data-icon="heart"></span></button>
+<nav class="bottom-nav" aria-label="Navegación inferior móvil"><a href="#inicio" class="active" data-section="inicio"><span data-icon="home"></span>Inicio</a><a href="#explorar" data-section="explorar"><span data-icon="grid"></span>Explorar</a><a href="#aprender" data-section="aprender"><span data-icon="graduation"></span>Aprender</a><a href="#comunidad" data-section="comunidad"><span data-icon="users"></span>Comunidad</a><a href="#mi-movida" data-section="mi-movida"><span data-icon="user"></span>Mi Movida</a></nav>
+<div class="dialog-backdrop" id="supportDialog" role="presentation" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="supportTitle">
+  <div class="dialog-top"><h2 id="supportTitle">Apoya a La Movida</h2><button id="closeSupport" class="close-dialog" type="button" aria-label="Cerrar"><span data-icon="close"></span></button></div>
+  <p>El aporte es voluntario y ayuda a mantener los recursos gratuitos y el desarrollo de herramientas para la comunidad.</p>
+  <div class="donation-details"><strong>Donación con PayPal</strong><p style="margin:6px 0 12px">Pago seguro a través del proveedor.</p><div id="paypal-container-L8JZJ944K29T2">Cargando opción PayPal al abrir...</div></div>
+  <div class="donation-details" style="margin-top:12px"><strong>USDT (Binance)</strong><p style="margin:6px 0">Red: BEP20 (BSC)<br>ID: 176067584<br>Correo: david.linaresb@gmail.com</p><button type="button" id="copyBinance" class="btn btn-primary">Copiar datos</button></div>
+  <p class="disclaimer" style="margin-top:12px">Verifica la red antes de realizar cualquier transferencia. Donar no es requisito para acceder a los recursos gratuitos.</p>
+</section></div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script defer src="/hub.js?v=20261018"></script>
+</body></html>
