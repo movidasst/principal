@@ -1,12 +1,12 @@
 {
-  "name": "La Movida de SST Plus",
-  "short_name": "La Movida SST",
-  "description": "Red Internacional de Profesionales de Seguridad y Salud en el Trabajo.",
+  "name": "La Movida de SST+ | HUB",
+  "short_name": "Movida SST+",
+  "description": "HUB de la comunidad, Estudia, Academia, MovidaLab HO y aplicaciones de La Movida de SST+",
   "lang": "es-VE",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f6f9fc",
+  "background_color": "#f8fafc",
   "theme_color": "#00205b",
   "icons": [
     {
