@@ -77,7 +77,7 @@ if(more)more.addEventListener("click",()=>{page++;render()});
 /* Pestañas internas del HUB: cambiar de pantalla sin abrir aplicaciones ni saltar a anclas. */
 const viewNames=["inicio","explorar","aprender","comunidad","mi-movida","empresas"];
 const viewLabel={"inicio":"Inicio","explorar":"Explorar","aprender":"Aprender","comunidad":"Comunidad","mi-movida":"Mi Movida","empresas":"Empresas"};
-const viewPanels=$("[data-hub-view]");
+const viewPanels=Array.from(document.querySelectorAll("[data-hub-view]"));
 function readCurrentView(){
   try{const name=new URL(window.location.href).searchParams.get("vista");return viewNames.includes(name)?name:"inicio"}catch{return "inicio"}
 }
@@ -85,7 +85,7 @@ function showView(name,updateUrl=true){
   if(!viewPanels.length||!viewNames.includes(name))return;
   const current=viewPanels.find(p=>!p.hidden)?.dataset.hubView||"inicio";
   viewPanels.forEach(panel=>{const active=panel.dataset.hubView===name;panel.hidden=!active;panel.classList.toggle("is-active",active)});
-  $("[data-hub-tab]").forEach(tab=>{
+  document.querySelectorAll("[data-hub-tab]").forEach(tab=>{
     const selected=tab.dataset.hubTab===name;
     tab.classList.toggle("active",selected);
     tab.setAttribute("aria-pressed",String(selected));
