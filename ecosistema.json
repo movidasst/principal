@@ -383,7 +383,7 @@
       "group": "Preparación y respuesta",
       "description": "Construye un plan de emergencia laboral mediante pasos guiados.",
       "url": "https://emergencias.movidasst.com/",
-      "keywords": "emergencia laboral simulacros plan",
+      "keywords": "emergencia laboral simulacros plan emergencias respuesta desastres prevención",
       "status": "disponible",
       "featured": 0,
       "icon": "alert"
@@ -395,7 +395,7 @@
       "group": "Preparación y respuesta",
       "description": "Organiza amenazas, rutas, contactos, suministros y acciones familiares.",
       "url": "https://pefamiliar.movidasst.com/",
-      "keywords": "emergencia familiar mochila casa riesgo",
+      "keywords": "emergencia familiar mochila casa riesgo emergencias respuesta desastres prevención",
       "status": "disponible",
       "featured": 1,
       "icon": "home"
