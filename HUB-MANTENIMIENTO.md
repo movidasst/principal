@@ -36,3 +36,17 @@ Actualizado: 18 de octubre de 2026 · Responsable editorial: La Movida de SST+
 - Los simuladores son recursos educativos, no instrumentos de medición real.
 - La disponibilidad editorial no equivale a una prueba automatizada de todos los destinos.
 - Los cambios del sitio principal se gestionan en el repositorio `movidasst/principal`; no se han alterado repositorios de apps ni bases de datos externas.
+
+## Navegación interna del HUB (corrección 18-oct-2026)
+
+La barra inferior del móvil y el menú superior del escritorio son **pestañas internas**, no accesos directos a plataformas externas ni enlaces que desplazan a otra altura de la misma página.
+
+- Las pestañas usan botones `data-hub-tab` y se corresponden con los paneles `data-hub-view`: `inicio`, `explorar`, `aprender`, `comunidad`, `mi-movida` y `empresas`.
+- Un panel está visible por vez. `hub.js` activa el nuevo panel, sincroniza botones superiores e inferiores, y actualiza `?vista=...` sin recargar para conservar historial del navegador.
+- Los enlaces externos están **dentro de los paneles**, como botones explícitos para abrir la aplicación en otra pestaña.
+- El Directorio tiene un bloque destacado dentro de Comunidad y su acceso en Mi Movida. Las acciones rápidas de la portada conducen a pestañas internas.
+- `explorar.html` sigue disponible como ruta independiente para compartir el catálogo, pero **no** es el destino de la pestaña Explorar en la portada.
+- Después de alterar `hub.js` o `hub.css`, actualizar el parámetro de versión de los archivos en `index.html` para evitar que el usuario cargue una versión anterior desde caché.
+
+### Pruebas específicas
+En un teléfono, tocar **Explorar** no debe abrir otra pestaña ni saltar al pie de página: debe mostrar la vista de catálogo con su buscador. **Aprender** muestra opciones de Estudia, Academia, Desarrolla SST y MovidaLab HO; **Comunidad** presenta Directorio, grupos y PARTICIPA; **Mi Movida** da acceso al perfil y a las plataformas personales. Al pulsar **Abrir Directorio** sí debe abrir `directorio.movidasst.com` en una pestaña nueva. La navegación Atrás/Adelante debe restaurar las vistas internas.
