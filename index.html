@@ -168,6 +168,19 @@
 
   
   <link rel="stylesheet" href="/hub.css?v=20261018tabs3">
+<style id="mentor-promo-style">
+.mentor-promo{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:22px auto 4px;padding:20px;background:linear-gradient(118deg,#001d50 0%,#00436b 53%,#007b85 100%);border:1px solid rgba(62,211,208,.45);border-radius:25px;box-shadow:0 15px 33px rgba(0,32,91,.17);color:#fff}
+.mentor-promo::before{content:"";position:absolute;right:-80px;top:-105px;width:290px;height:290px;border:1px solid rgba(255,255,255,.18);border-radius:50%;z-index:-1;pointer-events:none}
+.mentor-promo .mp-label{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(189,249,245,.35);background:rgba(0,0,0,.12);border-radius:99px;padding:5px 12px;font-size:.69rem;letter-spacing:.07em;font-weight:800;color:#c8fffa}
+.mentor-promo h2{color:#fff;font-size:clamp(1.55rem,3.7vw,2.4rem);line-height:1.12;margin:12px 0 9px;letter-spacing:-.035em}
+.mentor-promo h2 span{color:#ffcf4c}.mentor-promo p{color:#e5f6fa;margin:0;font-size:.94rem;max-width:650px;line-height:1.55}
+.mentor-promo .mp-tags{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 16px}.mentor-promo .mp-tags span{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);padding:5px 9px;border-radius:99px;font-size:.72rem;font-weight:700;color:#fff}
+.mentor-promo .mp-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:10px 17px;background:#ffbf18;border-radius:13px;color:#00205b;font-size:.89rem;font-weight:800;text-decoration:none;box-shadow:0 6px 17px rgba(0,0,0,.13);transition:transform .16s,background .16s}.mentor-promo .mp-button:hover{transform:translateY(-2px);background:#ffcf52}.mentor-promo .mp-button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.mentor-promo .mp-side{display:flex;align-items:center;gap:14px;justify-content:center;min-width:0}.mentor-promo .mp-logo{display:block;width:94px;height:94px;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 7px 16px rgba(0,0,0,.19))}
+.mentor-promo .mp-side-note{color:#fff;font-size:.82rem;font-weight:650}.mentor-promo .mp-side-note strong{display:block;font-size:1.35rem;line-height:1.13;color:#fff}.mentor-promo .mp-side-note small{display:block;font-size:.71rem;color:#cdf6ed;margin-top:5px}
+@media(min-width:760px){.mentor-promo{grid-template-columns:minmax(0,1fr) 220px;align-items:center;padding:24px 28px;gap:25px}.mentor-promo .mp-side{flex-direction:column;text-align:center}.mentor-promo .mp-logo{width:130px;height:130px}}
+@media(prefers-reduced-motion:reduce){.mentor-promo *{transition:none!important}}
+</style>
 </head>
 <body id="inicio">
 <div class="top-stripe" aria-hidden="true"></div>
@@ -204,6 +217,22 @@
     <button type="button" class="quick-action quick-tab" data-hub-tab="explorar" data-hub-category="laboratorio" aria-controls="vista-explorar" aria-pressed="false"><span class="quick-icon" data-icon="flask"></span><span><strong>MovidaLab HO</strong><small>Práctica con instrumentos</small></span></button>
     <button type="button" class="quick-action quick-tab" data-hub-tab="aprender"  aria-controls="vista-aprender" aria-pressed="false"><span class="quick-icon" data-icon="graduation"></span><span><strong>Academia</strong><small>Cursos y certificados</small></span></button>
   </div></div>
+  <!-- Promoción propia Mentoring SST Plus: abre aplicación en otra pestaña -->
+  <aside class="container" aria-label="Descubre Mentoring SST Plus">
+    <div class="mentor-promo">
+      <div>
+        <span class="mp-label">✦ NUEVO · ACOMPAÑAMIENTO PROFESIONAL</span>
+        <h2>Mentoring SST <span>Plus</span></h2>
+        <p>Aprende, aplica y avanza con mentoría individual en Gestión de SST. Fortalece tu criterio técnico con videollamadas de 45 minutos y consultas por WhatsApp.</p>
+        <div class="mp-tags"><span>Desde 10 USD/mes</span><span>Sin cobros automáticos</span><span>Mentoría 1 a 1</span></div>
+        <a class="mp-button" href="https://mentoring.movidasst.com/?vista=planes" target="_blank" rel="noopener noreferrer" aria-label="Abrir planes de Mentoring SST Plus en una pestaña nueva">Conocer los planes <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="mp-side">
+        <img class="mp-logo" src="/logo-oficial-movida-sst-plus.png" alt="Logo oficial de La Movida de SST Plus" width="130" height="130" loading="lazy" decoding="async">
+        <div class="mp-side-note"><strong>David Linares Brea</strong><small>Tu mentor en Gestión de SST</small></div>
+      </div>
+    </div>
+  </aside>
   <section class="section container" aria-labelledby="featuredTitle">
     <div class="section-head"><div><span class="eyebrow">Comienza por aquí</span><h2 id="featuredTitle">Lo más destacado de La Movida</h2><p>Accesos esenciales para descubrir, estudiar, practicar y utilizar nuestras herramientas.</p></div><button type="button" class="link-more hub-tab" data-hub-tab="explorar" aria-controls="vista-explorar" aria-pressed="false">Ver catálogo completo <span data-icon="arrow"></span></button></div>
     <div class="product-grid" id="featuredGrid" aria-label="Herramientas destacadas">
