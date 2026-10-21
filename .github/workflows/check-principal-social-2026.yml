@@ -27,7 +27,7 @@ jobs:
           curl -fsSL --max-time 25 -A 'WhatsApp/2.26.21.10' -D /tmp/headers.txt "${IMG}" -o /tmp/og.jpg
           grep -Ei '^HTTP/|^content-type:|^content-length:' /tmp/headers.txt | tail -n 8
           file /tmp/og.jpg
-          file --mime-type /tmp/og.jpg | grep -q '^image/jpeg$'
+          file --mime-type /tmp/og.jpg | grep -Fq 'image/jpeg'
           file /tmp/og.jpg | grep -q '1200x630'
           test "$(wc -c </tmp/og.jpg)" -gt 250000
           test "$(wc -c </tmp/og.jpg)" -lt 350000
