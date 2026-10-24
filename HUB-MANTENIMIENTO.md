@@ -50,3 +50,13 @@ La barra inferior del móvil y el menú superior del escritorio son **pestañas 
 
 ### Pruebas específicas
 En un teléfono, tocar **Explorar** no debe abrir otra pestaña ni saltar al pie de página: debe mostrar la vista de catálogo con su buscador. **Aprender** muestra opciones de Estudia, Academia, Desarrolla SST y MovidaLab HO; **Comunidad** presenta Directorio, grupos y PARTICIPA; **Mi Movida** da acceso al perfil y a las plataformas personales. Al pulsar **Abrir Directorio** sí debe abrir `directorio.movidasst.com` en una pestaña nueva. La navegación Atrás/Adelante debe restaurar las vistas internas.
+
+
+## Instalación como app (24-oct-2026)
+
+El HUB principal funciona como PWA. El enlace `/site.webmanifest` declara iconos oficiales de 192 y 512 px y el service worker `/sw.js` únicamente interviene al navegar sin Internet: usa red normal cuando hay conexión y muestra `/offline.html` en su ausencia. **No** almacena búsquedas, catálogos, credenciales ni solicitudes a otras plataformas.
+
+- `pwa-install.js`: opción manual en la portada móvil y guía por navegador; Android Chromium puede mostrar el diálogo nativo cuando emite `beforeinstallprompt`; iPhone Safari requiere “Compartir > Añadir a pantalla de inicio”.
+- `pwa-install.css`: llamada a la acción integrada en la portada móvil, sin elementos flotantes ni superposiciones sobre la barra de navegación. No se muestra si la app ya está instalada. El aviso puede descartarse durante 30 días y recuperarse en el menú móvil.
+- `movida-pwa-icon-192.png`: icono PNG de 192 px con el sello original de La Movida. El PNG original de 512 px ya presente en la web sirve como icono de alta resolución.
+- Probar el diálogo Android en una navegación HTTPS con criterios de instalación satisfechos y la adición manual en iOS Safari; no prometer un diálogo automático porque lo controla el navegador.

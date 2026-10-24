@@ -1,14 +1,28 @@
 {
   "name": "La Movida de SST+ | HUB",
   "short_name": "Movida SST+",
-  "description": "HUB de la comunidad, Estudia, Academia, MovidaLab HO y aplicaciones de La Movida de SST+",
+  "description": "Comunidad, formación, biblioteca colaborativa, simuladores y aplicaciones para profesionales de SST",
+  "id": "/",
   "lang": "es-VE",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#00205b",
+  "prefer_related_applications": false,
   "icons": [
+    {
+      "src": "/movida-pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-oficial-movida-sst-plus.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/logo-movida-sst-plus.svg",
       "sizes": "any",

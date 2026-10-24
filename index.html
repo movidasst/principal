@@ -18,7 +18,11 @@
   <link rel="alternate" hreflang="es-419" href="https://www.movidasst.com/">
   <link rel="alternate" hreflang="x-default" href="https://www.movidasst.com/">
   <link rel="sitemap" type="application/xml" href="https://www.movidasst.com/sitemap.xml">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="manifest" href="/site.webmanifest?v=20261024pwa1">
+  <link rel="apple-touch-icon" sizes="512x512" href="/logo-oficial-movida-sst-plus.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Movida SST+">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="theme-color" content="#00205b">
 
   <meta property="og:site_name" content="La Movida de SST Plus">
@@ -168,6 +172,7 @@
 
   
   <link rel="stylesheet" href="/hub.css?v=20261018tabs3">
+  <link rel="stylesheet" href="/pwa-install.css?v=20261024pwa1">
 <style id="mentor-promo-style">
 .mentor-promo{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:22px auto 4px;padding:20px;background:linear-gradient(118deg,#001d50 0%,#00436b 53%,#007b85 100%);border:1px solid rgba(62,211,208,.45);border-radius:25px;box-shadow:0 15px 33px rgba(0,32,91,.17);color:#fff}
 .mentor-promo::before{content:"";position:absolute;right:-80px;top:-105px;width:290px;height:290px;border:1px solid rgba(255,255,255,.18);border-radius:50%;z-index:-1;pointer-events:none}
@@ -192,12 +197,20 @@
     <a class="btn btn-primary header-join" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Ser integrante <span data-icon="arrow"></span></a>
     <button id="menuTrigger" class="menu-trigger" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileMenu"><span data-icon="menu"></span></button>
   </div>
-  <nav id="mobileMenu" class="mobile-top-menu container" aria-label="Menú de secciones" hidden><button type="button" class="hub-tab active" data-hub-tab="inicio" aria-pressed="true" aria-controls="vista-inicio" aria-label="Mostrar la sección Inicio"><span>Inicio</span></button><button type="button" class="hub-tab" data-hub-tab="explorar" aria-pressed="false" aria-controls="vista-explorar" aria-label="Mostrar la sección Explorar herramientas"><span>Explorar herramientas</span></button><button type="button" class="hub-tab" data-hub-tab="aprender" aria-pressed="false" aria-controls="vista-aprender" aria-label="Mostrar la sección Aprender y practicar"><span>Aprender y practicar</span></button><button type="button" class="hub-tab" data-hub-tab="comunidad" aria-pressed="false" aria-controls="vista-comunidad" aria-label="Mostrar la sección Comunidad"><span>Comunidad</span></button><button type="button" class="hub-tab" data-hub-tab="mi-movida" aria-pressed="false" aria-controls="vista-mi-movida" aria-label="Mostrar la sección Mi Movida"><span>Mi Movida</span></button><button type="button" class="hub-tab" data-hub-tab="empresas" aria-pressed="false" aria-controls="vista-empresas" aria-label="Mostrar la sección Empresas"><span>Empresas</span></button><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registrarme <span data-icon="external"></span></a></nav>
+  <nav id="mobileMenu" class="mobile-top-menu container" aria-label="Menú de secciones" hidden><button type="button" class="hub-tab active" data-hub-tab="inicio" aria-pressed="true" aria-controls="vista-inicio" aria-label="Mostrar la sección Inicio"><span>Inicio</span></button><button type="button" class="hub-tab" data-hub-tab="explorar" aria-pressed="false" aria-controls="vista-explorar" aria-label="Mostrar la sección Explorar herramientas"><span>Explorar herramientas</span></button><button type="button" class="hub-tab" data-hub-tab="aprender" aria-pressed="false" aria-controls="vista-aprender" aria-label="Mostrar la sección Aprender y practicar"><span>Aprender y practicar</span></button><button type="button" class="hub-tab" data-hub-tab="comunidad" aria-pressed="false" aria-controls="vista-comunidad" aria-label="Mostrar la sección Comunidad"><span>Comunidad</span></button><button type="button" class="hub-tab" data-hub-tab="mi-movida" aria-pressed="false" aria-controls="vista-mi-movida" aria-label="Mostrar la sección Mi Movida"><span>Mi Movida</span></button><button type="button" class="hub-tab" data-hub-tab="empresas" aria-pressed="false" aria-controls="vista-empresas" aria-label="Mostrar la sección Empresas"><span>Empresas</span></button><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registrarme <span data-icon="external"></span></a><button type="button" id="pwaInstallMenu" hidden>Instalar La Movida en mi celular</button></nav>
 </header>
 <main id="contenido">
 <div id="vista-inicio" class="hub-view is-active" data-hub-view="inicio" aria-label="Inicio del HUB">
   <section class="hero-wrap" aria-labelledby="heroTitle"><div class="container hero">
-    <div><span class="eyebrow">Tu espacio de SST, en un solo lugar</span>
+    <div>
+      <div class="pwa-install-entry" id="pwaInstallEntry" hidden>
+        <img src="/logo-oficial-movida-sst-plus.png" alt="" width="43" height="43" loading="eager">
+        <div class="pwa-install-copy"><strong>La Movida de SST+ en tu celular</strong><span>Ábrela como una app, desde tu pantalla de inicio.</span></div>
+        <button class="pwa-install-action" id="pwaInstallButton" type="button">Instalar</button>
+        <button class="pwa-install-close" id="pwaInstallDismiss" type="button" aria-label="Cerrar invitación de instalación">×</button>
+        <p id="pwaInstallHelp" role="status" aria-live="polite" hidden></p>
+      </div>
+      <span class="eyebrow">Tu espacio de SST, en un solo lugar</span>
       <h1 id="heroTitle">Un ecosistema para <em>conectar, aprender y prevenir.</em></h1>
       <p class="hero-description">La Movida de SST+ reúne profesionales, estudios, simuladores de higiene ocupacional y aplicaciones para llevar el conocimiento técnico a la práctica. Explora lo que necesitas, desde tu teléfono o computadora.</p>
       <div class="hero-buttons"><button type="button" class="btn btn-accent hub-tab" data-hub-tab="explorar" aria-controls="vista-explorar" aria-pressed="false"><span data-icon="search"></span> Encontrar una herramienta</button><a class="btn btn-light" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Únete gratis <span data-icon="arrow"></span></a></div>
@@ -330,4 +343,5 @@
 </section></div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <script defer src="/hub.js?v=20261018tabs3"></script>
+<script defer src="/pwa-install.js?v=20261024pwa1"></script>
 </body></html>
