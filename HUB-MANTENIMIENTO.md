@@ -60,3 +60,11 @@ El HUB principal funciona como PWA. El enlace `/site.webmanifest` declara iconos
 - `pwa-install.css`: llamada a la acción integrada en la portada móvil, sin elementos flotantes ni superposiciones sobre la barra de navegación. No se muestra si la app ya está instalada. El aviso puede descartarse durante 30 días y recuperarse en el menú móvil.
 - `movida-pwa-icon-192.png`: icono PNG de 192 px con el sello original de La Movida. El PNG original de 512 px ya presente en la web sirve como icono de alta resolución.
 - Probar el diálogo Android en una navegación HTTPS con criterios de instalación satisfechos y la adición manual en iOS Safari; no prometer un diálogo automático porque lo controla el navegador.
+
+## Identidad oficial de la aplicación instalable (24-oct-2026)
+
+- Los iconos PWA se obtienen **exclusivamente** del logo PNG maestro `logo-oficial-movida-sst-plus.png` (blob GitHub `86d85df7fa4eda6054f898dcc81289a449af096c`, 512×512 px).
+- `pwa/icon-192.png` se generó redimensionando los píxeles de ese PNG maestro, preservando transparencia y sin reinterpretar ni redibujar el logo.
+- `pwa/icon-512.png` contiene exactamente el PNG maestro de 512×512.
+- No volver a usar `logo-movida-sst-plus.svg` ni miniaturas antiguas para iconos PWA, pantalla de instalación, favicon o Apple Touch Icon.
+- Al sustituir iconos instalables, versionar el manifiesto y sus rutas; las apps ya instaladas pueden mantener la imagen anterior hasta reinstalarse.
