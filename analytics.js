@@ -8,7 +8,7 @@
   window.__movidaAnalyticsInit = true;
   var host = window.location.hostname.toLowerCase();
   if (host !== "movidasst.com" && !host.endsWith(".movidasst.com")) return;
-  var GA4 = "G-D0YXTL06LN";
+  var GA4 = "G-WQMF05XMJL";
   var cookieName = "movida_analytics_v1";
   var expires = 60 * 60 * 24 * 180;
   var loaded = false;
