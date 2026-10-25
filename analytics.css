@@ -1,0 +1,24 @@
+/* Identidad visual mínima del aviso de medición · La Movida de SST+.
+   Hoja independiente para funcionar con CSP estrictas (sin unsafe-inline). */
+#movida-analytics-consent{
+  position:fixed!important;z-index:2147483000!important;
+  bottom:calc(82px + env(safe-area-inset-bottom, 0px))!important;
+  left:12px!important;right:12px!important;margin:auto!important;
+  max-width:650px!important;padding:16px!important;
+  border-radius:16px!important;background:#fff!important;color:#00205b!important;
+  border:2px solid #007b85!important;box-shadow:0 10px 42px rgba(0,32,91,.22)!important;
+  font:500 14px/1.5 system-ui,Arial,sans-serif!important;
+  text-align:left!important;
+}
+#movida-analytics-consent *{box-sizing:border-box!important}
+#movida-analytics-consent .movida-analytics-title{display:block!important;font-size:16px!important;font-weight:800!important;margin:0 0 6px!important;color:#00205b!important}
+#movida-analytics-consent .movida-analytics-text{margin:0 0 10px!important;color:#475569!important;font-size:13px!important;line-height:1.45!important}
+#movida-analytics-consent .movida-analytics-link{color:#007b85!important;text-decoration:underline!important}
+#movida-analytics-consent .movida-analytics-actions{display:flex!important;gap:10px!important;flex-wrap:wrap!important}
+#movida-analytics-consent [data-movida-choice]{padding:11px 16px!important;border:1px solid #9eafc1!important;border-radius:10px!important;background:#fff!important;color:#00205b!important;font-weight:750!important;cursor:pointer!important;flex:1 1 130px!important;min-height:44px!important;line-height:1.2!important;max-width:none!important}
+#movida-analytics-consent [data-movida-choice="granted"]{border-color:#007b85!important;background:#007b85!important;color:#fff!important}
+#movida-analytics-consent [data-movida-choice]:focus-visible,#movida-analytics-pref button:focus-visible{outline:3px solid #ffb600!important;outline-offset:3px!important}
+#movida-analytics-pref{text-align:center!important;margin:12px auto 18px!important;padding:10px 12px!important;font:500 12px system-ui,Arial,sans-serif!important;position:relative!important;z-index:1!important}
+#movida-analytics-pref button{border:0!important;background:transparent!important;color:#007b85!important;text-decoration:underline!important;cursor:pointer!important;font:inherit!important;padding:8px!important;min-height:36px!important}
+@media(min-width:750px){#movida-analytics-consent{bottom:18px!important}}
+@media(max-width:450px){#movida-analytics-consent{padding:12px!important;bottom:calc(74px + env(safe-area-inset-bottom, 0px))!important}#movida-analytics-consent .movida-analytics-text{font-size:12px!important}}
