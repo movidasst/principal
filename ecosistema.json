@@ -53,18 +53,6 @@
       "icon": "messages"
     },
     {
-      "id": "grupos",
-      "title": "Grupos y canales",
-      "category": "comunidad",
-      "group": "Participación",
-      "description": "Encuentra los espacios de conversación, intercambio y estudio colaborativo.",
-      "url": "https://grupos.movidasst.com/",
-      "keywords": "whatsapp telegram canal comunidad",
-      "status": "disponible",
-      "featured": 0,
-      "icon": "messages"
-    },
-    {
       "id": "convivencia",
       "title": "Normas de convivencia",
       "category": "comunidad",
