@@ -14,6 +14,13 @@
   var loaded = false;
   var controls = null;
   var privacyURL = "https://registro.movidasst.com/privacidad.html";
+  function loadCss(){
+    if (document.querySelector('link[data-movida-analytics-css]')) return;
+    var css=document.createElement("link");
+    css.rel="stylesheet";css.setAttribute("data-movida-analytics-css","1");
+    css.href="https://www.movidasst.com/analytics.css?v=20261025";
+    document.head.appendChild(css);
+  }
   function preference(){
     var m = document.cookie.match(/(?:^|;\s*)movida_analytics_v1=([^;]*)/);
     return m ? m[1] : "";
@@ -82,12 +89,11 @@
     el.id="movida-analytics-consent";
     el.setAttribute("role","region");
     el.setAttribute("aria-label","Preferencias de estadísticas");
-    el.style.cssText="position:fixed;z-index:2147483000;bottom:calc(82px + env(safe-area-inset-bottom, 0px));left:12px;right:12px;margin:auto;max-width:650px;padding:16px;border-radius:16px;background:#fff;color:#00205b;border:2px solid #007b85;box-shadow:0 10px 42px rgba(0,32,91,.22);font:500 14px/1.5 system-ui,Arial,sans-serif;";
-    el.innerHTML='<strong style="display:block;font-size:16px;margin-bottom:6px">Estadísticas de La Movida SST+</strong>'+
-      '<p style="margin:0 0 10px;color:#475569">¿Nos permites medir visitas de forma agregada para mejorar las páginas? Solo activaremos Google Analytics con tu autorización. No enviaremos nombres, correos ni parámetros de las URL. <a style="color:#007b85;text-decoration:underline" target="_blank" rel="noopener noreferrer" href="'+privacyURL+'">Privacidad</a>.</p>'+
-      '<div style="display:flex;gap:10px;flex-wrap:wrap">'+
-      '<button type="button" data-movida-choice="denied" style="padding:11px 16px;border:1px solid #9eafc1;border-radius:10px;background:#fff;color:#00205b;font-weight:750;cursor:pointer;flex:1;min-width:130px">Rechazar</button>'+
-      '<button type="button" data-movida-choice="granted" style="padding:11px 16px;border:1px solid #007b85;border-radius:10px;background:#007b85;color:white;font-weight:750;cursor:pointer;flex:1;min-width:130px">Permitir estadísticas</button></div>';
+    el.innerHTML='<strong class="movida-analytics-title">Estadísticas de La Movida SST+</strong>'+
+      '<p class="movida-analytics-text">¿Nos permites medir visitas de forma agregada para mejorar las páginas? Solo activaremos Google Analytics con tu autorización. No enviaremos nombres, correos ni parámetros de las URL. <a class="movida-analytics-link" target="_blank" rel="noopener noreferrer" href="'+privacyURL+'">Privacidad</a>.</p>'+
+      '<div class="movida-analytics-actions">'+
+      '<button type="button" data-movida-choice="denied">Rechazar</button>'+
+      '<button type="button" data-movida-choice="granted">Permitir estadísticas</button></div>';
     el.addEventListener("click",function(e){
       var btn=e.target.closest("[data-movida-choice]");
       if(btn)setChoice(btn.getAttribute("data-movida-choice"));
@@ -96,16 +102,16 @@
     controls=el;
   }
   function init(){
+    loadCss();
     var pref=preference();
     if(pref==="granted") enable();
     else if(pref!=="denied")openChoices();
     /* Gestión permanente del consentimiento, sin un botón flotante superpuesto. */
     var footer = document.createElement("div");
-    footer.style.cssText="text-align:center;margin:12px auto 18px;padding:10px 12px;font:500 12px system-ui,Arial,sans-serif;";
+    footer.id="movida-analytics-pref";
     var btn=document.createElement("button");
     btn.type="button";
     btn.textContent="Preferencias de estadísticas";
-    btn.style.cssText="border:0;background:none;color:#007b85;text-decoration:underline;cursor:pointer;font:inherit;padding:8px;min-height:36px;";
     btn.addEventListener("click",openChoices);
     footer.appendChild(btn);
     document.body.appendChild(footer);
