@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#00205b">
+  <meta name="description" content="Comprobación de carga de Google Analytics 4 para La Movida de SST+.">
+  <title>Diagnóstico GA4 | La Movida SST+</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Arial,sans-serif;color:#00205b;background:#f8fafc}
+    *{box-sizing:border-box}
+    body{margin:0;padding:0 0 90px}
+    header{background:#00205b;color:white;padding:24px max(16px,calc((100% - 780px)/2))}
+    header small{color:#a2dcd9}
+    h1{font-size:clamp(1.4rem,4vw,2rem);margin:10px 0 4px}
+    main{max-width:790px;margin:24px auto;padding:0 15px}
+    .card{background:white;border:1px solid #d5e2e9;border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:0 8px 26px rgba(0,32,91,.04)}
+    h2{font-size:1.13rem;margin:0 0 12px}
+    p{line-height:1.55;color:#465b70}
+    .status{border-radius:12px;background:#f0f6f8;padding:14px 16px;margin:13px 0;font-weight:700}
+    .status.ok{background:#e9f6e9;color:#2c7135}
+    .status.warn{background:#fff4d8;color:#795200}
+    .status.error{background:#f9e7e9;color:#872632}
+    dl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;border-top:1px solid #edf0f3;padding-top:12px;margin:0}
+    dt{color:#53677c}dd{margin:0;font-weight:750;overflow-wrap:anywhere}
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+    button,.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border-radius:12px;border:1px solid #007b85;background:#007b85;padding:11px 15px;color:white;text-decoration:none;font-size:.9rem;font-weight:750;cursor:pointer}
+    button.secondary,.btn.secondary{background:white;color:#00205b;border-color:#adc3cf}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    button:focus-visible,a:focus-visible{outline:3px solid #ffb600;outline-offset:3px}
+    ol{padding-left:22px;color:#465b70;line-height:1.7}
+    .fine{font-size:.81rem;color:#6b7f8d}
+    a{color:#007b85}
+    .back{display:inline-block;color:white;text-decoration:underline;margin-top:10px}
+  </style>
+  <script defer src="/analytics.js?v=20261025-diagnostico2"></script>
+</head>
+<body>
+  <header>
+    <small>La Movida de SST+ · De la Reacción a la Prevención</small>
+    <h1>Comprobar Google Analytics 4</h1>
+    <div>Diagnóstico de <strong>www.movidasst.com</strong></div>
+    <a class="back" href="/">Volver a la página principal</a>
+  </header>
+  <main>
+    <section class="card">
+      <h2>1. Estado de la etiqueta</h2>
+      <p>Este diagnóstico verifica la autorización del visitante y si el navegador logró cargar la etiqueta. No demuestra por sí solo que los informes ya hayan procesado el evento.</p>
+      <div id="state" class="status" aria-live="polite">Comprobando configuración…</div>
+      <dl>
+        <dt>ID de GA4</dt><dd>G-D0YXTL06LN</dd>
+        <dt>Dominio actual</dt><dd id="host">—</dd>
+        <dt>Consentimiento</dt><dd id="consent">—</dd>
+        <dt>Solicitud de etiqueta</dt><dd id="requested">—</dd>
+        <dt>Descarga de etiqueta</dt><dd id="loaded">—</dd>
+      </dl>
+      <div class="actions">
+        <button type="button" id="preferences" class="secondary">Configurar consentimiento</button>
+        <button type="button" id="recheck" class="secondary">Volver a comprobar</button>
+      </div>
+    </section>
+    <section class="card">
+      <h2>2. Enviar un evento de prueba</h2>
+      <p>Después de autorizar las estadísticas y cargar la etiqueta, envía el evento <strong>movida_ga4_prueba</strong>. No incluye datos personales ni el contenido de formularios.</p>
+      <div class="actions"><button type="button" id="test" disabled>Enviar evento de prueba</button></div>
+      <div id="test-result" class="status" role="status" aria-live="polite">Necesitas aceptar las estadísticas y cargar la etiqueta.</div>
+      <p class="fine">El botón agrega el evento a la etiqueta de GA4. La confirmación de recepción se realiza en Google Analytics, en «DebugView» o «En tiempo real».</p>
+    </section>
+    <section class="card">
+      <h2>3. Confirmar recepción en Google Analytics</h2>
+      <ol>
+        <li>Abre Analytics con la propiedad <strong>Movidasst (401557991)</strong>.</li>
+        <li>En <strong>Administrar → Visualización de datos → DebugView</strong>, busca <strong>movida_ga4_prueba</strong>.</li>
+        <li>Como alternativa, revisa <strong>Informes → En tiempo real</strong>.</li>
+        <li>Si se ve el evento, la medición funciona desde <strong>www.movidasst.com</strong>. Los informes habituales pueden procesar la información posteriormente.</li>
+      </ol>
+      <a class="btn" target="_blank" rel="noopener noreferrer" href="https://analytics.google.com/analytics/web/">Abrir Google Analytics</a>
+      <p class="fine">Si está bloqueado un script por el navegador, por una extensión o por la red, prueba con otro navegador sin bloqueadores. No es necesario desactivar ninguna protección para continuar navegando por la web.</p>
+    </section>
+  </main>
+  <script>
+    (function () {
+      "use strict";
+      var state=document.getElementById("state"),test=document.getElementById("test");
+      var lastStatus;
+      function render(){
+        var api=window.MovidaGA4;
+        if(!api||typeof api.status!=="function"){
+          state.className="status error";state.textContent="El archivo de configuración GA4 no está disponible o no se ha ejecutado.";return;
+        }
+        var v=api.status();lastStatus=v;
+        document.getElementById("host").textContent=v.hostname;
+        document.getElementById("consent").textContent=v.consent==="granted"?"Permitido":v.consent==="denied"?"Rechazado":"Sin elegir";
+        document.getElementById("requested").textContent=v.tagRequested?"Sí":"No";
+        document.getElementById("loaded").textContent=v.tagLoaded?"Cargada":v.tagError?"Error":"Aún no";
+        var ready=v.consent==="granted"&&v.tagLoaded;
+        test.disabled=!ready;
+        if(ready){state.className="status ok";state.textContent="Consentimiento concedido y etiqueta de Google cargada. Ya puedes enviar el evento de prueba.";}
+        else if(v.tagError){state.className="status error";state.textContent="La descarga de la etiqueta falló. Revisa la conexión o los bloqueadores.";}
+        else if(v.preexistingTag){state.className="status warn";state.textContent="Ya existe otra etiqueta en esta página. Debe verificarse su configuración.";}
+        else if(v.consent==="denied"){state.className="status warn";state.textContent="Las estadísticas están desactivadas por decisión del visitante.";}
+        else if(v.consent!=="granted"){state.className="status warn";state.textContent="Pendiente de consentimiento. Pulsa «Configurar consentimiento» y selecciona «Permitir estadísticas».";}
+        else {state.className="status warn";state.textContent="Consentimiento concedido. Esperando que cargue la etiqueta de Google…";}
+      }
+      document.getElementById("preferences").addEventListener("click",function(){
+        if(window.MovidaGA4)window.MovidaGA4.openPreferences();
+        else alert("No se encontró el código de estadísticas.");
+      });
+      document.getElementById("recheck").addEventListener("click",render);
+      test.addEventListener("click",function(){
+        render();
+        var output=document.getElementById("test-result");
+        if(!lastStatus||lastStatus.consent!=="granted"||!lastStatus.tagLoaded||typeof window.gtag!=="function"){
+          output.className="status warn";output.textContent="No se puede realizar la prueba sin consentimiento y etiqueta cargada.";return;
+        }
+        window.gtag("event","movida_ga4_prueba",{
+          debug_mode:true,
+          page_location:location.origin+"/",
+          page_title:"La Movida SST+ · Comprobación GA4"
+        });
+        output.className="status ok";
+        output.textContent="Evento enviado a gtag. Abre DebugView en GA4 para confirmar su recepción; el envío a la cola por sí solo no garantiza que Google lo haya recibido.";
+      });
+      setInterval(render,1200);
+      render();
+    })();
+  </script>
+</body>
+</html>
