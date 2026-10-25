@@ -53,20 +53,25 @@
     window.gtag("consent","update",{
       analytics_storage:"granted",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"
     });
+    var ref = "";
+    try { if (document.referrer) ref = new URL(document.referrer).origin + "/"; }catch(e){}
+    /* Definir URL sin querystrings también en la configuración global. */
+    var safeLocation = window.location.origin + "/";
+    var safeTitle = "La Movida SST+ · " + host;
     window.gtag("js",new Date());
     window.gtag("config",GA4,{
       send_page_view:false,
       cookie_domain:"movidasst.com",
       allow_google_signals:false,
-      allow_ad_personalization_signals:false
-    });
-    var ref = "";
-    try { if (document.referrer) ref = new URL(document.referrer).origin + "/"; }catch(e){}
-    /* Evitar exposición de consultas, números de documento o datos de perfil. */
-    window.gtag("event","page_view",{
-      page_location:window.location.origin + "/",
+      allow_ad_personalization_signals:false,
+      page_location:safeLocation,
       page_referrer:ref,
-      page_title:"La Movida SST+ · " + host
+      page_title:safeTitle
+    });
+    window.gtag("event","page_view",{
+      page_location:safeLocation,
+      page_referrer:ref,
+      page_title:safeTitle
     });
     var script = document.createElement("script");
     script.async = true;
@@ -90,7 +95,7 @@
     el.setAttribute("role","region");
     el.setAttribute("aria-label","Preferencias de estadísticas");
     el.innerHTML='<strong class="movida-analytics-title">Estadísticas de La Movida SST+</strong>'+
-      '<p class="movida-analytics-text">¿Nos permites medir visitas de forma agregada para mejorar las páginas? Solo activaremos Google Analytics con tu autorización. No enviaremos nombres, correos ni parámetros de las URL. <a class="movida-analytics-link" target="_blank" rel="noopener noreferrer" href="'+privacyURL+'">Privacidad</a>.</p>'+
+      '<p class="movida-analytics-text">¿Nos permites medir visitas de forma agregada para mejorar las páginas? Solo activaremos Google Analytics con tu autorización. No incluimos nombres, correos ni parámetros de la URL en las visitas que registramos. <a class="movida-analytics-link" target="_blank" rel="noopener noreferrer" href="'+privacyURL+'">Privacidad</a>.</p>'+
       '<div class="movida-analytics-actions">'+
       '<button type="button" data-movida-choice="denied">Rechazar</button>'+
       '<button type="button" data-movida-choice="granted">Permitir estadísticas</button></div>';
