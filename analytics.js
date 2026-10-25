@@ -12,6 +12,9 @@
   var cookieName = "movida_analytics_v1";
   var expires = 60 * 60 * 24 * 180;
   var loaded = false;
+  var tagLoaded = false;
+  var tagError = false;
+  var tagAlreadyPresent = false;
   var controls = null;
   var privacyURL = "https://registro.movidasst.com/privacidad.html";
   function loadCss(){
@@ -45,7 +48,7 @@
   function enable(){
     if (loaded) return;
     /* Evita una segunda etiqueta en los sitios con integración propia. */
-    if (document.querySelector('script[src*="googletagmanager.com/gtag/js"], script[src*="googletagmanager.com/gtm.js"]')) return;
+    if (document.querySelector('script[src*="googletagmanager.com/gtag/js"], script[src*="googletagmanager.com/gtm.js"]')) { tagAlreadyPresent = true; return; }
     loaded = true;
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || gtag;
@@ -76,7 +79,8 @@
     var script = document.createElement("script");
     script.async = true;
     script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA4;
-    script.onerror = function(){ console.warn("La Movida SST+: no pudo cargarse Google Analytics."); };
+    script.onload = function(){ tagLoaded = true; tagError = false; };
+    script.onerror = function(){ tagError = true; console.warn("La Movida SST+: no pudo cargarse Google Analytics."); };
     document.head.appendChild(script);
   }
   function setChoice(value){
@@ -121,6 +125,21 @@
     footer.appendChild(btn);
     document.body.appendChild(footer);
   }
+  /* Diagnóstico local. No envía datos por sí mismo y no cambia el consentimiento. */
+  window.MovidaGA4 = Object.freeze({
+    status: function(){
+      return {
+        hostname: host,
+        measurementId: GA4,
+        consent: preference() === "granted" ? "granted" : preference() === "denied" ? "denied" : "pending",
+        tagRequested: loaded,
+        tagLoaded: tagLoaded,
+        tagError: tagError,
+        preexistingTag: tagAlreadyPresent
+      };
+    },
+    openPreferences: openChoices
+  });
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init,{once:true});
   else init();
 })();
