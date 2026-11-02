@@ -9,7 +9,9 @@ function respond(data:unknown,status=200,origin:string|null=null){
 const READ_ROUTES:Record<string,string>={
  '/api/me/profile':'mi_movida_profile',
  '/api/me/badges':'mi_movida_badges',
- '/api/me/certificates':'mi_movida_certificates'
+ '/api/me/certificates':'mi_movida_certificates',
+ '/api/me/xp':'mi_movida_xp',
+ '/api/me/activity':'mi_movida_activity'
 };
 export async function handle(req:Request,env:(name:string)=>string|undefined=(name)=>Deno.env.get(name)):Promise<Response>{
  const origin=req.headers.get('origin');
@@ -33,7 +35,14 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   if(!user.ok)return respond({error:{code:'unauthorized'}},401,origin);
   const session=await user.json();
   if(!session?.id)return respond({error:{code:'unauthorized'}},401,origin);
-  const result=await fetch(new URL('/rest/v1/rpc/'+rpc,supabase),{method:'POST',headers:{'apikey':publishable,'authorization':bearer,'content-type':'application/json'},body:'{}',redirect:'error'});
+  const params=new URL(req.url).searchParams;
+  const cursor=params.get('cursor');let paging:Record<string,unknown>={};
+  if(rpc==='mi_movida_xp'||rpc==='mi_movida_activity'){
+   if(cursor){try{const decoded=JSON.parse(atob(cursor.replace(/-/g,'+').replace(/_/g,'/')));if(typeof decoded.fecha!=='string'||!Number.isFinite(Date.parse(decoded.fecha))||!/^[a-f0-9-]{36}$/i.test(decoded.id))return respond({error:{code:'invalid_cursor'}},422,origin);paging={p_before:decoded.fecha,p_before_id:decoded.id};}catch{return respond({error:{code:'invalid_cursor'}},422,origin);}}
+   paging.p_limit=30;
+   if(rpc==='mi_movida_activity')paging.p_source=params.get('source')||null;
+  }
+  const result=await fetch(new URL('/rest/v1/rpc/'+rpc,supabase),{method:'POST',headers:{'apikey':publishable,'authorization':bearer,'content-type':'application/json'},body:JSON.stringify(paging),redirect:'error'});
   if(!result.ok)return respond({error:{code:result.status===403?'forbidden':'source_unavailable'}},result.status===403?403:503,origin);
   const data=await result.json();
   return respond({data:rpc==='mi_movida_profile'?{...data,version:String(data.profile_version),recovery_channel:{verified:!!data.recovery_channel_verified}}:data},200,origin);
