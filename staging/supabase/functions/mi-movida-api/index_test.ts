@@ -38,3 +38,11 @@ Deno.test('Renovación de sesión bloqueada sin activar login',async()=>{
  const res=await handle(new Request('https://test.supabase.co/functions/v1/mi-movida-api/api/session/refresh',{method:'POST',headers:{Origin:'https://www.movidasst.com','Content-Type':'application/json'},body:'{"refresh_token":"test-placeholder-token"}'}),()=>undefined);
  if(res.status!==503)throw new Error('Refresh must remain disabled');
 });
+
+Deno.test('Fotografías Edge cerradas sin habilitación explícita',async()=>{
+ for(const method of ['GET','POST']){
+  const req=new Request('https://test.supabase.co/functions/v1/mi-movida-api/api/me/photo',{method,headers:{Origin:'https://www.movidasst.com'},...(method==='POST'?{body:new Uint8Array(32)}:{})});
+  const res=await handle(req,()=>undefined);
+  if(res.status!==503)throw new Error('Photo endpoints must remain disabled');
+ }
+});
