@@ -1,0 +1,37 @@
+name: Mi Movida · pruebas sintéticas
+
+on:
+  pull_request:
+    paths:
+      - 'application/**'
+      - 'backend/**'
+      - 'staging/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/mi-movida-tests.yml'
+  push:
+    branches:
+      - codex/mi-movida-prototipo
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Instalar dependencias reproducibles
+        run: npm ci --ignore-scripts
+      - name: Validar sintaxis de componentes críticos
+        run: |
+          node --check application/public/app.js
+          node --check application/server/app.mjs
+          node --check application/server/security.mjs
+      - name: Pruebas sintéticas de autenticación, SQL, XP, Moodle y permisos
+        run: npm test
