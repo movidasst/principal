@@ -62,4 +62,4 @@ jobs:
         with:
           deno-version: v2.x
       - name: Testear gateway Edge sin servicios ni secretos
-        run: deno test --allow-none staging/supabase/functions/mi-movida-api/index_test.ts
+        run: deno test staging/supabase/functions/mi-movida-api/index_test.ts
