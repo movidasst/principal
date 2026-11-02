@@ -1,0 +1,12 @@
+FROM node:24-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
+COPY index.html hub.css ./
+COPY application/public ./application/public
+COPY application/server ./application/server
+COPY logo-oficial-movida-sst-plus.png ./
+USER node
+EXPOSE 4174
+CMD ["node","application/server/app.mjs"]
