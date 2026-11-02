@@ -1,0 +1,196 @@
+/* La Movida SST+ · identidad del HUB 2026.
+ * Capa de presentación: conserva navegación, catálogo, PWA y servicios. */
+:root{
+  --navy:#0E5560; --dark:#123F49; --teal:#007B85; --aqua:#4EA8A9;
+  --ink:#1B3E48; --muted:#58747E; --bg:#F7FAFA; --line:#DAE9E8;
+  --surface:#FFFFFF; --shadow:0 14px 42px rgba(17,84,89,.09);
+}
+body,button,input,textarea,select{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+h1,h2,h3,h4,.display,.brand strong,.hero-tile b,
+.product-card h3,.directory-spotlight-copy h3,
+.desktop-nav .hub-tab,.desktop-nav .hub-app-link,
+.mentor-promo h2,.pwa-install-copy strong,.pwa-install-entry .pwa-install-action{
+  font-family:'Inter',system-ui,sans-serif;
+}
+h1,h2,h3,h4{letter-spacing:-.035em;}
+html{scroll-padding-top:95px;}
+body{background:#F7FBFA;}
+::selection{background:#D7F0ED;color:#104F57;}
+:focus-visible{outline:3px solid #007B85;outline-offset:3px;}
+.top-stripe{height:4px;background:linear-gradient(90deg,#007B85,#6CBEB7 45%,#FFB600);}
+.site-header{
+  background:rgba(255,255,255,.975);
+  border-bottom:1px solid #DCEBE9;
+  box-shadow:0 5px 24px rgba(10,73,77,.045);
+  backdrop-filter:blur(13px);
+}
+.header-inner{min-height:87px;gap:16px;}
+.brand-home{display:flex;align-items:center;gap:10px;flex:0 1 auto;min-width:0;}
+.brand-surface{
+  display:flex;align-items:center;justify-content:flex-start;
+  min-width:0;flex:none;
+  width:clamp(155px,17vw,224px);min-height:61px;
+  padding:7px 11px;background:linear-gradient(125deg,#fff,#F9FEFD);
+  border:1px solid #E3F0EE;border-radius:15px;
+  box-shadow:0 5px 17px rgba(20,98,102,.07);
+  transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease;
+}
+.brand-surface img{
+  display:block;width:100%;height:auto;max-height:65px;
+  object-fit:contain;object-position:left center;
+  border-radius:0;background:transparent;
+}
+.brand-home:hover .brand-surface{
+  box-shadow:0 10px 24px rgba(0,123,133,.12);
+  border-color:#BDDFDB;transform:translateY(-1px);
+}
+.brand-caption{min-width:0;display:block;}
+.brand-caption small{
+  display:block;color:#307781;font-size:.65rem;
+  font-weight:700;letter-spacing:.02em;text-transform:none;
+  line-height:1.35;max-width:115px;
+}
+.desktop-nav{gap:3px;}
+.desktop-nav .hub-tab,.desktop-nav .hub-app-link{
+  font-size:.82rem;font-weight:650;
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center;
+  gap:7px;padding:10px 12px;border-radius:11px;
+  color:#43666E;text-decoration:none;
+  transition:background .2s ease,color .2s ease;
+}
+.desktop-nav .hub-tab:hover,.desktop-nav .hub-app-link:hover,
+.desktop-nav .hub-tab.active{color:#006F79;background:#E8F6F4;}
+.desktop-nav .hub-app-link{
+  background:#E6F5F3;border:1px solid #CCE8E5;
+  color:#006D75;font-weight:750;
+}
+.desktop-nav .hub-app-link svg{width:15px;height:15px;}
+.btn-primary{background:#007B85;border-color:#007B85;color:#fff;box-shadow:0 7px 20px rgba(0,123,133,.16);}
+.btn-primary:hover{background:#07666F;border-color:#07666F;}
+.btn-light{color:#0B5861;border-color:#D8EAE7;}
+.btn-accent{background:#FFCB55;color:#163E44;}
+.menu-trigger{background:#E8F5F3;color:#006F79;}
+/* Portada clara, turquesa pastel, sin un gran bloque azul oscuro. */
+.hero-wrap{
+  background:
+    radial-gradient(ellipse at 85% 13%,rgba(91,189,180,.19),transparent 45%),
+    radial-gradient(ellipse at 6% 90%,rgba(0,123,133,.075),transparent 48%),
+    linear-gradient(145deg,#F5FCFA 0%,#EAF8F6 53%,#F9FCFB 100%);
+  color:#153E48;
+  border-bottom:1px solid #D7EEEA;
+}
+.hero-wrap:before{
+  border-color:rgba(0,123,133,.10);
+  box-shadow:0 0 0 65px rgba(0,123,133,.028),0 0 0 135px rgba(0,123,133,.018);
+}
+.hero .eyebrow{color:#08757D;}
+.hero h1{color:#103F49;letter-spacing:-.048em;line-height:1.08;}
+.hero h1 em{color:#007B85;}
+.hero-description{color:#516E76;line-height:1.75;}
+.hero-points{color:#3F6F73;font-weight:650;}
+.hero-points svg{color:#007B85;}
+.hero-tile{
+  background:rgba(255,255,255,.87);
+  border:1px solid rgba(157,213,206,.7);
+  color:#164C55;
+  box-shadow:0 14px 34px rgba(32,110,109,.075);
+  backdrop-filter:blur(9px);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.hero-tile .bigicon{color:#007B85;background:#E2F5F0;}
+.hero-tile small{color:#587881;}
+.hero-tile b{color:#174D55;font-weight:750;}
+.hero-tile:hover{border-color:#73C3B9;box-shadow:0 18px 42px rgba(27,111,112,.14);}
+.hero-tile:nth-child(1):hover,.hero-tile:nth-child(3):hover{transform:translateY(-5px);}
+.hero-tile:nth-child(2):hover,.hero-tile:nth-child(4):hover{transform:translateY(23px);}
+.hero-stamp{background:#007B85;color:#fff;box-shadow:0 12px 30px rgba(0,123,133,.24);}
+.quick-shell{border-color:#DDECE9;box-shadow:0 14px 44px rgba(19,85,84,.075);}
+.quick-action{border-radius:14px;}
+.quick-action:hover{background:#EDF8F6;}
+.quick-action strong{color:#185761;}
+.quick-icon,.product-card .product-icon{background:#E5F4F1;color:#007B85;}
+.product-card,.panel,.search-shell{border-color:#DCEBE8;}
+.product-card:hover{border-color:#A2D5CE;box-shadow:0 14px 36px rgba(12,100,106,.10);}
+.section-head h2,.product-card h3,.panel h2,.directory-spotlight-copy h3{color:#155660;}
+.chip[aria-pressed="true"],.chip:hover{background:#007B85;border-color:#007B85;}
+.mentor-promo{
+  background:linear-gradient(120deg,#0B5963 0%,#0F7480 65%,#318E90 100%);
+  border-color:#9DD9D0;
+  box-shadow:0 16px 38px rgba(0,99,103,.16);
+}
+.site-footer{background:linear-gradient(140deg,#123F48,#0B6169 87%);}
+.footer-grid h3{color:#fff;}
+.footer-grid p,.footer-grid a{color:#E0F3F1;}
+.footer-grid a:hover{color:#fff;}
+.footer-base{border-color:rgba(255,255,255,.18);color:#D3EBE8;}
+.footer-brand-surface{
+  display:inline-flex;align-items:center;justify-content:flex-start;
+  background:#fff;border:1px solid #DCF0ED;
+  border-radius:17px;padding:11px 15px;margin:0 0 14px;
+  box-shadow:0 10px 28px rgba(0,30,38,.10);max-width:100%;
+}
+.footer-brand-surface .footer-logo{
+  display:block;width:236px;max-width:100%;height:auto;max-height:75px;
+  object-fit:contain;background:transparent;border-radius:0;margin:0;
+}
+.bottom-nav{border-color:#D8E9E6;box-shadow:0 -5px 23px rgba(15,80,80,.08);}
+.bottom-nav a.hub-app-link{color:#187780;}
+.bottom-nav a.hub-app-link svg{width:21px;height:21px;}
+.bottom-nav a.hub-app-link:active{background:#E4F5F2;transform:scale(.97);}
+.mobile-top-menu .hub-app-link{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:46px;border-radius:11px;background:#E8F6F4;
+  color:#006F79;padding:12px 14px;font-size:.87rem;font-weight:750;
+}
+.mobile-top-menu .hub-app-link svg{width:17px;height:17px;}
+.mi-movida-entry{
+  padding:24px;border-radius:24px;
+  background:linear-gradient(120deg,#E9F8F4 0%,#fff 100%);
+  border:1px solid #CDEAE5;
+  align-items:center;
+}
+.mi-movida-entry .btn{flex:none;}
+/* Compatible con pantallas estrechas y barra inferior tipo app. */
+@media(max-width:1180px){
+  .brand-caption{display:none;}
+}
+@media(max-width:1080px){
+  .header-inner{min-height:73px;}
+  .brand-surface{width:196px;min-height:56px;}
+}
+@media(max-width:760px){
+  html{scroll-padding-top:72px;}
+  .header-inner{min-height:69px;gap:10px;}
+  .brand-home{margin-right:auto;}
+  .brand-surface{
+    width:clamp(150px,48vw,198px);
+    min-height:49px;padding:6px 9px;border-radius:13px;
+  }
+  .brand-surface img{max-height:52px;}
+  .hero{padding:44px 0 72px;}
+  .hero h1{font-size:clamp(2.1rem,8.7vw,3.2rem);}
+  .hero-description{font-size:.91rem;}
+  .hero-buttons .btn{min-height:48px;}
+  .mobile-top-menu{background:#fff;border-color:#DCEBE8;}
+  .mobile-top-menu a.hub-app-link{margin:5px 0;border:1px solid #D3EAE7;}
+  .bottom-nav a.hub-app-link{
+    min-width:0;min-height:52px;padding:4px 1px;border-radius:13px;
+    font-size:.59rem;line-height:1.1;font-weight:800;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  }
+  .mi-movida-entry{padding:19px;gap:14px;}
+  .mi-movida-entry .btn{width:100%;}
+  .footer-brand-surface .footer-logo{width:210px;}
+}
+@media(max-width:355px){
+  .brand-surface{width:148px;}
+  .hero h1{font-size:2.02rem;}
+  .hero-buttons{gap:9px;}
+  .hero-buttons .btn{width:100%;}
+  .bottom-nav a.hub-app-link{font-size:.56rem;}
+}
+@media(prefers-reduced-motion:reduce){
+  .brand-surface,.hero-tile{transition:none!important;}
+}
