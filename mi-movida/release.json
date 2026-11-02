@@ -1,0 +1,8 @@
+{
+  "application": "Mi Movida",
+  "release": "2026-11-02",
+  "backend": "Supabase Edge",
+  "credential": "Directorio GEO",
+  "photos": "Google Drive",
+  "status": "pilot"
+}
