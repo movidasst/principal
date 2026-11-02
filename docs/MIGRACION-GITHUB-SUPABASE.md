@@ -15,7 +15,7 @@ Se añadió `staging/supabase/functions/mi-movida-api/index.ts`, una puerta aisl
 3. Login con documento + código: endpoint de sesión con comprobación privilegiada, límites por identidad y por origen, y sesión Auth sin exponer códigos ni tokens administrativos.
 4. Recuperación por correo previamente verificado; URLs y CORS correctos; no introducir tokens en logs.
 5. Moodle solo desde Edge con token secreto, validación del integrante por el vínculo autoritativo y manejo explícito de indisponibilidad.
-6. Migración incremental revisada sobre estructura real, NO baseline local; regresión PIF y privacidad Directorio/Ranking.
+6. Migración incremental revisada sobre estructura real, NO baseline local; privacidad Directorio/Ranking.
 7. Pruebas nativas Edge/Auth/Storage, navegador real, rollback y posterior activación por bandera. No desplegar la función de review sobre producción ni enlazar el frontend antes de ello.
 
 ### Publicación
