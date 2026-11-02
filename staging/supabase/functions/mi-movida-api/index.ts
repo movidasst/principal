@@ -1,6 +1,7 @@
 import {recoveryRoute,recoveryChannelRoute} from './recovery.ts';
 import {authRoute,sessionContext} from './auth.ts';
 import {createAcademia} from './academia.mjs';
+import {createToolCertificateReader} from './tool-certificates.mjs';
 // Private read gateway, disabled by default until native Auth/RLS regression passes.
 // GitHub Pages -> Supabase Edge; no service-role key or privileged SQL exposed.
 const ORIGIN='https://www.movidasst.com';
@@ -86,6 +87,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   if(!c)return respond({error:{code:'unauthorized'}},401,origin);
   const configured=env('MM_ENABLE_MOODLE_READS')==='true'&&!!env('MOODLE_BASE_URL')&&!!env('MOODLE_TOKEN');
   const lms=configured?createAcademia({baseUrl:env('MOODLE_BASE_URL'),token:env('MOODLE_TOKEN')} as any):null;
+  const originalCertificates=configured?createToolCertificateReader({baseUrl:env('MOODLE_BASE_URL'),token:env('MOODLE_TOKEN')}):null;
   try{
    if(route==='/api/me/learning'){
     if(!lms)return respond({error:{code:'moodle_not_configured'}},503,origin);
@@ -95,7 +97,8 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
    if(route.startsWith('/api/me/certificates/moodle/')){
     if(!lms||!c.moodle_user_id)return respond({error:{code:'moodle_not_configured'}},503,origin);
     const id=route.split('/').pop();
-    const document=await lms.downloadCertificate(c.moodle_user_id,id);
+    if(!originalCertificates)return respond({error:{code:'moodle_not_configured'}},503,origin);
+    const document=await originalCertificates.downloadCertificate(c.moodle_user_id,id);
     const headers=new Headers({'content-type':'application/pdf','cache-control':'no-store, private','x-content-type-options':'nosniff','content-disposition':'attachment; filename="'+document.filename+'"'});
     if(origin===ORIGIN)headers.set('access-control-allow-origin',ORIGIN);
     return new Response(document.content,{status:200,headers});
@@ -104,7 +107,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
    if(!ownResponse.ok)return respond({error:{code:'source_unavailable'}},503,origin);
    const own=await ownResponse.json();
    let moodle:any={status:'unavailable',certificates:[],message:'Moodle de pruebas no está configurado.'};
-   if(lms&&c.moodle_user_id)try{moodle=await lms.getCertificates(c.moodle_user_id,{offset:0,limit:100});}catch{moodle={status:'unavailable',certificates:[],message:'No se pudieron consultar certificados académicos.'};}
+   if(originalCertificates&&c.moodle_user_id)try{moodle=await originalCertificates.getCertificates(c.moodle_user_id,{offset:0,limit:100});}catch{moodle={status:'unavailable',certificates:[],message:'No se pudieron consultar certificados de Moodle. No se han eliminado certificados.'};}
    return respond({data:{items:[...(own?.items||[]),...moodle.certificates.map((item:Record<string,unknown>)=>({...item,source:'Academia Moodle',download_url:'/api/me/certificates/moodle/'+item.id}))],moodle_status:moodle.status,message:moodle.status==='available'?null:moodle.message||'La emisión académica no está disponible.'}},200,origin);
   }catch{return respond({error:{code:'moodle_unavailable'}},503,origin);}
  }
