@@ -17,3 +17,4 @@ jobs:
           node-version: '24'
       - run: node --check mi-movida/app.js
       - run: node tests/mi-movida-geo-contract.mjs
+      - run: node tests/mi-movida-perfil-solo-lectura.mjs
