@@ -36,7 +36,7 @@ function safeUrl(value,{localOnly=false}={}){
  try{const u=new URL(value,location.origin);if(u.origin===location.origin&&u.protocol===location.protocol)return u.href;if(!localOnly&&u.protocol==='https:'&&!u.username&&!u.password)return u.href;}catch{}
  return null;
 }
-function externalLink(label,value,cls='btn ghost'){const url=safeUrl(value);return url?'<a class="'+cls+'" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+icon('arrow')+'</a>':'';}
+function externalLink(label,value,cls='btn ghost'){if(typeof value==='string'&&/^\/api\/me\/certificates\/moodle\/[0-9]+$/.test(value))return '<button type="button" class="'+cls+'" data-action="download-moodle" data-file="'+esc(value)+'">'+esc(label)+icon('download')+'</button>';const url=safeUrl(value);return url?'<a class="'+cls+'" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+icon('arrow')+'</a>':'';}
 function btn(label,route,ico='arrow',cls='primary'){return '<a class="btn '+cls+'" href="#/'+route+'">'+esc(label)+icon(ico)+'</a>';}
 function textLink(label,route){return '<a class="text-link" href="#/'+route+'">'+esc(label)+icon('arrow')+'</a>';}
 function note(text,cls=''){return '<div class="note '+cls+'">'+icon('info')+'<span>'+esc(text)+'</span></div>';}
@@ -189,6 +189,16 @@ async function more(kind){
  const endpoint=kind==='xp'?'/api/me/xp?scope='+encodeURIComponent(state.scope)+'&cursor='+encodeURIComponent(cursor):'/api/me/activity?cursor='+encodeURIComponent(cursor)+(state.source==='Todas'?'':'&source='+encodeURIComponent(state.source));
  try{const next=data(await api(endpoint));if(kind==='xp')current.historial=[...(current.historial||[]),...(next.historial||next.movements||[])];else current.items=[...items(current),...items(next)];current.next_cursor=next.next_cursor;renderCurrent();}catch(error){toast(error.message);}
 }
+async function downloadMoodleDocument(route){
+ if(!/^\/api\/me\/certificates\/moodle\/[0-9]+$/.test(route))return;
+ const headers=state.edgeAccessToken?{Authorization:'Bearer '+state.edgeAccessToken}:{};
+ try{
+  const res=await fetch(EDGE_API_BASE?EDGE_API_BASE+route:route,{headers,credentials:EDGE_API_BASE?'omit':'same-origin',cache:'no-store',redirect:'error'});
+  if(!res.ok||!(res.headers.get('content-type')||'').startsWith('application/pdf'))throw Error('No se pudo obtener el certificado emitido.');
+  const file=await res.blob();if(file.size>10000000)throw Error('El certificado excede el límite autorizado.');
+  const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download='certificado-moodle-'+route.split('/').pop()+'.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ }catch(error){toast(error.message||'La descarga no está disponible.');}
+}
 function downloadCredential(){
  const d=state.cache.credencial||{},p=d.perfil||d.profile||state.profile;const verify=safeUrl(d.verification_url||d.verificacion_url);
  const xml='<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600"><rect width="1000" height="600" rx="25" fill="#082f5b"/><path d="M0 580h1000v20H0z" fill="#f4b400"/><g font-family="Arial,sans-serif" fill="white"><text x="55" y="80" font-size="32">LA MOVIDA DE SST+</text><text x="55" y="135" font-size="20">CREDENCIAL DE INTEGRANTE</text><text x="55" y="280" font-size="40">'+esc(displayName())+'</text><text x="55" y="335" font-size="22">'+esc(p.carrera||'Integrante')+'</text><text x="55" y="380" font-size="20">'+esc(p.pais_nombre||p.pais_iso2||'')+'</text><text x="55" y="465" font-size="16">Pertenencia a la comunidad. No es una licencia ni una certificación.</text>'+(verify?'<a href="'+esc(verify)+'"><text x="55" y="525" font-size="17" fill="#f4b400">Verificar credencial en la fuente oficial</text></a>':'')+'</g></svg>';
@@ -208,6 +218,7 @@ document.addEventListener('click',async event=>{
  if(action==='recovery'){recoveryForm();return;}
  if(action==='upload-photo'){await uploadPhoto();return;}
  if(action==='download-credential'){downloadCredential();return;}
+ if(action==='download-moodle'){await downloadMoodleDocument(target.dataset.file);return;}
  if(action==='more-xp'){await more('xp');return;}
  if(action==='more-activity'){await more('activity');return;}
  if(action==='rank-next'){state.offset+=50;await loadRanking();return;}
