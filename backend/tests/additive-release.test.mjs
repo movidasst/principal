@@ -4,7 +4,8 @@ import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 
 test('Migración aditiva de Mi Movida mantiene contratos existentes intactos',async()=>{
- const source=await readFile(new URL('../sql/004_production_additive_review.sql',import.meta.url),'utf8');
+ const source=await readFile(new URL('../sql/005_production_release_atomic.sql',import.meta.url),'utf8');
+ assert.doesNotMatch(source,/^BEGIN;|^COMMIT;/m);
  assert.doesNotMatch(source,/CREATE OR REPLACE FUNCTION public\.(?:pif_|ranking_publico|ranking_todos_estudios_publico|estudia_|directorio_)/i);
  assert.doesNotMatch(source,/DROP CONSTRAINT|DROP TABLE|DELETE FROM|TRUNCATE/i);
  assert.doesNotMatch(source,/REVOKE .*integrante_auth_links/i);
