@@ -1,3 +1,4 @@
+import {authRoute} from './auth.ts';
 // Private read gateway, disabled by default until native Auth/RLS regression passes.
 // GitHub Pages -> Supabase Edge; no service-role key or privileged SQL exposed.
 const ORIGIN='https://www.movidasst.com';
@@ -18,11 +19,14 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
  if(origin&&origin!==ORIGIN)return respond({error:{code:'origin_denied'}},403);
  if(req.method==='OPTIONS'){
   if(origin!==ORIGIN)return respond({error:{code:'origin_denied'}},403);
-  return new Response(null,{status:204,headers:{'access-control-allow-origin':ORIGIN,'access-control-allow-methods':'GET,PATCH,OPTIONS','access-control-allow-headers':'authorization,apikey,content-type','access-control-max-age':'600','vary':'Origin'}});
+  return new Response(null,{status:204,headers:{'access-control-allow-origin':ORIGIN,'access-control-allow-methods':'GET,POST,PATCH,OPTIONS','access-control-allow-headers':'authorization,apikey,content-type','access-control-max-age':'600','vary':'Origin'}});
  }
  const rawPath=new URL(req.url).pathname;
  const route=rawPath.replace(/^.*?\/mi-movida-api(?=\/|$)/,'');
  if(req.method==='GET'&&route==='/health')return respond({data:{status:'edge_gateway_ready',member_access:env('MM_ENABLE_MEMBER_READS')==='true'?'restricted':'disabled'}},200,origin);
+ if(['/api/session','/api/session/bootstrap','/api/session/logout'].includes(route)){
+  try{const result=await authRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'auth_unavailable'}},503,origin);}
+ }
  const profileWrite=req.method==='PATCH'&&route==='/api/me/profile';
  const rpc=profileWrite?'mi_movida_update_profile':READ_ROUTES[route];
  if(!rpc||(!profileWrite&&req.method!=='GET')||env('MM_ENABLE_MEMBER_READS')!=='true'||(profileWrite&&env('MM_ENABLE_MEMBER_WRITES')!=='true'))
