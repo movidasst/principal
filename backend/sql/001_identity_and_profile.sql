@@ -96,7 +96,6 @@ BEGIN
 END;
 $$;
 
--- Mi Movida NO reemplaza funciones de PIF. Identidad y permisos de PIF se conservan.
 CREATE OR REPLACE FUNCTION public.mi_movida_configure(p_api_url text) RETURNS boolean
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
 BEGIN
