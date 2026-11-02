@@ -439,10 +439,41 @@ BEGIN
  IF char_length(private.mm_document(p_document)) NOT BETWEEN 3 AND 64
   OR upper(btrim(coalesce(p_code,''))) !~ '^[A-Z0-9]{5}$' THEN RETURN NULL; END IF;
  SELECT count(*) INTO v_count FROM public.integrantes i
- WHERE private.mm_document(i.documento)=private.mm_document(p_document)
+ WHERE (CASE WHEN private.mm_document(coalesce(nullif(i.documento,''),i.cedula)) ~ '^[VE]?[. -]*[0-9][0-9. -]*
   AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
  IF v_count<>1 THEN RETURN NULL; END IF;
  SELECT * INTO r FROM public.integrantes i WHERE private.mm_document(i.documento)=private.mm_document(p_document)
+  AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
+ SELECT auth_user_id INTO v_auth FROM public.integrante_auth_links WHERE integrante_id=r.id;
+ IF v_auth IS NULL THEN
+  SELECT u.id INTO v_auth FROM auth.users u
+  WHERE lower(u.email)='integrante-'||r.id::text||'@auth.movidasst.com';
+ END IF;
+ v_email:='integrante-'||r.id::text||'@auth.movidasst.com';
+ IF v_auth IS NOT NULL THEN
+  SELECT email INTO v_email FROM auth.users WHERE id=v_auth;
+ END IF;
+ RETURN jsonb_build_object('integrante_id',r.id::text,'auth_user_id',v_auth,'auth_email',v_email);
+END;
+$$;
+ THEN regexp_replace(private.mm_document(coalesce(nullif(i.documento,''),i.cedula)),'[^0-9]','','g') ELSE private.mm_document(coalesce(nullif(i.documento,''),i.cedula)) END)=private.mm_document(p_document)
+  AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
+ IF v_count<>1 THEN RETURN NULL; END IF;
+ SELECT * INTO r FROM public.integrantes i WHERE (CASE WHEN private.mm_document(coalesce(nullif(i.documento,''),i.cedula)) ~ '^[VE]?[. -]*[0-9][0-9. -]*
+  AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
+ SELECT auth_user_id INTO v_auth FROM public.integrante_auth_links WHERE integrante_id=r.id;
+ IF v_auth IS NULL THEN
+  SELECT u.id INTO v_auth FROM auth.users u
+  WHERE lower(u.email)='integrante-'||r.id::text||'@auth.movidasst.com';
+ END IF;
+ v_email:='integrante-'||r.id::text||'@auth.movidasst.com';
+ IF v_auth IS NOT NULL THEN
+  SELECT email INTO v_email FROM auth.users WHERE id=v_auth;
+ END IF;
+ RETURN jsonb_build_object('integrante_id',r.id::text,'auth_user_id',v_auth,'auth_email',v_email);
+END;
+$$;
+ THEN regexp_replace(private.mm_document(coalesce(nullif(i.documento,''),i.cedula)),'[^0-9]','','g') ELSE private.mm_document(coalesce(nullif(i.documento,''),i.cedula)) END)=private.mm_document(p_document)
   AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
  SELECT auth_user_id INTO v_auth FROM public.integrante_auth_links WHERE integrante_id=r.id;
  IF v_auth IS NULL THEN
