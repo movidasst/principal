@@ -66,7 +66,7 @@ Deno.test('El canal de recuperación requiere habilitación expresa',async()=>{
 Deno.test('La tarjeta GEO sólo expone datos del integrante cuya sesión está validada',async()=>{
  const previous=globalThis.fetch;
  const sid='22222222-2222-4222-8222-222222222222',uid='11111111-1111-4111-8111-111111111111';
- const access='aaa.'+btoa(JSON.stringify({session_id:sid}))+'.sig';
+ const access='aaa.'+btoa(JSON.stringify({session_id:sid})).replace(/=/g,'')+'.sig';
  const expectedPublicId='33333333-3333-4333-8333-333333333333';
  let memberQuery='';
  try{
@@ -94,7 +94,7 @@ Deno.test('La tarjeta GEO sólo expone datos del integrante cuya sesión está v
 
 Deno.test('La tarjeta GEO rechaza filas de integrantes ajenos',async()=>{
  const previous=globalThis.fetch,uid='11111111-1111-4111-8111-111111111111';
- const access='aaa.'+btoa(JSON.stringify({session_id:'22222222-2222-4222-8222-222222222222'}))+'.sig';
+ const access='aaa.'+btoa(JSON.stringify({session_id:'22222222-2222-4222-8222-222222222222'})).replace(/=/g,'')+'.sig';
  try{
   globalThis.fetch=async(input:RequestInfo|URL):Promise<Response>=>{
    const path=new URL(String(input)).pathname;
