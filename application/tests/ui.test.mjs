@@ -20,3 +20,17 @@ test('Mi Movida carga logo oficial compartido por HUB y preserva su proporción'
  assert.match(app,/\/logo-oficial-movida-sst-plus\.png/);
  assert.match(css,/\.brand img\{width:162px;[^}]*height:auto/);
 });
+
+test('Mi credencial utiliza GEO por identificador público, sin replicar emisor ni exponer secretos',async()=>{
+ const app=await read('../public/app.js');
+ const html=await read('../public/index.html');
+ const css=await read('../public/styles.css');
+ assert.match(app,/function geoCredentialUrl\(publicId\)/);
+ assert.match(app,/directorio\.movidasst\.com\/\?id=/);
+ assert.match(app,/state\.profile\?\.public_id/);
+ assert.match(app,/iframe class="geo-credential-frame"/);
+ assert.match(app,/if\(route==='credencial'\)return \{profile:state\.profile\}/);
+ assert.doesNotMatch(app,/function downloadCredential\(|Mi-Movida-Credencial\.svg|geoCredentialUrl\(state\.profile\?\.documento/);
+ assert.match(html,/frame-src https:\/\/directorio\.movidasst\.com;/);
+ assert.match(css,/\.geo-credential-frame\{display:block;width:100%/);
+});
