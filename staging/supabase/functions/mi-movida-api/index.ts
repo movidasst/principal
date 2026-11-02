@@ -1,4 +1,4 @@
-import {recoveryRoute} from './recovery.ts';
+import {recoveryRoute,recoveryChannelRoute} from './recovery.ts';
 import {photoRoute} from './photo.ts';
 import {authRoute,sessionContext} from './auth.ts';
 import {createAcademia} from './academia.mjs';
@@ -27,6 +27,9 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
  const rawPath=new URL(req.url).pathname;
  const route=rawPath.replace(/^.*?\/mi-movida-api(?=\/|$)/,'');
  if(req.method==='GET'&&route==='/health')return respond({data:{status:'edge_gateway_ready',member_access:env('MM_ENABLE_MEMBER_READS')==='true'?'restricted':'disabled'}},200,origin);
+ if(['/api/me/recovery-channel','/api/me/recovery-channel/confirm'].includes(route)){
+  try{const result=await recoveryChannelRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'channel_unavailable'}},503,origin);}
+ }
  if(['/api/session/recovery/request','/api/session/recovery/consume'].includes(route)){
   try{const result=await recoveryRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'recovery_unavailable'}},503,origin);}
  }
