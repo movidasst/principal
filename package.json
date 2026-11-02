@@ -7,7 +7,8 @@
     "start": "node application/server/app.mjs",
     "stage:synthetic": "node application/staging/start.mjs",
     "test": "node --test application/tests/*.test.mjs backend/tests/*.test.mjs",
-    "stage:sync": "node scripts/sync-staging.mjs"
+    "stage:sync": "node scripts/sync-staging.mjs",
+    "build:pages": "node scripts/build-mi-movida-pages.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.14"
