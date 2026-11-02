@@ -429,3 +429,66 @@ GRANT EXECUTE ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_pro
 REVOKE ALL ON FUNCTION public.pif_current_integrante_id() FROM PUBLIC,anon;
 GRANT EXECUTE ON FUNCTION public.pif_current_integrante_id() TO authenticated;
 COMMIT;
+
+-- Acceso internacional simplificado: document + código solo si el resultado es único.
+-- Se mantienen contratos legacy sin cambiarlos.
+CREATE OR REPLACE FUNCTION public.mi_movida_auth_lookup_document(p_document text,p_code text) RETURNS jsonb
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path='' AS $$
+DECLARE r public.integrantes; v_count integer; v_auth uuid; v_email text;
+BEGIN
+ IF char_length(private.mm_document(p_document)) NOT BETWEEN 3 AND 64
+  OR upper(btrim(coalesce(p_code,''))) !~ '^[A-Z0-9]{5}$' THEN RETURN NULL; END IF;
+ SELECT count(*) INTO v_count FROM public.integrantes i
+ WHERE private.mm_document(i.documento)=private.mm_document(p_document)
+  AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
+ IF v_count<>1 THEN RETURN NULL; END IF;
+ SELECT * INTO r FROM public.integrantes i WHERE private.mm_document(i.documento)=private.mm_document(p_document)
+  AND upper(btrim(i.codigo_integrante))=upper(btrim(p_code));
+ SELECT auth_user_id INTO v_auth FROM public.integrante_auth_links WHERE integrante_id=r.id;
+ IF v_auth IS NULL THEN
+  SELECT u.id INTO v_auth FROM auth.users u
+  WHERE lower(u.email)='integrante-'||r.id::text||'@auth.movidasst.com';
+ END IF;
+ v_email:='integrante-'||r.id::text||'@auth.movidasst.com';
+ IF v_auth IS NOT NULL THEN
+  SELECT email INTO v_email FROM auth.users WHERE id=v_auth;
+ END IF;
+ RETURN jsonb_build_object('integrante_id',r.id::text,'auth_user_id',v_auth,'auth_email',v_email);
+END;
+$$;
+CREATE OR REPLACE FUNCTION public.mi_movida_recovery_prepare_document(p_document text,p_token_hash text,p_ip_hash text) RETURNS jsonb
+LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
+DECLARE r public.integrantes; v_count integer; v_email text; v_rate jsonb;
+BEGIN
+ IF p_token_hash !~ '^[a-f0-9]{64}$' OR p_ip_hash !~ '^[a-f0-9]{64}$' THEN
+  RAISE EXCEPTION 'invalid_request' USING ERRCODE='22023';
+ END IF;
+ v_rate:=public.mi_movida_rate_limit(p_ip_hash,5,900);
+ IF NOT (v_rate->>'allowed')::boolean THEN RETURN jsonb_build_object('delivery',NULL); END IF;
+ SELECT count(*) INTO v_count FROM public.integrantes i WHERE private.mm_document(i.documento)=private.mm_document(p_document);
+ IF v_count<>1 THEN RETURN jsonb_build_object('delivery',NULL); END IF;
+ SELECT * INTO r FROM public.integrantes i WHERE private.mm_document(i.documento)=private.mm_document(p_document);
+ SELECT c.email INTO v_email FROM private.mi_movida_verified_channels c
+ WHERE c.integrante_id=r.id AND c.email=lower(btrim(r.correo));
+ -- A confirmed non-synthetic Auth email may be reused, but never an unverified member contact.
+ IF v_email IS NULL THEN
+  SELECT lower(btrim(u.email)) INTO v_email FROM auth.users u
+  JOIN public.integrante_auth_links l ON l.auth_user_id=u.id AND l.integrante_id=r.id
+  WHERE u.email_confirmed_at IS NOT NULL AND lower(btrim(u.email))=lower(btrim(r.correo))
+   AND lower(u.email) NOT LIKE '%@auth.movidasst.com';
+ END IF;
+ IF v_email IS NULL OR EXISTS(SELECT 1 FROM public.integrantes WHERE id<>r.id AND lower(btrim(correo))=v_email) THEN
+  RETURN jsonb_build_object('delivery',NULL);
+ END IF;
+ v_rate:=public.mi_movida_rate_limit(md5('recovery:'||r.id::text)||md5('recovery:identity:'||r.id::text),3,900);
+ IF NOT (v_rate->>'allowed')::boolean THEN RETURN jsonb_build_object('delivery',NULL); END IF;
+ UPDATE private.mi_movida_tokens SET consumed_at=now() WHERE integrante_id=r.id AND purpose='recovery' AND consumed_at IS NULL;
+ INSERT INTO private.mi_movida_tokens(token_hash,integrante_id,purpose,email,expires_at)
+ VALUES(p_token_hash,r.id,'recovery',v_email,now()+interval '15 minutes');
+ RETURN jsonb_build_object('delivery',jsonb_build_object('email',v_email,'integrante_id',r.id::text));
+END;
+$$;
+REVOKE ALL ON FUNCTION public.mi_movida_auth_lookup_document(text,text) FROM PUBLIC,anon,authenticated;
+REVOKE ALL ON FUNCTION public.mi_movida_recovery_prepare_document(text,text,text) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.mi_movida_auth_lookup_document(text,text) TO service_role;
+GRANT EXECUTE ON FUNCTION public.mi_movida_recovery_prepare_document(text,text,text) TO service_role;
