@@ -56,7 +56,7 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
  if(!raw||!pub)return bad('not_configured',503);
  const serviceKey=env('SUPABASE_SERVICE_ROLE_KEY');
  const url=new URL(raw);
- if(url.protocol!=='https:'&&!['127.0.0.1','localhost'].includes(url.hostname))return bad('not_configured',503);
+ if(url.protocol!=='https:'&&!['127.0.0.1','localhost'].includes(url.hostname)&&!(url.hostname==='kong'&&url.port==='8000'&&env('MM_ALLOW_LOCAL_DOCKER_HOST')==='true'))return bad('not_configured',503);
  if(route==='/api/session'&&req.method==='GET'){
   const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
   if(!token)return good({authenticated:false,environment:'edge-review'});
