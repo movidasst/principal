@@ -18,13 +18,14 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
  if(origin&&origin!==ORIGIN)return respond({error:{code:'origin_denied'}},403);
  if(req.method==='OPTIONS'){
   if(origin!==ORIGIN)return respond({error:{code:'origin_denied'}},403);
-  return new Response(null,{status:204,headers:{'access-control-allow-origin':ORIGIN,'access-control-allow-methods':'GET,OPTIONS','access-control-allow-headers':'authorization,apikey,content-type','access-control-max-age':'600','vary':'Origin'}});
+  return new Response(null,{status:204,headers:{'access-control-allow-origin':ORIGIN,'access-control-allow-methods':'GET,PATCH,OPTIONS','access-control-allow-headers':'authorization,apikey,content-type','access-control-max-age':'600','vary':'Origin'}});
  }
  const rawPath=new URL(req.url).pathname;
  const route=rawPath.replace(/^.*?\/mi-movida-api(?=\/|$)/,'');
  if(req.method==='GET'&&route==='/health')return respond({data:{status:'edge_gateway_ready',member_access:env('MM_ENABLE_MEMBER_READS')==='true'?'restricted':'disabled'}},200,origin);
- const rpc=READ_ROUTES[route];
- if(req.method!=='GET'||!rpc||env('MM_ENABLE_MEMBER_READS')!=='true')
+ const profileWrite=req.method==='PATCH'&&route==='/api/me/profile';
+ const rpc=profileWrite?'mi_movida_update_profile':READ_ROUTES[route];
+ if(!rpc||(!profileWrite&&req.method!=='GET')||env('MM_ENABLE_MEMBER_READS')!=='true'||(profileWrite&&env('MM_ENABLE_MEMBER_WRITES')!=='true'))
   return respond({error:{code:'not_enabled',message:'El acceso privado aún no está habilitado.'}},503,origin);
  const bearer=req.headers.get('authorization')||'';
  if(!/^Bearer [A-Za-z0-9._~-]+$/.test(bearer))return respond({error:{code:'unauthorized'}},401,origin);
@@ -35,6 +36,17 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   if(!user.ok)return respond({error:{code:'unauthorized'}},401,origin);
   const session=await user.json();
   if(!session?.id)return respond({error:{code:'unauthorized'}},401,origin);
+  let profileChanges:Record<string,unknown>|null=null;
+  if(profileWrite){
+   const raw=await req.text();if(raw.length>16384)return respond({error:{code:'request_too_large'}},413,origin);
+   let changes:Record<string,unknown>;
+   try{changes=JSON.parse(raw);}catch{return respond({error:{code:'invalid_json'}},400,origin);}
+   const permitted=['pais_iso2','estado','municipio','telefono_e164','whatsapp_username','grado','carrera','postgrado','doctorado','laboral','linkedin','mostrar_correo','mostrar_wasap','mostrar_whatsapp_username','mostrar_insignias'];
+   const version=changes.version;
+   if(typeof version!=='string'||!version||!Object.keys(changes).every(k=>k==='version'||permitted.includes(k)))return respond({error:{code:'validation_error'}},422,origin);
+   delete changes.version;
+   profileChanges={p_changes:changes,p_version:version};
+  }
   const params=new URL(req.url).searchParams;
   const cursor=params.get('cursor');let paging:Record<string,unknown>={};
   if(rpc==='mi_movida_xp'||rpc==='mi_movida_activity'){
@@ -42,11 +54,11 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
    paging.p_limit=30;
    if(rpc==='mi_movida_activity')paging.p_source=params.get('source')||null;
   }
-  const result=await fetch(new URL('/rest/v1/rpc/'+rpc,supabase),{method:'POST',headers:{'apikey':publishable,'authorization':bearer,'content-type':'application/json'},body:JSON.stringify(paging),redirect:'error'});
+  const result=await fetch(new URL('/rest/v1/rpc/'+rpc,supabase),{method:'POST',headers:{'apikey':publishable,'authorization':bearer,'content-type':'application/json'},body:JSON.stringify(profileChanges||paging),redirect:'error'});
   if(!result.ok)return respond({error:{code:result.status===403?'forbidden':'source_unavailable'}},result.status===403?403:503,origin);
   const data=await result.json();
   const resultData=(rpc==='mi_movida_xp'||rpc==='mi_movida_activity')&&data?.next_cursor&&typeof data.next_cursor==='object'?{...data,next_cursor:btoa(JSON.stringify(data.next_cursor)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}:data;
-  return respond({data:rpc==='mi_movida_profile'?{...resultData,version:String(resultData.profile_version),recovery_channel:{verified:!!resultData.recovery_channel_verified}}:resultData},200,origin);
+  return respond({data:(rpc==='mi_movida_profile'||profileWrite)?{...resultData,version:String(resultData.profile_version),recovery_channel:{verified:!!resultData.recovery_channel_verified}}:resultData},200,origin);
  }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
 }
 if(import.meta.main)Deno.serve(req=>handle(req));
