@@ -1,4 +1,5 @@
-import {authRoute} from './auth.ts';
+import {authRoute,sessionContext} from './auth.ts';
+import {createAcademia} from './academia.mjs';
 // Private read gateway, disabled by default until native Auth/RLS regression passes.
 // GitHub Pages -> Supabase Edge; no service-role key or privileged SQL exposed.
 const ORIGIN='https://www.movidasst.com';
@@ -10,7 +11,6 @@ function respond(data:unknown,status=200,origin:string|null=null){
 const READ_ROUTES:Record<string,string>={
  '/api/me/profile':'mi_movida_profile',
  '/api/me/badges':'mi_movida_badges',
- '/api/me/certificates':'mi_movida_certificates',
  '/api/me/xp':'mi_movida_xp',
  '/api/me/activity':'mi_movida_activity'
 };
@@ -48,6 +48,37 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
    const data=await result.json();
    return respond({data:rpc==='mi_movida_public_credential'?data:{items:data,scope:(new URL(req.url)).searchParams.get('scope')||'general'}},200,origin);
   }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
+ }
+ if(req.method==='GET'&&(route==='/api/me/learning'||route==='/api/me/certificates'||/^\/api\/me\/certificates\/moodle\/[0-9]+$/.test(route))){
+  if(env('MM_ENABLE_MEMBER_READS')!=='true')return respond({error:{code:'not_enabled'}},503,origin);
+  const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
+  const base=env('SUPABASE_URL'),pub=env('SUPABASE_ANON_KEY')||env('SUPABASE_PUBLISHABLE_KEY'),service=env('SUPABASE_SERVICE_ROLE_KEY');
+  if(!base||!pub||!service)return respond({error:{code:'not_configured'}},503,origin);
+  const c=await sessionContext(new URL(base),pub,service,token);
+  if(!c)return respond({error:{code:'unauthorized'}},401,origin);
+  const configured=env('MM_ENABLE_MOODLE_READS')==='true'&&!!env('MOODLE_BASE_URL')&&!!env('MOODLE_TOKEN');
+  const lms=configured?createAcademia({baseUrl:env('MOODLE_BASE_URL'),token:env('MOODLE_TOKEN')}):null;
+  try{
+   if(route==='/api/me/learning'){
+    if(!lms)return respond({error:{code:'moodle_not_configured'}},503,origin);
+    if(!c.moodle_user_id)return respond({data:{status:'unlinked',courses:[],message:'El vínculo académico requiere revisión.'}},200,origin);
+    return respond({data:await lms.getLearning(c.moodle_user_id)},200,origin);
+   }
+   if(route.startsWith('/api/me/certificates/moodle/')){
+    if(!lms||!c.moodle_user_id)return respond({error:{code:'moodle_not_configured'}},503,origin);
+    const id=route.split('/').pop();
+    const document=await lms.downloadCertificate(c.moodle_user_id,id);
+    const headers=new Headers({'content-type':'application/pdf','cache-control':'no-store, private','x-content-type-options':'nosniff','content-disposition':'attachment; filename="'+document.filename+'"'});
+    if(origin===ORIGIN)headers.set('access-control-allow-origin',ORIGIN);
+    return new Response(document.content,{status:200,headers});
+   }
+   const ownResponse=await fetch(new URL('/rest/v1/rpc/mi_movida_certificates',base),{method:'POST',headers:{apikey:pub,authorization:'Bearer '+token,'content-type':'application/json'},body:'{}',redirect:'error'});
+   if(!ownResponse.ok)return respond({error:{code:'source_unavailable'}},503,origin);
+   const own=await ownResponse.json();
+   let moodle={status:'unavailable',certificates:[],message:'Moodle de pruebas no está configurado.'};
+   if(lms&&c.moodle_user_id)try{moodle=await lms.getCertificates(c.moodle_user_id,{offset:0,limit:100});}catch{moodle={status:'unavailable',certificates:[],message:'No se pudieron consultar certificados académicos.'};}
+   return respond({data:{items:[...(own?.items||[]),...moodle.certificates.map((item:Record<string,unknown>)=>({...item,source:'Academia Moodle',download_url:'/api/me/certificates/moodle/'+item.id}))],moodle_status:moodle.status,message:moodle.status==='available'?null:moodle.message||'La emisión académica no está disponible.'}},200,origin);
+  }catch{return respond({error:{code:'moodle_unavailable'}},503,origin);}
  }
  const profileWrite=req.method==='PATCH'&&route==='/api/me/profile';
  const rpc=profileWrite?'mi_movida_update_profile':READ_ROUTES[route];
