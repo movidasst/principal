@@ -29,3 +29,8 @@ dialog{border:1px solid var(--line);border-radius:20px;max-width:480px;width:cal
 .sidebar{overflow-y:auto}.form-actions .btn{min-height:44px}.credential-mini{overflow-wrap:anywhere}.credential .person>div{min-width:0}.credential p{overflow-wrap:anywhere}
 
 @media(max-width:360px){.badge-grid{grid-template-columns:minmax(0,1fr)}.badge-card:last-child{grid-column:auto}.badge-card .btn{max-width:100%}}
+
+/* Marca horizontal: mantener relación de aspecto original, sin recorte circular. */
+.brand img{width:162px;max-width:48vw;height:auto;max-height:66px;object-fit:contain;object-position:left center;flex-shrink:0}
+.credential .brand img{width:180px;max-width:55%;height:auto;max-height:65px;padding:0;background:transparent;border-radius:0}
+@media(max-width:550px){.brand img{width:130px;max-height:56px}.credential .brand img{width:145px}}
