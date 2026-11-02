@@ -18,7 +18,16 @@ async function api(path,options={}){
  if(options.body&&typeof options.body==='string')headers['Content-Type']='application/json';
  if(!['GET','HEAD'].includes(options.method||'GET')&&state.session?.csrf_token)headers['X-CSRF-Token']=state.session.csrf_token;
  try{
-  const response=await fetch(EDGE_API_BASE?EDGE_API_BASE+path:path,{...options,headers,credentials:EDGE_API_BASE?'omit':'same-origin',cache:'no-store',redirect:'error',signal:controller.signal});
+  let response=await fetch(EDGE_API_BASE?EDGE_API_BASE+path:path,{...options,headers,credentials:EDGE_API_BASE?'omit':'same-origin',cache:'no-store',redirect:'error',signal:controller.signal});
+  if(response.status===401&&EDGE_API_BASE&&state.edgeRefreshToken&&path!=='/api/session/refresh'&&path!=='/api/session/bootstrap'&&path!=='/api/session/logout'){
+   const refresh=await fetch(EDGE_API_BASE+'/api/session/refresh',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({refresh_token:state.edgeRefreshToken}),cache:'no-store',credentials:'omit',redirect:'error',signal:controller.signal});
+   const renewed=await refresh.json().catch(()=>null);
+   if(refresh.ok&&renewed?.data?.access_token&&renewed?.data?.refresh_token){
+    state.edgeAccessToken=renewed.data.access_token;state.edgeRefreshToken=renewed.data.refresh_token;
+    headers.Authorization='Bearer '+state.edgeAccessToken;
+    response=await fetch(EDGE_API_BASE+path,{...options,headers,credentials:'omit',cache:'no-store',redirect:'error',signal:controller.signal});
+   }
+  }
   const payload=await response.json().catch(()=>({}));
   if(!response.ok){
    if(response.status===401&&state.session?.authenticated){clearPrivateState();renderLogin('Tu sesión terminó. Ingresa nuevamente.');}
