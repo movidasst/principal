@@ -35,3 +35,20 @@ jobs:
           node --check application/server/security.mjs
       - name: Pruebas sintéticas de autenticación, SQL, XP, Moodle y permisos
         run: npm test
+
+  native-database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 2.122.0
+      - name: Impedir configuración de proyecto remoto
+        run: |
+          test ! -d staging/supabase/.temp
+          ! grep -R -l 'lfdmbkzghnwvsapxypvt' staging/supabase
+      - name: Iniciar servicios nativos locales
+        run: supabase start --workdir ./staging -x realtime,studio,analytics,vector,imgproxy
+      - name: Verificar migraciones y seed desde cero
+        run: supabase db reset --local --workdir ./staging
