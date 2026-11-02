@@ -54,3 +54,11 @@ Deno.test('Recuperación de acceso permanece cerrada sin habilitación',async()=
   if(result.status!==503)throw new Error('Recovery must remain disabled');
  }
 });
+
+Deno.test('El canal de recuperación requiere habilitación expresa',async()=>{
+ for(const route of ['/api/me/recovery-channel','/api/me/recovery-channel/confirm']){
+  const request=new Request('https://test.supabase.co/functions/v1/mi-movida-api'+route,{method:'POST',headers:{Origin:'https://www.movidasst.com','Content-Type':'application/json'},body:'{}'});
+  const response=await handle(request,()=>undefined);
+  if(response.status!==503)throw new Error('Channel must remain disabled');
+ }
+});
