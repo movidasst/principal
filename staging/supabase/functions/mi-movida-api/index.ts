@@ -1,3 +1,4 @@
+import {photoRoute} from './photo.ts';
 import {authRoute,sessionContext} from './auth.ts';
 import {createAcademia} from './academia.mjs';
 // Private read gateway, disabled by default until native Auth/RLS regression passes.
@@ -27,6 +28,9 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
  if(req.method==='GET'&&route==='/health')return respond({data:{status:'edge_gateway_ready',member_access:env('MM_ENABLE_MEMBER_READS')==='true'?'restricted':'disabled'}},200,origin);
  if(['/api/session','/api/session/bootstrap','/api/session/refresh','/api/session/logout'].includes(route)){
   try{const result=await authRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'auth_unavailable'}},503,origin);}
+ }
+ if(route==='/api/me/photo'){
+  try{return await photoRoute(req,env,origin);}catch{return respond({error:{code:'photo_unavailable'}},503,origin);}
  }
  if(req.method==='GET'&&(route==='/api/public/ranking'||route.startsWith('/api/public/credential/'))){
   if(env('MM_ENABLE_PUBLIC_READS')!=='true')return respond({error:{code:'not_enabled'}},503,origin);
