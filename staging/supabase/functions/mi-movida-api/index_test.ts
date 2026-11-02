@@ -13,3 +13,8 @@ Deno.test('Mi Movida Edge preflight restringido',async()=>{
  const res=await handle(new Request('https://test.supabase.co/functions/v1/mi-movida-api/api/me/xp',{method:'OPTIONS',headers:{Origin:'https://www.movidasst.com'}}),testEnv);
  if(res.status!==204||res.headers.get('access-control-allow-origin')!=='https://www.movidasst.com')throw new Error('CORS invalid');
 });
+
+Deno.test('Mi Movida Edge no habilita escrituras por defecto',async()=>{
+ const res=await handle(new Request('https://test.supabase.co/functions/v1/mi-movida-api/api/me/profile',{method:'PATCH',headers:{Origin:'https://www.movidasst.com','Content-Type':'application/json'},body:'{}'}),key=>key==='MM_ENABLE_MEMBER_READS'?'true':undefined);
+ if(res.status!==503)throw new Error('PATCH should remain disabled');
+});
