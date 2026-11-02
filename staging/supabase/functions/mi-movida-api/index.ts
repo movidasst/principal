@@ -29,6 +29,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   try{const result=await authRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'auth_unavailable'}},503,origin);}
  }
  if(req.method==='GET'&&(route==='/api/public/ranking'||route.startsWith('/api/public/credential/'))){
+  if(env('MM_ENABLE_PUBLIC_READS')!=='true')return respond({error:{code:'not_enabled'}},503,origin);
   const supabase=env('SUPABASE_URL'),key=env('SUPABASE_ANON_KEY')||env('SUPABASE_PUBLISHABLE_KEY');
   if(!supabase||!key)return respond({error:{code:'not_configured'}},503,origin);
   const args:Record<string,unknown>={};let rpc='';
