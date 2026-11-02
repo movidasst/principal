@@ -53,11 +53,11 @@ function empty(text){return '<div class="empty">'+esc(text)+'</div>';}
 function failure(error,retry=true){return '<section class="panel error-panel" role="alert"><h2>Esta información no está disponible</h2><p class="subtitle">'+esc(error.message||'No se pudo consultar la fuente.')+'</p>'+(retry?'<button class="btn primary spaced" data-action="retry">Volver a consultar</button>':'')+'</section>';}
 function loading(){return '<section class="panel" role="status"><div class="loading-bar"></div><h2>Consultando tus fuentes…</h2><p class="subtitle">La información se consulta con los permisos de tu sesión.</p></section>';}
 function toast(text){const el=document.querySelector('#toast');el.textContent=text;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),4500);}
-function modal(title,text,extra=''){document.querySelector('#modal-content').innerHTML='<h2 id="modal-title">'+esc(title)+'</h2><p>'+esc(text)+'</p>'+extra;document.querySelector('#modal').showModal();}
+function modal(title,text,extra=''){document.querySelector('#modal-content').innerHTML='<h2 id="modal-title">'+esc(title)+'</h2><p>'+esc(text)+'</p>'+extra;document.querySelector('#close-modal').textContent=title==='Recuperar acceso'?'Cancelar':'Entendido';document.querySelector('#modal').showModal();}
 function displayName(){return [state.profile?.nombres,state.profile?.apellidos].filter(Boolean).join(' ').trim()||state.session?.person?.display_name||'Integrante';}
 function initials(){return esc(displayName().split(/\s+/).map(s=>s[0]).slice(0,2).join(''));}
 function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+(safePhotoUrl(state.profile?.foto_url)?'<img src="'+esc(safePhotoUrl(state.profile.foto_url))+'" alt="Tu fotografía" class="avatar-photo" referrerpolicy="no-referrer">':initials())+'</span>';}
-function brand(){return '<div class="brand"><img src="/logo-oficial-movida-sst-plus.png" alt="La Movida de SST+"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>LA MOVIDA DE SST+</small></span></div>';}
+function brand(){return '<div class="brand"><img src="https://movidasst.org/pluginfile.php/1/theme_moove/sliderimage1/1793466008/La%20Movida%20de%20SST%2B.png" alt="La Movida de SST+" decoding="async"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>TU ESPACIO PERSONAL</small></span></div>';}
 function navLinks(){return routes.map(([key,ico,label,group])=>(group?'<div class="nav-group">'+group+'</div>':'')+'<a class="nav-link '+(state.route===key?'active':'')+'" href="#/'+key+'"'+(state.route===key?' aria-current="page"':'')+'>'+icon(ico)+esc(label)+'</a>').join('');}
 function header(){
  const headings={
