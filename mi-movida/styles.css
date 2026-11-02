@@ -39,7 +39,7 @@ dialog{border:1px solid var(--line);border-radius:20px;max-width:480px;width:cal
    Sin tarjeta, QR ni lógica de emisión duplicados en Mi Movida. */
 .geo-credential-panel{max-width:1120px;margin-inline:auto}
 .geo-credential-frame-wrap{overflow:hidden;border:1px solid #d7e1e9;border-radius:16px;background:#f5f8fa;margin:18px 0}
-.geo-credential-frame{display:block;width:100%;height:840px;border:0;background:#f5f8fa}
+.geo-credential-frame{display:block;width:100%;height:540px;border:0;background:#f8fafc}
 .geo-credential-panel .form-actions{display:flex;flex-wrap:wrap;gap:12px}
 .geo-credential-panel .form-actions>a{min-height:46px}
-@media(max-width:700px){.geo-credential-frame{height:740px}.geo-credential-panel .form-actions>a{width:100%;justify-content:center}}
+@media(max-width:700px){.geo-credential-frame{height:445px}.geo-credential-panel .form-actions>a{width:100%;justify-content:center}}

@@ -138,10 +138,14 @@ function geoCredentialUrl(publicId){
 }
 function credential(){
  const officialUrl=geoCredentialUrl(state.profile?.public_id);
- const inAccess=state.geoCredentialMode==='acceso';
- const frameUrl=inAccess?'https://directorio.movidasst.com/#/credencial':officialUrl;
- if(!officialUrl)return '<section class="panel"><h2>Mi credencial oficial</h2>'+note('Aún no se pudo obtener el identificador público de tu credencial. Por seguridad no generamos otra credencial ni un QR alternativo.')+'<div class="form-actions"><a class="btn primary" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Abrir Directorio GEO</a></div></section>';
- return '<section class="panel geo-credential-panel"><div class="panel-head"><div><h2>Mi credencial oficial</h2><p class="subtitle">Directorio GEO · verificación original de La Movida de SST+</p></div><span class="chip">OFICIAL</span></div><p class="subtitle">Esta vista viene directamente de Directorio: no reproducimos ni modificamos su diseño, QR o datos. Si necesitas descargar tu credencial de integrante, abre su acceso privado en Directorio con tu cédula y código habitual.</p><div class="form-actions"><button type="button" class="btn '+(inAccess?'ghost':'primary')+'" data-action="geo-credential-verify">Verificación oficial</button><button type="button" class="btn '+(inAccess?'primary':'ghost')+'" data-action="geo-credential-access">Acceder y descargar aquí</button></div><div class="geo-credential-frame-wrap"><iframe class="geo-credential-frame" title="'+(inAccess?'Acceso privado a la credencial original de GEO':'Verificación oficial de mi credencial en Directorio GEO')+'" src="'+esc(frameUrl)+'" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe></div><p class="subtitle">'+(inAccess?'Para descargar, el Directorio solicita tu cédula y código habituales dentro de su propio formulario. Mi Movida no transmite ni almacena ese código en la URL.':'Esta vista muestra la verificación pública de tu credencial. Puedes acceder a la descarga original usando la otra pestaña.')+'</p><div class="form-actions"><a class="btn ghost" href="'+esc(frameUrl)+'" target="_blank" rel="noopener noreferrer">Abrir esta vista en Directorio</a></div></section>';
+ if(!officialUrl)return '<section class="panel"><h2>Mi credencial oficial</h2>'+note('Aún no se encontró tu identificador público. GEO sigue siendo la fuente oficial; no se generó una credencial alternativa.')+'<div class="form-actions"><a class="btn primary" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Abrir Directorio GEO</a></div></section>';
+ const id=String(state.profile.public_id);
+ const embed='https://directorio.movidasst.com/?embed=mi-movida&id='+encodeURIComponent(id)+'#/credencial';
+ return '<section class="panel geo-credential-panel"><div class="panel-head"><div><h2>Mi credencial oficial</h2><p class="subtitle">Diseño, QR y descarga originales de Directorio GEO.</p></div><span class="chip">OFICIAL</span></div>'+
+ '<div class="geo-credential-frame-wrap"><iframe id="geo-credential-embed" class="geo-credential-frame" title="Mi credencial original de GEO, con descarga" src="'+esc(embed)+'" loading="eager" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe></div>'+
+ '<p id="geo-embed-status" class="subtitle" role="status" aria-live="polite">Preparando tu credencial original en GEO…</p>'+
+ '<div class="form-actions"><a class="btn ghost" href="'+esc(officialUrl)+'" target="_blank" rel="noopener noreferrer">Verificar QR en GEO '+icon('arrow')+'</a><a class="btn ghost" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Abrir Directorio completo</a></div>'+
+ '<p class="subtitle">No es una segunda credencial: GEO presenta la tarjeta original. Tu código privado y tu sesión no se envían al Directorio.</p></section>';
 }
 function field(name,label,value,type='text',extra=''){return '<label class="field"><span>'+esc(label)+'</span><input name="'+name+'" type="'+type+'" value="'+esc(value||'')+'" maxlength="160" '+extra+'></label>';}
 function toggle(name,title,text){return '<label class="toggle-row"><span><strong>'+esc(title)+'</strong><p>'+esc(text)+'</p></span><input class="switch" type="checkbox" name="'+name+'" '+(state.profile?.[name]?'checked':'')+'></label>';}
@@ -234,6 +238,47 @@ async function downloadMoodleDocument(route){
   const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download='certificado-moodle-'+route.split('/').pop()+'.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }catch(error){toast(error.message||'La descarga no está disponible.');}
 }
+// Intercambio únicamente de datos de la sesión autenticada con la ventana oficial GEO.
+const GEO_FRAME_ORIGIN='https://directorio.movidasst.com';
+window.addEventListener('message',async event=>{
+ if(event.origin!==GEO_FRAME_ORIGIN)return;
+ const frame=document.getElementById('geo-credential-embed');
+ if(!frame||event.source!==frame.contentWindow||!state.session?.authenticated||state.route!=='credencial')return;
+ const packet=event.data||{},id=String(state.profile?.public_id||'').toLowerCase();
+ if(String(packet.public_id||'').toLowerCase()!==id)return;
+ const status=document.getElementById('geo-embed-status');
+ if(packet.type==='movida-geo-credential-rendered'){
+  if(status)status.textContent='Credencial original lista. Puedes descargarla directamente desde el componente GEO.';
+  return;
+ }
+ if(packet.type==='movida-geo-credential-unavailable'){
+  if(status)status.textContent='No se pudo mostrar la tarjeta aquí. Abre Directorio GEO desde el botón inferior.';
+  return;
+ }
+ if(packet.type!=='movida-geo-credential-ready')return;
+ if(status)status.textContent='Comprobando tu identidad para presentar la credencial de GEO…';
+ try{
+  const credentialData=data(await api('/api/me/credential-card'));
+  if(!state.session?.authenticated||state.route!=='credencial'||String(credentialData.public_id||'').toLowerCase()!==id)throw new Error('La credencial no corresponde a esta sesión.');
+  // Los puntos se leen de la sesión actual; el diseño y QR se pintan exclusivamente en GEO.
+  try{
+   const xp=data(await api('/api/me/xp?scope=general'));
+   const rank=xp?.ranking||xp;
+   if(rank&&typeof rank==='object'){
+    credentialData.puntos=Number(rank.puntos)||0;
+    credentialData.posicion_actividad=Number(rank.posicion)||0;
+    credentialData.nivel=String(rank.nivel||'Participante');
+    credentialData.nivel_icono=String(rank.nivel_icono||'🥉');
+   }
+  }catch{}
+  if(frame.contentWindow&&frame.isConnected){
+   frame.contentWindow.postMessage({type:'movida-geo-credential-data',public_id:id,credential:credentialData},GEO_FRAME_ORIGIN);
+  }
+ }catch{
+  if(status)status.textContent='No se pudo recuperar tu credencial de forma segura. Utiliza el botón Abrir Directorio completo.';
+ }
+});
+
 document.addEventListener('submit',event=>{if(!['login-form','profile-form','recovery-form','consume-recovery','recovery-channel-form'].includes(event.target.id))return;event.preventDefault();const handlers={'login-form':submitLogin,'profile-form':saveProfile,'recovery-form':requestRecovery,'consume-recovery':consumeRecovery,'recovery-channel-form':setRecoveryChannel};handlers[event.target.id](event.target);});
 document.addEventListener('click',async event=>{
  if(event.target.closest('.skip')){event.preventDefault();const main=document.querySelector('#main');main?.setAttribute('tabindex','-1');main?.focus();return;}

@@ -1,0 +1,19 @@
+name: Mi Movida · integración credencial GEO
+on:
+  pull_request:
+    paths: ['mi-movida/**','tests/mi-movida-geo-contract.mjs','.github/workflows/mi-movida-geo.yml']
+  push:
+    branches: [feat/credencial-integracion-geo-20261102]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --check mi-movida/app.js
+      - run: node tests/mi-movida-geo-contract.mjs
