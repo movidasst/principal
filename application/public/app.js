@@ -56,7 +56,7 @@ function toast(text){const el=document.querySelector('#toast');el.textContent=te
 function modal(title,text,extra=''){document.querySelector('#modal-content').innerHTML='<h2 id="modal-title">'+esc(title)+'</h2><p>'+esc(text)+'</p>'+extra;document.querySelector('#modal').showModal();}
 function displayName(){return [state.profile?.nombres,state.profile?.apellidos].filter(Boolean).join(' ').trim()||state.session?.person?.display_name||'Integrante';}
 function initials(){return esc(displayName().split(/\s+/).map(s=>s[0]).slice(0,2).join(''));}
-function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+((state.photoObjectUrl||(!EDGE_API_BASE&&state.profile?.foto_url))?'<img src="'+esc(state.photoObjectUrl||'/api/me/photo')+'" alt="Tu fotografía" class="avatar-photo">':initials())+'</span>';}
+function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+(safePhotoUrl(state.profile?.foto_url)?'<img src="'+esc(safePhotoUrl(state.profile.foto_url))+'" alt="Tu fotografía" class="avatar-photo" referrerpolicy="no-referrer">':initials())+'</span>';}
 function brand(){return '<div class="brand"><img src="/logo-oficial-movida-sst-plus.png" alt="La Movida de SST+"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>LA MOVIDA DE SST+</small></span></div>';}
 function navLinks(){return routes.map(([key,ico,label,group])=>(group?'<div class="nav-group">'+group+'</div>':'')+'<a class="nav-link '+(state.route===key?'active':'')+'" href="#/'+key+'"'+(state.route===key?' aria-current="page"':'')+'>'+icon(ico)+esc(label)+'</a>').join('');}
 function header(){
@@ -92,17 +92,14 @@ async function boot(){
  try{await refreshSession();if(state.session?.authenticated&&!state.recoveryToken){if(state.channelToken)location.hash='#/cuenta';await navigate();}else renderLogin(state.channelToken?'Ingresa para confirmar tu canal de recuperación.':'');}
  catch(error){renderLogin(error.message);}
 }
-async function loadPrivatePhoto(){
- if(!EDGE_API_BASE||!state.edgeAccessToken||!state.profile?.foto_url)return;
- try{
-  const res=await fetch(EDGE_API_BASE+'/api/me/photo',{headers:{Authorization:'Bearer '+state.edgeAccessToken},credentials:'omit',cache:'no-store',redirect:'error'});
-  if(!res.ok||!/^image\/(jpeg|png|webp)/.test(res.headers.get('content-type')||''))return;
-  const image=await res.blob();if(image.size>5242880)return;
-  if(state.photoObjectUrl)URL.revokeObjectURL(state.photoObjectUrl);
-  state.photoObjectUrl=URL.createObjectURL(image);
+function safePhotoUrl(value){
+ try{const url=new URL(String(value||''));if(url.protocol!=='https:')return '';
+ const h=url.hostname.toLowerCase();
+ if(h==='drive.google.com'||h==='drive.usercontent.google.com'||h==='lh3.googleusercontent.com'||h.endsWith('.googleusercontent.com')||h==='lfdmbkzghnwvsapxypvt.supabase.co')return url.href;
  }catch{}
+ return '';
 }
-async function getProfile(){const p=data(await api('/api/me/profile'));state.profile=p.profile||p;await loadPrivatePhoto();return state.profile;}
+async function getProfile(){const p=data(await api('/api/me/profile'));state.profile=p.profile||p;return state.profile;}
 function getRoute(){const route=location.hash.replace(/^#\//,'');return routes.some(r=>r[0]===route)?route:'inicio';}
 async function navigate(){
  if(!state.session?.authenticated){renderLogin();return;}
@@ -140,7 +137,7 @@ function field(name,label,value,type='text',extra=''){return '<label class="fiel
 function toggle(name,title,text){return '<label class="toggle-row"><span><strong>'+esc(title)+'</strong><p>'+esc(text)+'</p></span><input class="switch" type="checkbox" name="'+name+'" '+(state.profile?.[name]?'checked':'')+'></label>';}
 function profileView(){
  const p=state.profile||{};
- return '<form id="profile-form"><div class="two-col"><section class="panel"><h2>Mi perfil profesional</h2><p class="subtitle">'+esc(displayName())+'</p><div class="field-grid spaced">'+field('pais_iso2','País de residencia · ISO',p.pais_iso2,'text','pattern="[A-Za-z]{2}" maxlength="2" required')+field('estado','Estado o región',p.estado)+field('municipio','Municipio o ciudad',p.municipio)+field('correo','Correo de contacto',p.correo,'email','readonly')+field('telefono_e164','Teléfono internacional',p.telefono_e164,'tel','pattern="[+][1-9][0-9]{6,14}" placeholder="+…"')+field('whatsapp_username','Usuario de WhatsApp',p.whatsapp_username)+field('grado','Grado de formación',p.grado)+field('carrera','Profesión o carrera',p.carrera)+field('postgrado','Postgrado',p.postgrado)+field('doctorado','Doctorado',p.doctorado)+field('laboral','Situación laboral',p.laboral)+field('linkedin','Perfil de LinkedIn',p.linkedin,'url')+'</div><div class="spaced">'+note('El documento y la identidad canónica requieren un proceso de verificación. Cambiar el país de residencia no cambia el país emisor del documento.')+'</div></section><section class="panel"><h2>Privacidad del perfil</h2>'+note('Preferencias en revisión: los consumidores antiguos del Directorio necesitan adaptarse antes de garantizar estos controles en todo el ecosistema.')+toggle('mostrar_correo','Mostrar correo','Oculto salvo autorización expresa.')+toggle('mostrar_wasap','Mostrar WhatsApp','Publicar tu teléfono es una decisión independiente.')+toggle('mostrar_whatsapp_username','Mostrar usuario de WhatsApp','Control independiente del número de teléfono.')+toggle('mostrar_insignias','Mostrar insignias','Publica únicamente reconocimientos autorizados.')+'<div class="divider"></div><h3>Fotografía</h3>'+avatar(true)+'<label class="field spaced"><span>Archivo JPG, PNG o WebP · máximo 5 MB</span><input type="file" id="photo-file" accept="image/jpeg,image/png,image/webp"></label><button class="btn spaced" type="button" data-action="upload-photo">Actualizar fotografía</button><p class="subtitle">La fotografía se mostrará en el Directorio, como en tu perfil actual. No incluye tus credenciales.</p></section></div><div class="form-actions"><button type="submit" class="btn primary">Guardar cambios '+icon('check')+'</button></div><p id="profile-message" role="status"></p></form>';
+ return '<form id="profile-form"><div class="two-col"><section class="panel"><h2>Mi perfil profesional</h2><p class="subtitle">'+esc(displayName())+'</p><div class="field-grid spaced">'+field('pais_iso2','País de residencia · ISO',p.pais_iso2,'text','pattern="[A-Za-z]{2}" maxlength="2" required')+field('estado','Estado o región',p.estado)+field('municipio','Municipio o ciudad',p.municipio)+field('correo','Correo de contacto',p.correo,'email','readonly')+field('telefono_e164','Teléfono internacional',p.telefono_e164,'tel','pattern="[+][1-9][0-9]{6,14}" placeholder="+…"')+field('whatsapp_username','Usuario de WhatsApp',p.whatsapp_username)+field('grado','Grado de formación',p.grado)+field('carrera','Profesión o carrera',p.carrera)+field('postgrado','Postgrado',p.postgrado)+field('doctorado','Doctorado',p.doctorado)+field('laboral','Situación laboral',p.laboral)+field('linkedin','Perfil de LinkedIn',p.linkedin,'url')+'</div><div class="spaced">'+note('El documento y la identidad canónica requieren un proceso de verificación. Cambiar el país de residencia no cambia el país emisor del documento.')+'</div></section><section class="panel"><h2>Privacidad del perfil</h2>'+note('Preferencias en revisión: los consumidores antiguos del Directorio necesitan adaptarse antes de garantizar estos controles en todo el ecosistema.')+toggle('mostrar_correo','Mostrar correo','Oculto salvo autorización expresa.')+toggle('mostrar_wasap','Mostrar WhatsApp','Publicar tu teléfono es una decisión independiente.')+toggle('mostrar_whatsapp_username','Mostrar usuario de WhatsApp','Control independiente del número de teléfono.')+toggle('mostrar_insignias','Mostrar insignias','Publica únicamente reconocimientos autorizados.')+'<div class="divider"></div><h3>Fotografía del Directorio</h3>'+avatar(true)+'<p class="subtitle">Esta foto ya se registró en Google Drive; Mi Movida solo muestra el enlace almacenado en Supabase. Para cambiarla, utiliza el procedimiento actual de Registro o Directorio.</p></section></div><div class="form-actions"><button type="submit" class="btn primary">Guardar cambios '+icon('check')+'</button></div><p id="profile-message" role="status"></p></form>';
 }
 function sourceSelect(){return '<label><span class="sr-only">Filtrar fuente</span><select class="btn" id="source-filter">'+['Todas','Estudia','Participa','Inteligencia','Desarrolla'].map(v=>'<option '+(state.source===v?'selected':'')+'>'+v+'</option>').join('')+'</select></label>';}
 function pointsView(d){
@@ -187,23 +184,6 @@ async function saveProfile(form){
  try{await api('/api/me/profile',{method:'PATCH',body:JSON.stringify(body)});await getProfile();state.cache={};await navigate();toast('Tus cambios se guardaron. Los cambios de contacto pueden requerir verificación.');}
  catch(error){setFormBusy(form,false);const message=document.querySelector('#profile-message');message.textContent=error.status===409?'El perfil cambió mientras lo editabas. Recarga la consulta antes de guardar.':error.message;message.setAttribute('role','alert');}
 }
-async function cleanPhoto(file){
- const bitmap=await createImageBitmap(file);
- try{
-  const width=Math.min(bitmap.width,1600),height=Math.max(1,Math.round(bitmap.height*width/bitmap.width));
-  const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
-  const ctx=canvas.getContext('2d');if(!ctx)throw Error('No se pudo procesar la fotografía.');
-  ctx.drawImage(bitmap,0,0,width,height);
-  return await new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('No se pudo limpiar la fotografía.')),'image/jpeg',0.84));
- }finally{bitmap.close?.();}
-}
-async function uploadPhoto(){
- const input=document.querySelector('#photo-file'),file=input?.files?.[0];if(!file){toast('Selecciona una fotografía.');return;}
- if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){toast('Usa una imagen JPG, PNG o WebP de máximo 5 MB.');return;}
- const button=document.querySelector('[data-action="upload-photo"]');button.disabled=true;
- try{const upload=EDGE_API_BASE?await cleanPhoto(file):file;if(upload.size>5*1024*1024)throw Error('La foto procesada supera 5 MB.');await api('/api/me/photo',{method:'POST',headers:{'Content-Type':upload.type},body:upload});await getProfile();await navigate();toast('Fotografía actualizada.');}
- catch(error){toast(error.message);if(button.isConnected)button.disabled=false;}
-}
 async function logout(){
  const previous=state.session;
  try{await api('/api/session/logout',{method:'POST',body:'{}'});clearPrivateState();renderLogin();}
@@ -245,7 +225,6 @@ document.addEventListener('click',async event=>{
  if(action==='menu'){state.drawer=!state.drawer;renderCurrent();document.querySelector(state.drawer?'#drawer-close':'.menu-button')?.focus();return;}
  if(action==='logout'){target.disabled=true;await logout();return;}
  if(action==='recovery'){recoveryForm();return;}
- if(action==='upload-photo'){await uploadPhoto();return;}
  if(action==='download-credential'){downloadCredential();return;}
  if(action==='download-moodle'){await downloadMoodleDocument(target.dataset.file);return;}
  if(action==='more-xp'){await more('xp');return;}
