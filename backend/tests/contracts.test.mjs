@@ -69,3 +69,16 @@ test('PostgreSQL staged contracts, ownership, recovery and XP regression',async 
  });
  }finally{await close();}
 });
+
+
+test('login de dos campos y recuperación rechazan documentos desconocidos sin depender de país',async()=>{
+ const {db,exec}=await createSyntheticStore();
+ try{
+  const match=await exec('mi_movida_auth_lookup_document',{p_document:' demo001 ',p_code:'a1b2c'});
+  assert.equal(match?.integrante_id,'900001');
+  assert.equal(await exec('mi_movida_auth_lookup_document',{p_document:'ZZZ999',p_code:'A1B2C'}),null);
+  assert.equal(await exec('mi_movida_auth_lookup_document',{p_document:'DEMO001',p_code:'BAD99'}),null);
+  const rec=await exec('mi_movida_recovery_prepare_document',{p_document:'ZZZ999',p_token_hash:'a'.repeat(64),p_ip_hash:'b'.repeat(64)});
+  assert.equal(rec?.delivery,null);
+ }finally{await db.close();}
+});
