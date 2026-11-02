@@ -421,3 +421,7 @@ verify_jwt = false
 
 [functions.validar-integrante]
 verify_jwt = false
+
+[functions.mi-movida-api]
+# Login sin JWT; cada ruta privada valida el token Supabase en el handler.
+verify_jwt = false
