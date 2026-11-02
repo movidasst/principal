@@ -18,3 +18,9 @@ test('Migración Mi Movida completamente independiente de funciones PIF',async()
   assert.doesNotMatch(migration,/\bpif_current_integrante_id\b|\bpif_ensure_access\b|\bpif_has_full_access\b/i);
  }
 });
+
+test('Migración de publicación conserva las fotos existentes en Drive',async()=>{
+ const sql=await readFile(new URL('../../backend/sql/005_production_release_atomic.sql',import.meta.url),'utf8');
+ assert.doesNotMatch(sql,/mi-movida-photos|CREATE POLICY mi_movida_photo_|pif_current_integrante_id/i);
+ assert.match(sql,/public\.integrantes\.foto_url/);
+});
