@@ -74,7 +74,7 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
  if(route==='/api/session/logout'&&req.method==='POST'){
   const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
   if(!token)return bad('unauthorized');
-  const c=await context(url,pub,token);
+  const c=await context(url,pub,serviceKey||'',token);
   if(!c)return bad('unauthorized');
   const service=env('SUPABASE_SERVICE_ROLE_KEY'),sid=decodeSession(token);
   if(!service||!sid)return bad('not_configured',503);
