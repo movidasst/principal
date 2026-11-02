@@ -278,3 +278,30 @@ table { min-width:460px; }
 @media(prefers-reduced-motion:reduce) {
   *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; }
 }
+
+/* Volver al HUB público en la misma pestaña: sesión, API y datos sin cambios. */
+.hub-return-row {
+  display:flex; align-items:center; justify-content:flex-start;
+  margin:0 0 18px;
+}
+.hub-return-link {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:9px; min-height:46px; max-width:100%;
+  padding:11px 15px; border:1px solid #C9E5E0; border-radius:12px;
+  color:#08646D; background:#FFFFFF; text-decoration:none;
+  font-weight:700; font-size:.85rem; line-height:1.3;
+  box-shadow:0 5px 20px rgba(0,123,133,.055);
+  transition:background .16s ease,border-color .16s ease,transform .16s ease;
+}
+.hub-return-link svg { width:18px; height:18px; flex-shrink:0; }
+.hub-return-link:hover { background:#E8F6F4; border-color:#9ACFC8; transform:translateY(-1px); }
+.hub-return-link:focus-visible { outline:3px solid #007B85; outline-offset:3px; }
+.login-form > .hub-return-link { margin:0 0 26px; }
+@media(max-width:359px) {
+  .hub-return-row .hub-return-link { width:100%; }
+  .hub-return-link { font-size:.81rem; padding-inline:12px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .hub-return-link { transition:none; }
+  .hub-return-link:hover { transform:none; }
+}
