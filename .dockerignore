@@ -1,0 +1,14 @@
+.git
+.github
+node_modules
+.env
+.env.*
+!.env.example
+staging
+backend
+docs
+prototipo
+previsualizaciones
+application/tests
+application/staging
+*.log
