@@ -187,11 +187,21 @@ async function saveProfile(form){
  try{await api('/api/me/profile',{method:'PATCH',body:JSON.stringify(body)});await getProfile();state.cache={};await navigate();toast('Tus cambios se guardaron. Los cambios de contacto pueden requerir verificación.');}
  catch(error){setFormBusy(form,false);const message=document.querySelector('#profile-message');message.textContent=error.status===409?'El perfil cambió mientras lo editabas. Recarga la consulta antes de guardar.':error.message;message.setAttribute('role','alert');}
 }
+async function cleanPhoto(file){
+ const bitmap=await createImageBitmap(file);
+ try{
+  const width=Math.min(bitmap.width,1600),height=Math.max(1,Math.round(bitmap.height*width/bitmap.width));
+  const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+  const ctx=canvas.getContext('2d');if(!ctx)throw Error('No se pudo procesar la fotografía.');
+  ctx.drawImage(bitmap,0,0,width,height);
+  return await new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('No se pudo limpiar la fotografía.')),'image/jpeg',0.84));
+ }finally{bitmap.close?.();}
+}
 async function uploadPhoto(){
  const input=document.querySelector('#photo-file'),file=input?.files?.[0];if(!file){toast('Selecciona una fotografía.');return;}
  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){toast('Usa una imagen JPG, PNG o WebP de máximo 5 MB.');return;}
  const button=document.querySelector('[data-action="upload-photo"]');button.disabled=true;
- try{await api('/api/me/photo',{method:'POST',headers:{'Content-Type':file.type},body:file});await getProfile();await navigate();toast('Fotografía actualizada.');}
+ try{const upload=EDGE_API_BASE?await cleanPhoto(file):file;if(upload.size>5*1024*1024)throw Error('La foto procesada supera 5 MB.');await api('/api/me/photo',{method:'POST',headers:{'Content-Type':upload.type},body:upload});await getProfile();await navigate();toast('Fotografía actualizada.');}
  catch(error){toast(error.message);if(button.isConnected)button.disabled=false;}
 }
 async function logout(){
