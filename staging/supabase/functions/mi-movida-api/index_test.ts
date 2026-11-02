@@ -62,3 +62,53 @@ Deno.test('El canal de recuperación requiere habilitación expresa',async()=>{
   if(response.status!==503)throw new Error('Channel must remain disabled');
  }
 });
+
+Deno.test('La tarjeta GEO sólo expone datos del integrante cuya sesión está validada',async()=>{
+ const previous=globalThis.fetch;
+ const sid='22222222-2222-4222-8222-222222222222',uid='11111111-1111-4111-8111-111111111111';
+ const access='aaa.'+btoa(JSON.stringify({session_id:sid}))+'.sig';
+ const expectedPublicId='33333333-3333-4333-8333-333333333333';
+ let memberQuery='';
+ try{
+  globalThis.fetch=async(input:RequestInfo|URL,init?:RequestInit):Promise<Response>=>{
+   const address=new URL(String(input));
+   if(address.pathname==='/auth/v1/user')return Response.json({id:uid});
+   if(address.pathname==='/rest/v1/rpc/mi_movida_session_context')return Response.json({active:true,integrante_id:'42'});
+   if(address.pathname==='/rest/v1/integrantes'){
+    memberQuery=address.searchParams.get('id')||'';
+    return Response.json([{id:42,public_id:expectedPublicId,nombres:'Persona',apellidos:'Ejemplo',documento:'SYN-001',pais_iso2:'VE',grado:'SST',carrera:'SST',foto_url:'https://drive.google.com/example'}]);
+   }
+   return new Response(null,{status:404});
+  };
+  const env=(k:string)=>({
+   MM_ALLOW_LOCAL_DOCKER_HOST:'true',SUPABASE_URL:'http://kong:8000',SUPABASE_ANON_KEY:'public-fixture',
+   SUPABASE_SERVICE_ROLE_KEY:'private-fixture',MM_ENABLE_MEMBER_READS:'true'
+  } as Record<string,string>)[k];
+  const req=new Request('https://example.test/functions/v1/mi-movida-api/api/me/credential-card',{headers:{origin:'https://www.movidasst.com',authorization:'Bearer '+access}});
+  const resp=await handle(req,env);
+  if(resp.status!==200)throw new Error('Expected own credential card: HTTP '+resp.status);
+  const json=await resp.json();
+  if(memberQuery!=='eq.42'||json.data.public_id!==expectedPublicId||json.data.codigo_integrante!==undefined||json.data.access_token!==undefined)throw new Error('Unauthorized disclosure or wrong member');
+ }finally{globalThis.fetch=previous;}
+});
+
+Deno.test('La tarjeta GEO rechaza filas de integrantes ajenos',async()=>{
+ const previous=globalThis.fetch,uid='11111111-1111-4111-8111-111111111111';
+ const access='aaa.'+btoa(JSON.stringify({session_id:'22222222-2222-4222-8222-222222222222'}))+'.sig';
+ try{
+  globalThis.fetch=async(input:RequestInfo|URL):Promise<Response>=>{
+   const path=new URL(String(input)).pathname;
+   if(path==='/auth/v1/user')return Response.json({id:uid});
+   if(path==='/rest/v1/rpc/mi_movida_session_context')return Response.json({active:true,integrante_id:'42'});
+   if(path==='/rest/v1/integrantes')return Response.json([{id:99,public_id:'33333333-3333-4333-8333-333333333333'}]);
+   return new Response(null,{status:404});
+  };
+  const env=(k:string)=>({
+   MM_ALLOW_LOCAL_DOCKER_HOST:'true',SUPABASE_URL:'http://kong:8000',SUPABASE_ANON_KEY:'public-fixture',
+   SUPABASE_SERVICE_ROLE_KEY:'private-fixture',MM_ENABLE_MEMBER_READS:'true'
+  } as Record<string,string>)[k];
+  const req=new Request('https://example.test/functions/v1/mi-movida-api/api/me/credential-card',{headers:{origin:'https://www.movidasst.com',authorization:'Bearer '+access}});
+  const resp=await handle(req,env);
+  if(resp.status!==409)throw new Error('Cross-member response must be denied');
+ }finally{globalThis.fetch=previous;}
+});
