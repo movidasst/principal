@@ -70,3 +70,7 @@ La rama de revisión ahora muestra solamente **cédula/documento y código de ci
 La interfaz referencia `/logo-oficial-movida-sst-plus.png` (recurso oficial actualmente referenciado por el HUB) y preserva proporciones sin recorte circular. **Pendiente:** verificar visualmente contra el archivo horizontal exacto instalado en Moodle; el nombre por sí solo no demuestra equivalencia.
 
 Se actualizaron pruebas sintéticas y se añadieron casos específicos de los nuevos contratos. **No se ha ejecutado la suite completa después de estos cambios:** el entorno disponible para esta revisión no resolvió el host de GitHub para clonar y ejecutar Node. Las 42 pruebas previamente comunicadas corresponden al estado anterior de la rama. Ejecutar `npm ci && npm test` en una copia actualizada y después las pruebas nativas de Supabase antes de autorizar cualquier despliegue.
+
+## Validación automática posterior a los cambios de acceso
+
+GitHub Actions ejecutó exitosamente el flujo `Mi Movida · pruebas sintéticas` en la rama de revisión, run 41366883954, commit `02e12f9a8bc553eeabae02f578e3511b8b62d81f`. El trabajo `synthetic-tests` aprobó `npm ci --ignore-scripts`, comprobaciones `node --check` y `npm test`. Esta evidencia **sustituye** la advertencia anterior de que la suite actualizada no se había ejecutado; se mantiene la exigencia de pruebas nativas Supabase/Storage/Edge, correo y Moodle real antes de producción.
