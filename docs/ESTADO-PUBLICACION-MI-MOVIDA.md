@@ -29,3 +29,11 @@ No se modificaron datos de integrantes, XP, certificados ni contraseñas de prod
 
 ## Procedimiento seguro de activación
 Primero validar contratos y cerrar los ocho puntos. Después habilitar flags en ensayo, ejecutar E2E nativa, probar el build en navegador, desplegar migración incremental revisada, habilitar al grupo piloto y finalmente a la comunidad. Si hay fallo, deshabilitar flags y revertir frontend sin borrar integrantes ni XP.
+
+## Comprobación específica del Supabase existente — 2026-11-02
+
+Se efectuaron consultas **solo de catálogo** (sin leer cédulas, códigos ni perfiles). El proyecto tiene la tabla `integrante_auth_links` y en `integrantes` existen `cedula`, `documento` y `codigo_integrante`. Sin embargo, en el esquema actual **no existen** `public.mi_movida_auth_lookup_document`, `public.mi_movida_session_context`, `public.mi_movida_profile` ni `private.mi_movida_rate_limits`; tampoco existen todavía las columnas `mi_movida_auth_epoch` y `mi_movida_profile_version`.
+
+Por lo tanto la función Edge instalada con las banderas apagadas **no puede iniciar sesión realmente** hasta aplicar migraciones incrementales compatibles. No confundir el éxito de migraciones aisladas con su instalación en la base compartida. No ejecutar directamente el baseline sintético ni el script general contra producción: contienen cambios de constraints y permisos que afectan a consumidores existentes; requieren comparación de DDL, respaldo y regresiones PIF/Directorio antes de promover.
+
+La normalización de cédula `V-12.345.678` → `12345678` fue incorporada al login de Edge y al RPC bajo revisión. Los usuarios siguen ingresando con cédula y código de cinco caracteres, sin país obligatorio ni nuevo registro.
