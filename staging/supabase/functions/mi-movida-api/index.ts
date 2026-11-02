@@ -58,7 +58,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   const c=await sessionContext(new URL(base),pub,service,token);
   if(!c)return respond({error:{code:'unauthorized'}},401,origin);
   const configured=env('MM_ENABLE_MOODLE_READS')==='true'&&!!env('MOODLE_BASE_URL')&&!!env('MOODLE_TOKEN');
-  const lms=configured?createAcademia({baseUrl:env('MOODLE_BASE_URL'),token:env('MOODLE_TOKEN')}):null;
+  const lms=configured?createAcademia({baseUrl:env('MOODLE_BASE_URL'),token:env('MOODLE_TOKEN')} as any):null;
   try{
    if(route==='/api/me/learning'){
     if(!lms)return respond({error:{code:'moodle_not_configured'}},503,origin);
@@ -76,7 +76,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
    const ownResponse=await fetch(new URL('/rest/v1/rpc/mi_movida_certificates',base),{method:'POST',headers:{apikey:pub,authorization:'Bearer '+token,'content-type':'application/json'},body:'{}',redirect:'error'});
    if(!ownResponse.ok)return respond({error:{code:'source_unavailable'}},503,origin);
    const own=await ownResponse.json();
-   let moodle={status:'unavailable',certificates:[],message:'Moodle de pruebas no está configurado.'};
+   let moodle:any={status:'unavailable',certificates:[],message:'Moodle de pruebas no está configurado.'};
    if(lms&&c.moodle_user_id)try{moodle=await lms.getCertificates(c.moodle_user_id,{offset:0,limit:100});}catch{moodle={status:'unavailable',certificates:[],message:'No se pudieron consultar certificados académicos.'};}
    return respond({data:{items:[...(own?.items||[]),...moodle.certificates.map((item:Record<string,unknown>)=>({...item,source:'Academia Moodle',download_url:'/api/me/certificates/moodle/'+item.id}))],moodle_status:moodle.status,message:moodle.status==='available'?null:moodle.message||'La emisión académica no está disponible.'}},200,origin);
   }catch{return respond({error:{code:'moodle_unavailable'}},503,origin);}
