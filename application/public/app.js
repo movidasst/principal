@@ -8,7 +8,7 @@ const routes=[
  ['aprendizaje','book','Mi aprendizaje'],['certificados','cert','Mis certificados'],['cuenta','shield','Mi cuenta y seguridad','MI CUENTA']
 ];
 const EDGE_API_BASE=document.querySelector('meta[name="mi-movida-edge-api"]')?.content?.replace(/\/$/,'')||'';
-const state={edgeAccessToken:null,edgeRefreshToken:null,session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
+const state={edgeAccessToken:null,edgeRefreshToken:null,photoObjectUrl:null,session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
 const root=document.querySelector('#root');
 class ApiError extends Error{constructor(message,status,code){super(message);this.status=status;this.code=code;}}
 async function api(path,options={}){
@@ -56,7 +56,7 @@ function toast(text){const el=document.querySelector('#toast');el.textContent=te
 function modal(title,text,extra=''){document.querySelector('#modal-content').innerHTML='<h2 id="modal-title">'+esc(title)+'</h2><p>'+esc(text)+'</p>'+extra;document.querySelector('#modal').showModal();}
 function displayName(){return [state.profile?.nombres,state.profile?.apellidos].filter(Boolean).join(' ').trim()||state.session?.person?.display_name||'Integrante';}
 function initials(){return esc(displayName().split(/\s+/).map(s=>s[0]).slice(0,2).join(''));}
-function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+(state.profile?.foto_url?'<img src="/api/me/photo" alt="Tu fotografía" class="avatar-photo">':initials())+'</span>';}
+function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+((state.photoObjectUrl||(!EDGE_API_BASE&&state.profile?.foto_url))?'<img src="'+esc(state.photoObjectUrl||'/api/me/photo')+'" alt="Tu fotografía" class="avatar-photo">':initials())+'</span>';}
 function brand(){return '<div class="brand"><img src="/logo-oficial-movida-sst-plus.png" alt="La Movida de SST+"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>LA MOVIDA DE SST+</small></span></div>';}
 function navLinks(){return routes.map(([key,ico,label,group])=>(group?'<div class="nav-group">'+group+'</div>':'')+'<a class="nav-link '+(state.route===key?'active':'')+'" href="#/'+key+'"'+(state.route===key?' aria-current="page"':'')+'>'+icon(ico)+esc(label)+'</a>').join('');}
 function header(){
@@ -83,7 +83,7 @@ function renderLogin(message=''){
  state.busy=false;root.setAttribute('aria-busy','false');document.title='Acceso · Mi Movida';
  root.innerHTML='<main class="login-shell" id="main"><section class="login-art">'+brand()+'<span class="eyebrow">DE LA REACCIÓN A LA PREVENCIÓN</span><h1>Tu comunidad.<br>Tu recorrido.<br><span>Tu movida.</span></h1><p>Un solo espacio para tu identidad, tus aportes y tu aprendizaje.</p><div class="login-orbit"><img src="./assets/comunicacion-asertiva.svg" alt=""><img src="./assets/negociacion.svg" alt=""><img src="./assets/liderazgo-preventivo.svg" alt=""></div></section><section class="login-form"><span class="eyebrow">BIENVENIDO A MI MOVIDA</span><h2>Vuelve a tu espacio.</h2><p class="subtitle">Usa tu identidad actual de integrante. No necesitas registrarte de nuevo.</p>'+(message?'<div class="note amber" role="alert">'+esc(message)+'</div>':'')+(state.recoveryToken?'<form id="consume-recovery"><p class="subtitle">Confirma que deseas recuperar tu acceso. El enlace se utiliza una sola vez y no cambia tu contraseña de Moodle.</p><button type="submit" class="btn primary wide spaced">Confirmar recuperación</button></form>':'<form id="login-form">'+loginFields()+'<label class="field"><span>Código de integrante</span><input name="member_code" type="password" maxlength="5" minlength="5" pattern="[A-Za-z0-9]{5}" autocapitalize="characters" autocomplete="current-password" required></label><button type="submit" class="btn primary wide">Ingresar '+icon('arrow')+'</button></form><button class="login-help" data-action="recovery">¿Necesitas recuperar tu acceso?</button>')+'<p class="login-note">'+icon('shield')+' Tu código no se guarda en este navegador.</p></section></main>';
 }
-function clearPrivateState(){state.edgeAccessToken=null;state.edgeRefreshToken=null;state.session=null;state.profile=null;state.cache={};state.error=null;state.drawer=false;state.loadId++;document.querySelector('#modal')?.close();}
+function clearPrivateState(){if(state.photoObjectUrl)URL.revokeObjectURL(state.photoObjectUrl);state.photoObjectUrl=null;state.edgeAccessToken=null;state.edgeRefreshToken=null;state.session=null;state.profile=null;state.cache={};state.error=null;state.drawer=false;state.loadId++;document.querySelector('#modal')?.close();}
 async function refreshSession(){const payload=data(await api('/api/session'));state.session=payload;state.environment=payload.environment;document.querySelector(".demo-bar").textContent=payload.environment==="synthetic-local"?"STAGING LOCAL · DATOS SINTÉTICOS · NO USAR DATOS REALES":"MI MOVIDA · ESPACIO PERSONAL";return payload;}
 async function boot(){
  const url=new URL(location.href),token=url.searchParams.get('recovery_token')||url.searchParams.get('token'),channelToken=url.searchParams.get('channel_token');
@@ -92,7 +92,17 @@ async function boot(){
  try{await refreshSession();if(state.session?.authenticated&&!state.recoveryToken){if(state.channelToken)location.hash='#/cuenta';await navigate();}else renderLogin(state.channelToken?'Ingresa para confirmar tu canal de recuperación.':'');}
  catch(error){renderLogin(error.message);}
 }
-async function getProfile(){const p=data(await api('/api/me/profile'));state.profile=p.profile||p;return state.profile;}
+async function loadPrivatePhoto(){
+ if(!EDGE_API_BASE||!state.edgeAccessToken||!state.profile?.foto_url)return;
+ try{
+  const res=await fetch(EDGE_API_BASE+'/api/me/photo',{headers:{Authorization:'Bearer '+state.edgeAccessToken},credentials:'omit',cache:'no-store',redirect:'error'});
+  if(!res.ok||!/^image\/(jpeg|png|webp)/.test(res.headers.get('content-type')||''))return;
+  const image=await res.blob();if(image.size>5242880)return;
+  if(state.photoObjectUrl)URL.revokeObjectURL(state.photoObjectUrl);
+  state.photoObjectUrl=URL.createObjectURL(image);
+ }catch{}
+}
+async function getProfile(){const p=data(await api('/api/me/profile'));state.profile=p.profile||p;await loadPrivatePhoto();return state.profile;}
 function getRoute(){const route=location.hash.replace(/^#\//,'');return routes.some(r=>r[0]===route)?route:'inicio';}
 async function navigate(){
  if(!state.session?.authenticated){renderLogin();return;}
