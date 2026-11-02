@@ -78,8 +78,7 @@ jobs:
           done
           curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready
           code=$(curl -sS -o /tmp/private-response -w '%{http_code}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/me/profile)
-          test "$code" = "503"
-          # Con login habilitado pero sin JWT, el perfil no puede ser leído.
+          # Sin JWT, incluso el entorno sintético habilitado debe negar el perfil.
           test "$code" = "401"
           curl -sS -o /tmp/mm-login.json -H 'Origin: https://www.movidasst.com' -H 'Content-Type: application/json' -d '{"document":"DEMO001","member_code":"A1B2C"}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/session/bootstrap
           node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('/tmp/mm-login.json','utf8'));if(!d.data?.access_token)throw Error('login did not create a valid session');fs.writeFileSync('/tmp/mm-jwt',d.data.access_token,{mode:0o600})"
