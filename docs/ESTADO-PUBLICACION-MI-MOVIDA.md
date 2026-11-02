@@ -43,3 +43,9 @@ La normalización de cédula `V-12.345.678` → `12345678` fue incorporada al lo
 Se prepararon rutas GET y POST de fotografía con autenticación, ruta de objeto asignada al usuario y límite de 5 MB en lectura por streaming. La interfaz obtiene la imagen autenticada como blob de sesión y vuelve a codificar la foto con Canvas antes de enviarla a Edge para no transmitir metadatos EXIF originales. La función requiere simultáneamente `MM_ENABLE_MEMBER_READS=true`, `MM_ENABLE_PHOTOS=true` y, para escribir, `MM_ENABLE_MEMBER_WRITES=true`. **Estos interruptores están desactivados en producción**. No se ha probado aún la lectura de fotos legacy ni la migración SQL real y el navegador requiere pruebas en dispositivos móviles.
 
 PIF no forma parte de Mi Movida: eliminadas sus referencias de las migraciones, tests y políticas Storage, y añadida regresión que impide reintroducirlas.
+
+## Avance — recuperación y versión 5 de Edge
+
+La función Edge incorpora solicitud de recuperación por correo verificado, enlace de un solo uso y consumo del token, además de alta y confirmación del canal de recuperación. Requieren `MM_ENABLE_RECOVERY=true`, correo de salida autorizado y, para el canal, `MM_ENABLE_MEMBER_WRITES=true`. **No se han activado en producción ni se ha enviado ningún correo real durante las pruebas**. El navegador ya recibe la sesión resultante de la recuperación sin pasar por un servidor Node.
+
+La función `mi-movida-api` está instalada en el Supabase existente como versión 5, pero no es una publicación utilizable por integrantes: faltan migraciones SQL revisadas y banderas autorizadas. Las suites sintéticas y Deno estaban aprobadas al publicarla; no sustituye una prueba integral real de login, RLS y Moodle.
