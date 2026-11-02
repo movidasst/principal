@@ -7,16 +7,18 @@ const routes=[
  ['puntos','chart','Mis puntos y ranking','MI RECORRIDO'],['insignias','award','Mis insignias'],['actividad','activity','Mi actividad'],
  ['aprendizaje','book','Mi aprendizaje'],['certificados','cert','Mis certificados'],['cuenta','shield','Mi cuenta y seguridad','MI CUENTA']
 ];
-const state={session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
+const EDGE_API_BASE=document.querySelector('meta[name="mi-movida-edge-api"]')?.content?.replace(/\/$/,'')||'';
+const state={edgeAccessToken:null,edgeRefreshToken:null,session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
 const root=document.querySelector('#root');
 class ApiError extends Error{constructor(message,status,code){super(message);this.status=status;this.code=code;}}
 async function api(path,options={}){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),25000);
  const headers={'Accept':'application/json',...options.headers};
+ if(EDGE_API_BASE&&state.edgeAccessToken)headers.Authorization='Bearer '+state.edgeAccessToken;
  if(options.body&&typeof options.body==='string')headers['Content-Type']='application/json';
  if(!['GET','HEAD'].includes(options.method||'GET')&&state.session?.csrf_token)headers['X-CSRF-Token']=state.session.csrf_token;
  try{
-  const response=await fetch(path,{...options,headers,credentials:'same-origin',cache:'no-store',redirect:'error',signal:controller.signal});
+  const response=await fetch(EDGE_API_BASE?EDGE_API_BASE+path:path,{...options,headers,credentials:EDGE_API_BASE?'omit':'same-origin',cache:'no-store',redirect:'error',signal:controller.signal});
   const payload=await response.json().catch(()=>({}));
   if(!response.ok){
    if(response.status===401&&state.session?.authenticated){clearPrivateState();renderLogin('Tu sesión terminó. Ingresa nuevamente.');}
@@ -72,7 +74,7 @@ function renderLogin(message=''){
  state.busy=false;root.setAttribute('aria-busy','false');document.title='Acceso · Mi Movida';
  root.innerHTML='<main class="login-shell" id="main"><section class="login-art">'+brand()+'<span class="eyebrow">DE LA REACCIÓN A LA PREVENCIÓN</span><h1>Tu comunidad.<br>Tu recorrido.<br><span>Tu movida.</span></h1><p>Un solo espacio para tu identidad, tus aportes y tu aprendizaje.</p><div class="login-orbit"><img src="./assets/comunicacion-asertiva.svg" alt=""><img src="./assets/negociacion.svg" alt=""><img src="./assets/liderazgo-preventivo.svg" alt=""></div></section><section class="login-form"><span class="eyebrow">BIENVENIDO A MI MOVIDA</span><h2>Vuelve a tu espacio.</h2><p class="subtitle">Usa tu identidad actual de integrante. No necesitas registrarte de nuevo.</p>'+(message?'<div class="note amber" role="alert">'+esc(message)+'</div>':'')+(state.recoveryToken?'<form id="consume-recovery"><p class="subtitle">Confirma que deseas recuperar tu acceso. El enlace se utiliza una sola vez y no cambia tu contraseña de Moodle.</p><button type="submit" class="btn primary wide spaced">Confirmar recuperación</button></form>':'<form id="login-form">'+loginFields()+'<label class="field"><span>Código de integrante</span><input name="member_code" type="password" maxlength="5" minlength="5" pattern="[A-Za-z0-9]{5}" autocapitalize="characters" autocomplete="current-password" required></label><button type="submit" class="btn primary wide">Ingresar '+icon('arrow')+'</button></form><button class="login-help" data-action="recovery">¿Necesitas recuperar tu acceso?</button>')+'<p class="login-note">'+icon('shield')+' Tu código no se guarda en este navegador.</p></section></main>';
 }
-function clearPrivateState(){state.session=null;state.profile=null;state.cache={};state.error=null;state.drawer=false;state.loadId++;document.querySelector('#modal')?.close();}
+function clearPrivateState(){state.edgeAccessToken=null;state.edgeRefreshToken=null;state.session=null;state.profile=null;state.cache={};state.error=null;state.drawer=false;state.loadId++;document.querySelector('#modal')?.close();}
 async function refreshSession(){const payload=data(await api('/api/session'));state.session=payload;state.environment=payload.environment;document.querySelector(".demo-bar").textContent=payload.environment==="synthetic-local"?"STAGING LOCAL · DATOS SINTÉTICOS · NO USAR DATOS REALES":"MI MOVIDA · ESPACIO PERSONAL";return payload;}
 async function boot(){
  const url=new URL(location.href),token=url.searchParams.get('recovery_token')||url.searchParams.get('token'),channelToken=url.searchParams.get('channel_token');
@@ -154,7 +156,7 @@ function setFormBusy(form,busy){form.querySelectorAll('button,input,select').for
 async function submitLogin(form){
  const f=new FormData(form),body=Object.fromEntries(['document','member_code'].map(k=>[k,String(f.get(k)||'').trim()]));
  setFormBusy(form,true);
- try{await api('/api/session/bootstrap',{method:'POST',body:JSON.stringify(body)});form.reset();await refreshSession();if(!state.session.authenticated)throw new ApiError('No se pudo establecer una sesión segura. Vuelve a ingresar.',401);location.hash=state.channelToken?'#/cuenta':'#/inicio';await navigate();}
+ try{const result=data(await api('/api/session/bootstrap',{method:'POST',body:JSON.stringify(body)}));if(EDGE_API_BASE){state.edgeAccessToken=result.access_token;state.edgeRefreshToken=result.refresh_token;}form.reset();await refreshSession();if(!state.session.authenticated)throw new ApiError('No se pudo establecer una sesión segura. Vuelve a ingresar.',401);location.hash=state.channelToken?'#/cuenta':'#/inicio';await navigate();}
  catch(error){const secret=form.elements.member_code;if(secret)secret.value='';renderLogin(error.message);}
 }
 async function saveProfile(form){
