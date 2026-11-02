@@ -65,23 +65,25 @@ jobs:
           test ! -d staging/supabase/.temp
           ! grep -R -l 'lfdmbkzghnwvsapxypvt' staging/supabase
       - name: Iniciar servicios nativos locales
-        run: supabase start --workdir ./staging -x realtime,studio,analytics,vector,imgproxy
+        run: supabase start --workdir ./staging -x realtime,studio,analytics,vector,imgproxy,edge-runtime
       - name: Verificar migraciones y seed desde cero
         run: supabase db reset --local --workdir ./staging
+      - name: Configurar flags de ensayo para runtime Edge aislado
+        run: |
+          printf 'MM_ENABLE_MEMBER_LOGIN=true\nMM_ENABLE_MEMBER_READS=true\nMM_RATE_LIMIT_SECRET=%s\n' "$(openssl rand -hex 32)" > /tmp/mi-movida-edge.env
       - name: Validar gateway nativo en modo seguro
         run: |
-          supabase functions serve mi-movida-api --workdir ./staging --no-verify-jwt > /tmp/mi-movida-edge.log 2>&1 &
+          supabase functions serve mi-movida-api --workdir ./staging --no-verify-jwt --env-file /tmp/mi-movida-edge.env > /tmp/mi-movida-edge.log 2>&1 &
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready; then break; fi
             sleep 2
           done
           curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready
           code=$(curl -sS -o /tmp/private-response -w '%{http_code}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/me/profile)
-          test "$code" = "503"
-          grep -q not_enabled /tmp/private-response
+          test "$code" = "401"
+          grep -q unauthorized /tmp/private-response
           code=$(curl -sS -o /tmp/login-response -w '%{http_code}' -H 'Content-Type: application/json' -d '{"document":"DEMO001","member_code":"A1B2C"}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/session/bootstrap)
-          test "$code" = "503"
-          grep -q not_enabled /tmp/login-response
+          node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('/tmp/login-response','utf8'));if(!d.data?.access_token)throw Error('login ficticio no generó sesión, código HTTP: '+process.argv[1])" "$code"
 
   edge-unit-tests:
     runs-on: ubuntu-latest
