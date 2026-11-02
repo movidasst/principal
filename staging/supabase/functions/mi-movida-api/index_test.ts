@@ -33,3 +33,8 @@ Deno.test('Cédula de Mi Movida compatible con validador actual',()=>{
   if(normalizeMemberDocument(input)!==expected)throw new Error('document normalization mismatch');
  }
 });
+
+Deno.test('Renovación de sesión bloqueada sin activar login',async()=>{
+ const res=await handle(new Request('https://test.supabase.co/functions/v1/mi-movida-api/api/session/refresh',{method:'POST',headers:{Origin:'https://www.movidasst.com','Content-Type':'application/json'},body:'{"refresh_token":"test-placeholder-token"}'}),()=>undefined);
+ if(res.status!==503)throw new Error('Refresh must remain disabled');
+});
