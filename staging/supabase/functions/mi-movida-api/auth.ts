@@ -74,7 +74,14 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   if(!token)return bad('unauthorized');
   const c=await context(url,pub,token);
   if(!c)return bad('unauthorized');
-  await fetch(new URL('/auth/v1/logout?scope=local',url),{method:'POST',headers:{apikey:pub,authorization:'Bearer '+token},redirect:'error'});
+  const service=env('SUPABASE_SERVICE_ROLE_KEY'),sid=decodeSession(token);
+  if(!service||!sid)return bad('not_configured',503);
+  const who=await fetch(new URL('/auth/v1/user',url),{headers:{apikey:pub,authorization:'Bearer '+token},redirect:'error'});
+  if(!who.ok)return bad('unauthorized');
+  const user=await who.json();
+  const revoked=await jsonRequest(new URL('/rest/v1/rpc/mi_movida_revoke_session',url),service,{p_auth_user_id:user.id,p_session_id:sid});
+  if(!revoked.ok)return bad('revocation_unavailable',503);
+  await fetch(new URL('/auth/v1/logout?scope=local',url),{method:'POST',headers:{apikey:pub,authorization:'Bearer '+token},redirect:'error'}).catch(()=>{});
   return good({logged_out:true});
  }
  return bad('not_enabled',503);
