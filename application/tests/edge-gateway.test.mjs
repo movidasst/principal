@@ -11,3 +11,10 @@ test('Puerta Edge aislada: sin claves privadas ni rutas de datos de miembros act
  assert.match(text,/MM_ENABLE_MOODLE_READS/);
  assert.doesNotMatch(text,/sb_secret_[A-Za-z0-9]{8,}|sk-proj-[A-Za-z0-9]{8,}/);
 });
+
+test('Migración Mi Movida completamente independiente de funciones PIF',async()=>{
+ for(const path of ['../../backend/sql/001_identity_and_profile.sql','../../staging/supabase/migrations/20261101235635_mi_movida_identity.sql']){
+  const migration=await readFile(new URL(path,import.meta.url),'utf8');
+  assert.doesNotMatch(migration,/\bpif_current_integrante_id\b|\bpif_ensure_access\b|\bpif_has_full_access\b/i);
+ }
+});
