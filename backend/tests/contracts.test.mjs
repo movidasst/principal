@@ -78,6 +78,10 @@ test('login de dos campos y recuperación rechazan documentos desconocidos sin d
   assert.equal(match?.integrante_id,'900001');
   assert.equal(await exec('mi_movida_auth_lookup_document',{p_document:'ZZZ999',p_code:'A1B2C'}),null);
   assert.equal(await exec('mi_movida_auth_lookup_document',{p_document:'DEMO001',p_code:'BAD99'}),null);
+  await db.query("insert into public.integrantes(id,documento,codigo_integrante,pais_iso2) values (900099,' demo001 ','a1b2c','VE')");
+  assert.equal(await exec('mi_movida_auth_lookup_document',{p_document:'DEMO001',p_code:'A1B2C'}),null,'no elegir arbitrariamente entre documentos normalizados iguales');
+  const grants=await db.query("select has_function_privilege('anon','public.mi_movida_auth_lookup_document(text,text)','execute') as public_login,has_function_privilege('authenticated','public.mi_movida_recovery_prepare_document(text,text,text)','execute') as public_recovery");
+  assert.equal(grants.rows[0].public_login,false);assert.equal(grants.rows[0].public_recovery,false);
   const rec=await exec('mi_movida_recovery_prepare_document',{p_document:'ZZZ999',p_token_hash:'a'.repeat(64),p_ip_hash:'b'.repeat(64)});
   assert.equal(rec?.delivery,null);
  }finally{await db.close();}
