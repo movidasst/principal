@@ -35,6 +35,22 @@ jobs:
           node --check application/server/security.mjs
       - name: Pruebas sintéticas de autenticación, SQL, XP, Moodle y permisos
         run: npm test
+      - name: Preparar Mi Movida para GitHub Pages
+        env:
+          MM_EDGE_API_URL: https://lfdmbkzghnwvsapxypvt.supabase.co/functions/v1/mi-movida-api
+        run: |
+          npm run build:pages
+          test -f mi-movida/index.html
+          test -f mi-movida/app.js
+          test -f mi-movida/styles.css
+          grep -q 'mi-movida-edge-api' mi-movida/index.html
+      - name: Guardar vista estática de revisión
+        uses: actions/upload-artifact@v4
+        with:
+          name: mi-movida-pages-review
+          path: mi-movida/
+          retention-days: 7
+
 
   native-database:
     runs-on: ubuntu-latest
