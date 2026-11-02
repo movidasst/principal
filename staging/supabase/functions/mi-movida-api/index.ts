@@ -45,7 +45,8 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   const result=await fetch(new URL('/rest/v1/rpc/'+rpc,supabase),{method:'POST',headers:{'apikey':publishable,'authorization':bearer,'content-type':'application/json'},body:JSON.stringify(paging),redirect:'error'});
   if(!result.ok)return respond({error:{code:result.status===403?'forbidden':'source_unavailable'}},result.status===403?403:503,origin);
   const data=await result.json();
-  return respond({data:rpc==='mi_movida_profile'?{...data,version:String(data.profile_version),recovery_channel:{verified:!!data.recovery_channel_verified}}:data},200,origin);
+  const resultData=(rpc==='mi_movida_xp'||rpc==='mi_movida_activity')&&data?.next_cursor&&typeof data.next_cursor==='object'?{...data,next_cursor:btoa(JSON.stringify(data.next_cursor)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}:data;
+  return respond({data:rpc==='mi_movida_profile'?{...resultData,version:String(resultData.profile_version),recovery_channel:{verified:!!resultData.recovery_channel_verified}}:resultData},200,origin);
  }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
 }
 if(import.meta.main)Deno.serve(req=>handle(req));
