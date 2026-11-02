@@ -68,6 +68,18 @@ jobs:
         run: supabase start --workdir ./staging -x realtime,studio,analytics,vector,imgproxy
       - name: Verificar migraciones y seed desde cero
         run: supabase db reset --local --workdir ./staging
+      - name: Validar respuesta Edge en runtime nativo
+        run: |
+          supabase functions serve mi-movida-api --workdir ./staging --no-verify-jwt > /tmp/mi-movida-edge.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready
+          code=$(curl -sS -o /tmp/private-response -w '%{http_code}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/me/profile)
+          test "$code" = "503"
+          grep -q not_enabled /tmp/private-response
+
 
   edge-unit-tests:
     runs-on: ubuntu-latest
