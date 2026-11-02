@@ -37,3 +37,9 @@ Se efectuaron consultas **solo de catálogo** (sin leer cédulas, códigos ni pe
 Por lo tanto la función Edge instalada con las banderas apagadas **no puede iniciar sesión realmente** hasta aplicar migraciones incrementales compatibles. No confundir el éxito de migraciones aisladas con su instalación en la base compartida. No ejecutar directamente el baseline sintético ni el script general contra producción: contienen cambios de constraints y permisos que afectan a consumidores existentes; requieren comparación de DDL, respaldo y regresiones del Directorio antes de promover.
 
 La normalización de cédula `V-12.345.678` → `12345678` fue incorporada al login de Edge y al RPC bajo revisión. Los usuarios siguen ingresando con cédula y código de cinco caracteres, sin país obligatorio ni nuevo registro.
+
+## Avance posterior: fotografías Edge
+
+Se prepararon rutas GET y POST de fotografía con autenticación, ruta de objeto asignada al usuario y límite de 5 MB en lectura por streaming. La interfaz obtiene la imagen autenticada como blob de sesión y vuelve a codificar la foto con Canvas antes de enviarla a Edge para no transmitir metadatos EXIF originales. La función requiere simultáneamente `MM_ENABLE_MEMBER_READS=true`, `MM_ENABLE_PHOTOS=true` y, para escribir, `MM_ENABLE_MEMBER_WRITES=true`. **Estos interruptores están desactivados en producción**. No se ha probado aún la lectura de fotos legacy ni la migración SQL real y el navegador requiere pruebas en dispositivos móviles.
+
+PIF no forma parte de Mi Movida: eliminadas sus referencias de las migraciones, tests y políticas Storage, y añadida regresión que impide reintroducirlas.
