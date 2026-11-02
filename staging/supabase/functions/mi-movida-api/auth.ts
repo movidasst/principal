@@ -8,6 +8,13 @@ async function bucket(secret:string,text:string){
  const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);
  return hex(await crypto.subtle.sign('HMAC',key,new TextEncoder().encode(text)));
 }
+export function normalizeMemberDocument(input:unknown):string{
+ const value=String(input??'').normalize('NFKC').trim().toUpperCase();
+ // Compatible con la validación existente: V-12.345.678 -> 12345678.
+ // No transforma identificadores alfanuméricos internacionales sin autorización.
+ if(/^(?:[VE]-?)?[0-9.\s-]+$/.test(value))return value.replace(/\D/g,'').slice(0,32);
+ return value;
+}
 function decodeSession(token:string):string|null{
  try{const payload=JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));return typeof payload.session_id==='string'?payload.session_id:null;}catch{return null;}
 }
@@ -47,7 +54,7 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   if(!service||!secret)return bad('not_configured',503);
   let data:Record<string,unknown>;
   try{data=await req.json();}catch{return bad('invalid_json',400);}
-  const document=String(data.document||'').normalize('NFKC').trim().toUpperCase(),code=String(data.member_code||'').trim().toUpperCase();
+  const document=normalizeMemberDocument(data.document),code=String(data.member_code||'').trim().toUpperCase();
   if(document.length<3||document.length>64||/[\x00-\x1f]/.test(document)||!/^[A-Z0-9]{5}$/.test(code))return bad('invalid_credentials');
   // A database-wide per-document counter prevents distributed brute-force across IPs.
   const rate=await jsonRequest(new URL('/rest/v1/rpc/mi_movida_rate_limit',url),service,{p_bucket:await bucket(secret,'edge-login:'+document),p_limit:12,p_window_seconds:900});
