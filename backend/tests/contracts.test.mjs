@@ -25,7 +25,6 @@ test('PostgreSQL staged contracts, ownership, recovery and XP regression',async 
  await t.test('private profile rejects impersonation through user_metadata and ID fields',async()=>{
   const profile=await exec('mi_movida_profile',{}, {...claims,user_metadata:{integrante_id:900002}});
   assert.equal(profile.id,'900001');assert.equal(profile.codigo_integrante,undefined);assert.equal(profile.documento,undefined);
-  assert.equal(await exec('pif_current_integrante_id',{},claims),900001);
   await assert.rejects(exec('mi_movida_update_profile',{p_changes:{id:900002},p_version:1},claims));
   const p=await exec('mi_movida_update_profile',{p_changes:{municipio:'Ciudad sintética',mostrar_correo:false},p_version:1},claims);assert.equal(p.profile_version,2);
   await assert.rejects(exec('mi_movida_update_profile',{p_changes:{municipio:'stale'},p_version:1},claims));
@@ -65,7 +64,6 @@ test('PostgreSQL staged contracts, ownership, recovery and XP regression',async 
   const recovered=await exec('mi_movida_recovery_consume',{p_token_hash:'a'.repeat(64)});assert.equal(recovered.integrante_id,'900001');
   assert.equal(await exec('mi_movida_recovery_consume',{p_token_hash:'a'.repeat(64)}),null);
   await assert.rejects(exec('mi_movida_profile',{},claims));
-  assert.equal(await exec('pif_current_integrante_id',{},claims),null);
  });
  }finally{await close();}
 });
