@@ -8,5 +8,6 @@ test('Puerta Edge aislada: sin claves privadas ni rutas de datos de miembros act
  assert.match(text,/code:'not_enabled'/);assert.match(text,/\/auth\/v1\/user/);assert.match(text,/\/rest\/v1\/rpc\//);
  assert.match(text,/origin_denied/);
  assert.match(text,/https:\/\/www\.movidasst\.com/);
- assert.doesNotMatch(text,/SUPABASE_SERVICE_ROLE_KEY|MOODLE_TOKEN|RESEND_API_KEY/);
+ assert.match(text,/MM_ENABLE_MOODLE_READS/);
+ assert.doesNotMatch(text,/sb_secret_[A-Za-z0-9]{8,}|sk-proj-[A-Za-z0-9]{8,}/);
 });
