@@ -15,6 +15,25 @@ const READ_ROUTES:Record<string,string>={
  '/api/me/xp':'mi_movida_xp',
  '/api/me/activity':'mi_movida_activity'
 };
+
+const SWITCHES=['MM_ENABLE_MEMBER_LOGIN','MM_ENABLE_MEMBER_READS','MM_ENABLE_MEMBER_WRITES','MM_ENABLE_PUBLIC_READS','MM_ENABLE_MOODLE_READS','MM_ENABLE_RECOVERY'];
+async function releaseEnv(source:(name:string)=>string|undefined){
+ const local=source('SUPABASE_URL')||'';
+ if(source('MM_ALLOW_LOCAL_DOCKER_HOST')==='true'&&/^http:\/\/(kong:8000|127\.0\.0\.1:|localhost:)/.test(local))return source;
+ const base=source('SUPABASE_URL'),key=source('SUPABASE_SERVICE_ROLE_KEY');
+ let enabled:Record<string,boolean>={};
+ if(base&&key){
+  try{
+   const res=await fetch(new URL('/rest/v1/rpc/mi_movida_runtime_flags',base),{
+    method:'POST',headers:{apikey:key,authorization:'Bearer '+key,'content-type':'application/json'},
+    body:'{}',redirect:'error',signal:AbortSignal.timeout(3500)
+   });
+   if(res.ok){const data=await res.json();if(data&&typeof data==='object')enabled=data;}
+  }catch{/* Unknown flags always mean disabled; never bypass authorization. */}
+ }
+ return (name:string)=>SWITCHES.includes(name)?(enabled[name]===true?'true':'false'):source(name);
+}
+
 export async function handle(req:Request,env:(name:string)=>string|undefined=(name)=>Deno.env.get(name)):Promise<Response>{
  const origin=req.headers.get('origin');
  if(origin&&origin!==ORIGIN)return respond({error:{code:'origin_denied'}},403);
@@ -22,6 +41,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   if(origin!==ORIGIN)return respond({error:{code:'origin_denied'}},403);
   return new Response(null,{status:204,headers:{'access-control-allow-origin':ORIGIN,'access-control-allow-methods':'GET,POST,PATCH,OPTIONS','access-control-allow-headers':'authorization,apikey,content-type','access-control-max-age':'600','vary':'Origin'}});
  }
+ env=await releaseEnv(env);
  const rawPath=new URL(req.url).pathname;
  const route=rawPath.replace(/^.*?\/mi-movida-api(?=\/|$)/,'');
  if(req.method==='GET'&&route==='/health')return respond({data:{status:'edge_gateway_ready',member_access:env('MM_ENABLE_MEMBER_READS')==='true'?'restricted':'disabled'}},200,origin);
