@@ -77,20 +77,18 @@ jobs:
           done
       - name: Verificar migraciones y seed desde cero
         run: supabase db reset --local --workdir ./staging
-      - name: Verificar el gateway con accesos cerrados en Supabase local
+      - name: Preparar credenciales efímeras del Supabase local (sin imprimir claves)
+        run: node scripts/prepare-mi-movida-local-edge.mjs
+      - name: Arrancar API Edge con identidad ficticia local
         run: |
-          supabase functions serve mi-movida-api --workdir ./staging --no-verify-jwt > /tmp/mi-movida-edge.log 2>&1 &
+          supabase functions serve mi-movida-api --workdir ./staging --no-verify-jwt --env-file /tmp/mi-movida-local-edge.env > /tmp/mi-movida-edge.log 2>&1 &
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready; then break; fi
             sleep 2
           done
           curl -fsS http://127.0.0.1:54321/functions/v1/mi-movida-api/health | grep -q edge_gateway_ready
-          code=$(curl -sS -o /tmp/profile-response -w '%{http_code}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/me/profile)
-          test "$code" = "503"
-          grep -q not_enabled /tmp/profile-response
-          code=$(curl -sS -o /tmp/login-response -w '%{http_code}' -H 'Content-Type: application/json' -d '{"document":"DEMO001","member_code":"A1B2C"}' http://127.0.0.1:54321/functions/v1/mi-movida-api/api/session/bootstrap)
-          test "$code" = "503"
-          grep -q not_enabled /tmp/login-response
+      - name: Ingreso real sintético y revocación de sesión
+        run: node scripts/test-mi-movida-edge-e2e.mjs
 
   edge-unit-tests:
     runs-on: ubuntu-latest
