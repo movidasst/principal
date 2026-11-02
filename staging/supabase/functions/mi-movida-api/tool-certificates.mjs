@@ -22,6 +22,7 @@ function vettedUrl(value,base){
    ?url.href:null;
  }catch{return null;}
 }
+/** @param {{baseUrl?:string,token?:string,fetchImpl?:typeof globalThis.fetch,timeoutMs?:number}} [options] */
 export function createToolCertificateReader({baseUrl,token,fetchImpl=globalThis.fetch,timeoutMs=12000}={}){
  let base;
  try{base=new URL(baseUrl);}catch{throw new MoodleCertificateError('moodle_not_configured');}
