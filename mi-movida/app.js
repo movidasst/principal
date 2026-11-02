@@ -3,7 +3,7 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const fmt=value=>new Intl.NumberFormat('es-CL').format(Number.isFinite(Number(value))?Number(value):0);
 const date=value=>{if(!value)return 'Sin fecha';const d=new Date(value);return Number.isNaN(d.valueOf())?'Sin fecha':new Intl.DateTimeFormat('es-CL',{dateStyle:'medium'}).format(d);};
 const routes=[
- ['inicio','home','Panel principal','MI ESPACIO'],['credencial','id','Mi credencial'],['perfil','edit','Editar perfil'],
+ ['inicio','home','Panel principal','MI ESPACIO'],['credencial','id','Mi credencial'],['perfil','user-round','Mi perfil'],
  ['puntos','chart','Mis puntos y ranking','MI RECORRIDO'],['insignias','award','Mis insignias'],['actividad','activity','Mi actividad'],
  ['aprendizaje','book','Mi aprendizaje'],['certificados','cert','Mis certificados'],['cuenta','shield','Mi cuenta y seguridad','MI CUENTA']
 ];
@@ -63,7 +63,7 @@ function header(){
  const headings={
   inicio:['TU COMUNIDAD, TU RECORRIDO','Qué bueno verte, '+displayName().split(' ')[0]+'.','Tu aprendizaje, tus aportes y tus logros, en un solo lugar.'],
   credencial:['MI IDENTIDAD','Mi credencial','Tu pertenencia a La Movida de SST+, con tus datos actuales.'],
-  perfil:['MI IDENTIDAD','Editar perfil','Actualiza tu información y decide qué compartes.'],
+  perfil:['MI IDENTIDAD','Mi perfil profesional','Consulta tus datos. Las modificaciones se realizan únicamente en Directorio GEO.'],
   puntos:['CADA APORTE CUENTA','Mis puntos y ranking','Tu saldo oficial y el historial de sus fuentes.'],
   insignias:['RECONOCIMIENTOS','Mis insignias','Los reconocimientos confirmados de tu recorrido.'],
   actividad:['MI PARTICIPACIÓN','Mi actividad','Tus estudios, consultas y aportes confirmados.'],
@@ -147,11 +147,22 @@ function credential(){
  '<div class="form-actions"><a class="btn ghost" href="'+esc(officialUrl)+'" target="_blank" rel="noopener noreferrer">Verificar QR en GEO '+icon('arrow')+'</a><a class="btn ghost" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Abrir Directorio completo</a></div>'+
  '<p class="subtitle">No es una segunda credencial: GEO presenta la tarjeta original. Tu código privado y tu sesión no se envían al Directorio.</p></section>';
 }
-function field(name,label,value,type='text',extra=''){return '<label class="field"><span>'+esc(label)+'</span><input name="'+name+'" type="'+type+'" value="'+esc(value||'')+'" maxlength="160" '+extra+'></label>';}
-function toggle(name,title,text){return '<label class="toggle-row"><span><strong>'+esc(title)+'</strong><p>'+esc(text)+'</p></span><input class="switch" type="checkbox" name="'+name+'" '+(state.profile?.[name]?'checked':'')+'></label>';}
 function profileView(){
  const p=state.profile||{};
- return '<form id="profile-form"><div class="two-col"><section class="panel"><h2>Mi perfil profesional</h2><p class="subtitle">'+esc(displayName())+'</p><div class="field-grid spaced">'+field('pais_iso2','País de residencia · ISO',p.pais_iso2,'text','pattern="[A-Za-z]{2}" maxlength="2" required')+field('estado','Estado o región',p.estado)+field('municipio','Municipio o ciudad',p.municipio)+field('correo','Correo de contacto',p.correo,'email','readonly')+field('telefono_e164','Teléfono internacional',p.telefono_e164,'tel','pattern="[+][1-9][0-9]{6,14}" placeholder="+…"')+field('whatsapp_username','Usuario de WhatsApp',p.whatsapp_username)+field('grado','Grado de formación',p.grado)+field('carrera','Profesión o carrera',p.carrera)+field('postgrado','Postgrado',p.postgrado)+field('doctorado','Doctorado',p.doctorado)+field('laboral','Situación laboral',p.laboral)+field('linkedin','Perfil de LinkedIn',p.linkedin,'url')+'</div><div class="spaced">'+note('El documento y la identidad canónica requieren un proceso de verificación. Cambiar el país de residencia no cambia el país emisor del documento.')+'</div></section><section class="panel"><h2>Privacidad del perfil</h2>'+note('Preferencias en revisión: los consumidores antiguos del Directorio necesitan adaptarse antes de garantizar estos controles en todo el ecosistema.')+toggle('mostrar_correo','Mostrar correo','Oculto salvo autorización expresa.')+toggle('mostrar_wasap','Mostrar WhatsApp','Publicar tu teléfono es una decisión independiente.')+toggle('mostrar_whatsapp_username','Mostrar usuario de WhatsApp','Control independiente del número de teléfono.')+toggle('mostrar_insignias','Mostrar insignias','Publica únicamente reconocimientos autorizados.')+'<div class="divider"></div><h3>Fotografía del Directorio</h3>'+avatar(true)+'<p class="subtitle">Esta foto ya se registró en Google Drive; Mi Movida solo muestra el enlace almacenado en Supabase. Para cambiarla, utiliza el procedimiento actual de Registro o Directorio.</p></section></div><div class="form-actions"><button type="submit" class="btn primary">Guardar cambios '+icon('check')+'</button></div><p id="profile-message" role="status"></p></form>';
+ const show=(label,value)=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value==null||value===''?'No informado':value)+'</dd></div>';
+ return '<div class="stack">'+
+ '<section class="panel"><div class="panel-head"><div><h2>Mi perfil profesional</h2><p class="subtitle">Información oficial sincronizada desde el Directorio de integrantes.</p></div><span class="chip">Solo lectura</span></div>'+
+ '<div class="profile-summary">'+avatar(true)+'<div><h3>'+esc(displayName())+'</h3><p class="subtitle">'+esc(p.carrera||'Profesional de SST')+' · '+esc(p.pais_nombre||p.pais_iso2||'País no informado')+'</p></div></div>'+
+ '<dl class="detail-grid spaced">'+
+ show('País',p.pais_nombre||p.pais_iso2)+show('Estado o región',p.estado)+show('Municipio o ciudad',p.municipio)+
+ show('Grado de formación',p.grado)+show('Profesión o carrera',p.carrera)+show('Postgrado',p.postgrado)+
+ show('Doctorado',p.doctorado)+show('Situación laboral',p.laboral)+show('Correo registrado',p.correo)+
+ show('Teléfono',p.telefono_e164)+show('Usuario de WhatsApp',p.whatsapp_username)+
+ show('LinkedIn',p.linkedin)+'</dl></section>'+
+ '<section class="panel"><h2>¿Necesitas corregir o actualizar tus datos?</h2>'+
+ '<p class="subtitle">Para proteger la calidad de las estadísticas, los datos profesionales, geográficos y laborales solo se modifican en Directorio GEO, donde existen listas y validaciones oficiales.</p>'+
+ '<div class="form-actions"><a class="btn primary" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Actualizar mis datos en Directorio '+icon('arrow')+'</a></div>'+
+ '<p class="subtitle">Accede con tu cédula y código de integrante habituales. Mi Movida no permite editar ni guardar estos datos.</p></section></div>';
 }
 function sourceSelect(){return '<label><span class="sr-only">Filtrar fuente</span><select class="btn" id="source-filter">'+['Todas','Estudia','Participa','Inteligencia','Desarrolla'].map(v=>'<option '+(state.source===v?'selected':'')+'>'+v+'</option>').join('')+'</select></label>';}
 function pointsView(d){
@@ -196,7 +207,7 @@ function certificatesView(d){
    +(desarrolla.length?renderCertificates(desarrolla):empty('Todavía no aparecen certificados emitidos por Desarrolla.'))+'</section>';
  return '<div class="stack">'+academia+desarrollo+'</div>';
 }
-function accountView(){return '<div class="two-col"><section class="panel"><h2>Una identidad. Tu espacio.</h2><p class="subtitle">Mi Movida utiliza tu identidad actual de integrante. No almacena una contraseña nueva.</p><dl class="detail-grid spaced"><div><dt>Integrante</dt><dd>'+esc(displayName())+'</dd></div><div><dt>Correo de contacto</dt><dd>'+esc(state.profile?.correo||'No informado')+'</dd></div><div><dt>Sesión</dt><dd>Validada por el servidor</dd></div><div><dt>Vencimiento</dt><dd>'+esc(date(state.session.expires_at))+'</dd></div></dl><div class="spaced">'+note('La recuperación del acceso comunitario no cambia tu contraseña de Moodle.')+'</div></section><div class="stack"><section class="panel"><h2>Acceso y dispositivos</h2><div class="account-session">'+icon('device')+'<div class="session-info"><strong>Este navegador</strong><p>Acceso protegido mediante sesión privada.</p></div></div><button class="btn primary wide spaced" data-action="logout">Cerrar sesión '+icon('out')+'</button></section>'+recoveryChannelView()+'<section class="panel"><h2>Privacidad</h2><p class="subtitle">Revisa los datos que autorizas a mostrar públicamente.</p><div class="spaced">'+btn('Revisar preferencias','perfil','shield','ghost')+'</div></section></div></div>';}
+function accountView(){return '<div class="two-col"><section class="panel"><h2>Una identidad. Tu espacio.</h2><p class="subtitle">Mi Movida utiliza tu identidad actual de integrante. No almacena una contraseña nueva.</p><dl class="detail-grid spaced"><div><dt>Integrante</dt><dd>'+esc(displayName())+'</dd></div><div><dt>Correo de contacto</dt><dd>'+esc(state.profile?.correo||'No informado')+'</dd></div><div><dt>Sesión</dt><dd>Validada por el servidor</dd></div><div><dt>Vencimiento</dt><dd>'+esc(date(state.session.expires_at))+'</dd></div></dl><div class="spaced">'+note('La recuperación del acceso comunitario no cambia tu contraseña de Moodle.')+'</div></section><div class="stack"><section class="panel"><h2>Acceso y dispositivos</h2><div class="account-session">'+icon('device')+'<div class="session-info"><strong>Este navegador</strong><p>Acceso protegido mediante sesión privada.</p></div></div><button class="btn primary wide spaced" data-action="logout">Cerrar sesión '+icon('out')+'</button></section>'+recoveryChannelView()+'<section class="panel"><h2>Privacidad</h2><p class="subtitle">Revisa los datos que autorizas a mostrar públicamente.</p><div class="spaced">'+btn('Consultar mi perfil','perfil','shield','ghost')+'</div></section></div></div>';}
 const views={inicio:overview,credencial:credential,perfil:profileView,puntos:pointsView,insignias:badgesView,actividad:activityView,aprendizaje:learningView,certificados:certificatesView,cuenta:accountView};
 function setFormBusy(form,busy){form.querySelectorAll('button,input,select').forEach(el=>{el.disabled=busy;});}
 async function submitLogin(form){
@@ -204,15 +215,6 @@ async function submitLogin(form){
  setFormBusy(form,true);
  try{const result=data(await api('/api/session/bootstrap',{method:'POST',body:JSON.stringify(body)}));if(EDGE_API_BASE){state.edgeAccessToken=result.access_token;state.edgeRefreshToken=result.refresh_token;}form.reset();await refreshSession();if(!state.session.authenticated)throw new ApiError('No se pudo establecer una sesión segura. Vuelve a ingresar.',401);location.hash=state.channelToken?'#/cuenta':'#/inicio';await navigate();}
  catch(error){const secret=form.elements.member_code;if(secret)secret.value='';renderLogin(error.message);}
-}
-async function saveProfile(form){
- const f=new FormData(form),body={version:state.profile.version??state.profile.updated_at??state.profile.perfil_version??null};
- for(const k of ['pais_iso2','estado','municipio','telefono_e164','whatsapp_username','grado','carrera','postgrado','doctorado','laboral','linkedin'])body[k]=String(f.get(k)||'').trim()||null;
- body.pais_iso2=String(body.pais_iso2||'').toUpperCase();
- for(const k of ['mostrar_correo','mostrar_wasap','mostrar_whatsapp_username','mostrar_insignias'])body[k]=f.has(k);
- setFormBusy(form,true);
- try{await api('/api/me/profile',{method:'PATCH',body:JSON.stringify(body)});await getProfile();state.cache={};await navigate();toast('Tus cambios se guardaron. Los cambios de contacto pueden requerir verificación.');}
- catch(error){setFormBusy(form,false);const message=document.querySelector('#profile-message');message.textContent=error.status===409?'El perfil cambió mientras lo editabas. Recarga la consulta antes de guardar.':error.message;message.setAttribute('role','alert');}
 }
 async function logout(){
  const previous=state.session;
@@ -279,7 +281,7 @@ window.addEventListener('message',async event=>{
  }
 });
 
-document.addEventListener('submit',event=>{if(!['login-form','profile-form','recovery-form','consume-recovery','recovery-channel-form'].includes(event.target.id))return;event.preventDefault();const handlers={'login-form':submitLogin,'profile-form':saveProfile,'recovery-form':requestRecovery,'consume-recovery':consumeRecovery,'recovery-channel-form':setRecoveryChannel};handlers[event.target.id](event.target);});
+document.addEventListener('submit',event=>{if(!['login-form','recovery-form','consume-recovery','recovery-channel-form'].includes(event.target.id))return;event.preventDefault();const handlers={'login-form':submitLogin,'recovery-form':requestRecovery,'consume-recovery':consumeRecovery,'recovery-channel-form':setRecoveryChannel};handlers[event.target.id](event.target);});
 document.addEventListener('click',async event=>{
  if(event.target.closest('.skip')){event.preventDefault();const main=document.querySelector('#main');main?.setAttribute('tabindex','-1');main?.focus();return;}
  const currentAnchor=event.target.closest('.mobile-drawer a');if(currentAnchor&&currentAnchor.getAttribute('href')===location.hash){state.drawer=false;renderCurrent();return;}
