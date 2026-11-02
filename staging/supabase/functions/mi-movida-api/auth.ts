@@ -14,7 +14,7 @@ function decodeSession(token:string):string|null{
 async function jsonRequest(url:URL,key:string,payload:unknown,admin=false,method='POST'){
  return fetch(url,{method,headers:{apikey:key,authorization:'Bearer '+key,...(method==='POST'?{'content-type':'application/json'}:{})},...(method==='POST'?{body:JSON.stringify(payload)}:{}),redirect:'error'});
 }
-async function context(url:URL,key:string,service:string,access:string){
+export async function sessionContext(url:URL,key:string,service:string,access:string){
  const userResponse=await fetch(new URL('/auth/v1/user',url),{headers:{apikey:key,authorization:'Bearer '+access},redirect:'error'});
  if(!userResponse.ok)return null;
  const user=await userResponse.json();const sid=decodeSession(access);
@@ -39,7 +39,7 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
   if(!token)return good({authenticated:false,environment:'edge-review'});
   if(!serviceKey)return bad('not_configured',503);
-  const c=await context(url,pub,serviceKey,token);
+  const c=await sessionContext(url,pub,serviceKey,token);
   return c?good(personal(c)):good({authenticated:false,environment:'edge-review'});
  }
  if(route==='/api/session/bootstrap'&&req.method==='POST'){
@@ -68,13 +68,13 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   if(identity.auth_user_id&&identity.auth_user_id!==verified.user.id)return bad('identity_conflict',409);
   const linking=await jsonRequest(new URL('/rest/v1/rpc/mi_movida_link_auth',url),service,{p_integrante_id:identity.integrante_id,p_auth_user_id:verified.user.id});
   if(!linking.ok)return bad('identity_requires_review',409);
-  const c=await context(url,pub,service,verified.access_token);
+  const c=await sessionContext(url,pub,service,verified.access_token);
   return c?good(personal(c,verified.access_token,verified.refresh_token,verified.expires_in)):bad('session_invalid',503);
  }
  if(route==='/api/session/logout'&&req.method==='POST'){
   const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
   if(!token)return bad('unauthorized');
-  const c=await context(url,pub,serviceKey||'',token);
+  const c=await sessionContext(url,pub,serviceKey||'',token);
   if(!c)return bad('unauthorized');
   const service=env('SUPABASE_SERVICE_ROLE_KEY'),sid=decodeSession(token);
   if(!service||!sid)return bad('not_configured',503);
