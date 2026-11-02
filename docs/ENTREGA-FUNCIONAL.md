@@ -61,3 +61,12 @@ Las RPC propias requieren vínculo y sesión. Las operaciones de recuperación/v
 Servidor/API: `application/server`; interfaz: `application/public`; fuentes sintéticas: `application/staging`; SQL versionado: `backend/sql`; compatibilidad Edge revisable: `backend/edge`; pruebas: `application/tests` y `backend/tests`. No sustituir funciones de producción copiando estas carpetas sin el procedimiento de STAGING y despliegue.
 
 Las capturas de `docs/evidencias` son del entorno sintético. Las pruebas automatizadas contienen aserciones por sección y de denegación entre personas. Los documentos de auditoría/prototipo previos se conservan como antecedentes; el estado de implementación vigente es este documento.
+
+
+## Actualización de interfaz: acceso de dos campos y marca (2 nov 2026)
+
+La rama de revisión ahora muestra solamente **cédula/documento y código de cinco caracteres**. Se retiraron país y tipo del formulario. El BFF utiliza los nuevos contratos `mi_movida_auth_lookup_document` y `mi_movida_recovery_prepare_document`; ambos rechazan coincidencias que no identifiquen exactamente a una sola persona y no crean cuentas duplicadas. El contrato anterior por país permanece para consumidores legacy. La recuperación sigue requiriendo un canal previamente verificado.
+
+La interfaz referencia `/logo-oficial-movida-sst-plus.png` (recurso oficial actualmente referenciado por el HUB) y preserva proporciones sin recorte circular. **Pendiente:** verificar visualmente contra el archivo horizontal exacto instalado en Moodle; el nombre por sí solo no demuestra equivalencia.
+
+Se actualizaron pruebas sintéticas y se añadieron casos específicos de los nuevos contratos. **No se ha ejecutado la suite completa después de estos cambios:** el entorno disponible para esta revisión no resolvió el host de GitHub para clonar y ejecutar Node. Las 42 pruebas previamente comunicadas corresponden al estado anterior de la rama. Ejecutar `npm ci && npm test` en una copia actualizada y después las pruebas nativas de Supabase antes de autorizar cualquier despliegue.
