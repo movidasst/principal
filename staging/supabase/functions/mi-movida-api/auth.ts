@@ -78,6 +78,18 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   const c=await sessionContext(url,pub,service,verified.access_token);
   return c?good(personal(c,verified.access_token,verified.refresh_token,verified.expires_in)):bad('session_invalid',503);
  }
+ if(route==='/api/session/refresh'&&req.method==='POST'){
+  const body=await req.json().catch(()=>null);
+  const refresh=body?.refresh_token;
+  if(typeof refresh!=='string'||refresh.length<10||refresh.length>4096)return bad('invalid_refresh',401);
+  if(!serviceKey)return bad('not_configured',503);
+  const response=await jsonRequest(new URL('/auth/v1/token?grant_type=refresh_token',url),pub,{refresh_token:refresh});
+  if(!response.ok)return bad('session_expired',401);
+  const renewed=await response.json();
+  if(!renewed?.access_token||!renewed?.refresh_token)return bad('session_expired',401);
+  const c=await sessionContext(url,pub,serviceKey,renewed.access_token);
+  return c?good(personal(c,renewed.access_token,renewed.refresh_token,renewed.expires_in)):bad('session_expired',401);
+ }
  if(route==='/api/session/logout'&&req.method==='POST'){
   const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
   if(!token)return bad('unauthorized');
