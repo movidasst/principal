@@ -6,6 +6,7 @@ function problem(code:string,status:number,origin:string|null){
  if(origin===ORIGIN)h.set('access-control-allow-origin',ORIGIN);
  return new Response(JSON.stringify({error:{code}}),{status,headers:h});
 }
+async function limitedBody(req:Request,max:number){const reader=req.body?.getReader();if(!reader)return new Uint8Array();const chunks:Uint8Array[]=[];let total=0;try{while(true){const {done,value}=await reader.read();if(done)break;total+=value.byteLength;if(total>max){await reader.cancel();return null;}chunks.push(value);}const bytes=new Uint8Array(total);let pos=0;for(const c of chunks){bytes.set(c,pos);pos+=c.byteLength;}return bytes;}finally{reader.releaseLock();}}
 function imageType(bytes:Uint8Array,type:string):string|null{
  if(type==='image/png'&&bytes.length>33&&[137,80,78,71,13,10,26,10].every((x,i)=>bytes[i]===x)&&new TextDecoder().decode(bytes.subarray(12,16))==='IHDR')return 'png';
  if(type==='image/jpeg'&&bytes.length>4&&bytes[0]===255&&bytes[1]===216&&bytes[bytes.length-2]===255&&bytes[bytes.length-1]===217)return 'jpg';
@@ -43,8 +44,9 @@ export async function photoRoute(req:Request,env:Env,origin:string|null):Promise
  if(env('MM_ENABLE_MEMBER_WRITES')!=='true')return problem('not_enabled',503,origin);
  const length=Number(req.headers.get('content-length')||'0');
  if(length>5242880)return problem('photo_too_large',413,origin);
- const raw=new Uint8Array(await req.arrayBuffer());
- if(raw.length>5242880||raw.length<20)return problem('invalid_photo',422,origin);
+ const raw=await limitedBody(req,5242880);
+ if(!raw)return problem('photo_too_large',413,origin);
+ if(raw.length<20)return problem('invalid_photo',422,origin);
  const type=req.headers.get('content-type')||'';
  const ext=imageType(raw,type);
  if(!ext)return problem('invalid_photo',422,origin);
