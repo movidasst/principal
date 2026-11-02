@@ -8,7 +8,7 @@ const routes=[
  ['aprendizaje','book','Mi aprendizaje'],['certificados','cert','Mis certificados'],['cuenta','shield','Mi cuenta y seguridad','MI CUENTA']
 ];
 const EDGE_API_BASE=document.querySelector('meta[name="mi-movida-edge-api"]')?.content?.replace(/\/$/,'')||'';
-const state={edgeAccessToken:null,edgeRefreshToken:null,photoObjectUrl:null,session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
+const state={edgeAccessToken:null,edgeRefreshToken:null,photoObjectUrl:null,geoCredentialMode:'verificacion',session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
 const root=document.querySelector('#root');
 class ApiError extends Error{constructor(message,status,code){super(message);this.status=status;this.code=code;}}
 async function api(path,options={}){
@@ -138,8 +138,10 @@ function geoCredentialUrl(publicId){
 }
 function credential(){
  const officialUrl=geoCredentialUrl(state.profile?.public_id);
+ const inAccess=state.geoCredentialMode==='acceso';
+ const frameUrl=inAccess?'https://directorio.movidasst.com/#/credencial':officialUrl;
  if(!officialUrl)return '<section class="panel"><h2>Mi credencial oficial</h2>'+note('Aún no se pudo obtener el identificador público de tu credencial. Por seguridad no generamos otra credencial ni un QR alternativo.')+'<div class="form-actions"><a class="btn primary" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Abrir Directorio GEO</a></div></section>';
- return '<section class="panel geo-credential-panel"><div class="panel-head"><div><h2>Mi credencial oficial</h2><p class="subtitle">Directorio GEO · verificación original de La Movida de SST+</p></div><span class="chip">OFICIAL</span></div><p class="subtitle">Esta vista viene directamente de Directorio: no reproducimos ni modificamos su diseño, QR o datos. Si necesitas descargar tu credencial de integrante, abre su acceso privado en Directorio con tu cédula y código habitual.</p><div class="geo-credential-frame-wrap"><iframe class="geo-credential-frame" title="Verificación oficial de mi credencial en Directorio GEO" src="'+esc(officialUrl)+'" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe></div><div class="form-actions"><a class="btn primary" href="'+esc(officialUrl)+'" target="_blank" rel="noopener noreferrer">'+icon('id')+'Abrir verificación oficial</a><a class="btn ghost" href="https://directorio.movidasst.com/#/credencial" target="_blank" rel="noopener noreferrer">Acceder y descargar en GEO</a></div></section>';
+ return '<section class="panel geo-credential-panel"><div class="panel-head"><div><h2>Mi credencial oficial</h2><p class="subtitle">Directorio GEO · verificación original de La Movida de SST+</p></div><span class="chip">OFICIAL</span></div><p class="subtitle">Esta vista viene directamente de Directorio: no reproducimos ni modificamos su diseño, QR o datos. Si necesitas descargar tu credencial de integrante, abre su acceso privado en Directorio con tu cédula y código habitual.</p><div class="form-actions"><button type="button" class="btn '+(inAccess?'ghost':'primary')+'" data-action="geo-credential-verify">Verificación oficial</button><button type="button" class="btn '+(inAccess?'primary':'ghost')+'" data-action="geo-credential-access">Acceder y descargar aquí</button></div><div class="geo-credential-frame-wrap"><iframe class="geo-credential-frame" title="'+(inAccess?'Acceso privado a la credencial original de GEO':'Verificación oficial de mi credencial en Directorio GEO')+'" src="'+esc(frameUrl)+'" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"></iframe></div><p class="subtitle">'+(inAccess?'Para descargar, el Directorio solicita tu cédula y código habituales dentro de su propio formulario. Mi Movida no transmite ni almacena ese código en la URL.':'Esta vista muestra la verificación pública de tu credencial. Puedes acceder a la descarga original usando la otra pestaña.')+'</p><div class="form-actions"><a class="btn ghost" href="'+esc(frameUrl)+'" target="_blank" rel="noopener noreferrer">Abrir esta vista en Directorio</a></div></section>';
 }
 function field(name,label,value,type='text',extra=''){return '<label class="field"><span>'+esc(label)+'</span><input name="'+name+'" type="'+type+'" value="'+esc(value||'')+'" maxlength="160" '+extra+'></label>';}
 function toggle(name,title,text){return '<label class="toggle-row"><span><strong>'+esc(title)+'</strong><p>'+esc(text)+'</p></span><input class="switch" type="checkbox" name="'+name+'" '+(state.profile?.[name]?'checked':'')+'></label>';}
@@ -224,6 +226,8 @@ document.addEventListener('click',async event=>{
  if(target.dataset.tab){state.tab=target.dataset.tab;if(state.tab==='ranking')await loadRanking();else renderCurrent();return;}
  const action=target.dataset.action;
  if(action==='confirm-channel'){await confirmRecoveryChannel(target);return;}
+ if(action==='geo-credential-verify'){state.geoCredentialMode='verificacion';renderCurrent();return;}
+ if(action==='geo-credential-access'){state.geoCredentialMode='acceso';renderCurrent();return;}
  if(action==='retry'){await navigate();return;}
  if(action==='menu'){state.drawer=!state.drawer;renderCurrent();document.querySelector(state.drawer?'#drawer-close':'.menu-button')?.focus();return;}
  if(action==='logout'){target.disabled=true;await logout();return;}
