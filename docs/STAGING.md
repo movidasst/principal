@@ -23,7 +23,7 @@ El sincronizador copia SQL revisado a migraciones timestamp y fuentes Edge a fun
 
 Copiar `.env.example` a `.env` local privado y completar valores del contenedor. Generar SESSION_SECRET aleatorio; las claves nativas locales se consultan mediante `supabase status --workdir ./staging` y no se adjuntan a evidencias. Para Edge, archivo privado `staging/.env.edge` con MM_RATE_LIMIT_SECRET y MM_ALLOWED_ORIGINS. Las variables SUPABASE del runtime las proporciona CLI. Ningún secreto al navegador o Git. Ejecutar `node --env-file=.env application/server/app.mjs` para el BFF nativo.
 
-Validación pendiente en ese runtime: bootstrap Auth real y refresh, grants PostgREST, RLS entre dos usuarios, límites y replay, foto propia/ajena y MIME/tamaño, funciones Edge desde consumidores legacy, regresión PIF, parches de ranking con definiciones reales y logout/recovery con JWT anterior. Ejecutar asesores de seguridad de CLI y revisar cada hallazgo antes de promover. Las 42 pruebas actuales no sustituyen estos pasos.
+Validación pendiente en ese runtime: bootstrap Auth real y refresh, grants PostgREST, RLS entre dos usuarios, límites y replay, foto propia/ajena y MIME/tamaño, funciones Edge desde consumidores legacy, revisión de integración del Directorio, parches de ranking con definiciones reales y logout/recovery con JWT anterior. Ejecutar asesores de seguridad de CLI y revisar cada hallazgo antes de promover. Las 42 pruebas actuales no sustituyen estos pasos.
 
 ## Moodle y correo
 
