@@ -1,3 +1,4 @@
+import {normalizeMemberDocument} from './auth.ts';
 import {handle} from './index.ts';
 const testEnv=(key:string)=>key==='MM_ENABLE_MEMBER_READS'?'false':undefined;
 Deno.test('Mi Movida Edge rechaza otros orígenes',async()=>{
@@ -24,5 +25,11 @@ Deno.test('Ranking y credencial pública deshabilitados por defecto',async()=>{
  for(const route of ['/api/public/ranking','/api/public/credential/11111111-1111-4111-8111-111111111111']){
   const res=await handle(new Request('https://test.supabase.co/functions/v1/mi-movida-api'+route,{headers:{Origin:'https://www.movidasst.com'}}),env);
   if(res.status!==503)throw new Error('Public read should be disabled: '+route);
+ }
+});
+
+Deno.test('Cédula de Mi Movida compatible con validador actual',()=>{
+ for(const [input,expected] of [['V-12.345.678','12345678'],['12.345.678','12345678'],['001234','001234'],['AB001','AB001']]){
+  if(normalizeMemberDocument(input)!==expected)throw new Error('document normalization mismatch');
  }
 });
