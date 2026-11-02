@@ -29,6 +29,9 @@ test('Mi credencial utiliza GEO por identificador público, sin replicar emisor 
  assert.match(app,/directorio\.movidasst\.com\/\?id=/);
  assert.match(app,/state\.profile\?\.public_id/);
  assert.match(app,/iframe class="geo-credential-frame"/);
+ assert.match(app,/data-action="geo-credential-verify"/);
+ assert.match(app,/data-action="geo-credential-access"/);
+ assert.match(app,/directorio\.movidasst\.com\/#\/credencial/);
  assert.match(app,/if\(route==='credencial'\)return \{profile:state\.profile\}/);
  assert.doesNotMatch(app,/function downloadCredential\(|Mi-Movida-Credencial\.svg|geoCredentialUrl\(state\.profile\?\.documento/);
  assert.match(html,/frame-src https:\/\/directorio\.movidasst\.com;/);
