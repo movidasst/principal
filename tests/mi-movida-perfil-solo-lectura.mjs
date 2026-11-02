@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const code=readFileSync(new URL('../mi-movida/app.js',import.meta.url),'utf8');
+assert.match(code,/\['perfil','user-round','Mi perfil'\]/);
+assert.match(code,/function profileView\(\)/);
+assert.match(code,/Solo lectura/);
+assert.match(code,/https:\/\/directorio\.movidasst\.com\/#\/credencial/);
+assert.match(code,/Actualizar mis datos en Directorio/);
+assert.doesNotMatch(code,/id="profile-form"/);
+assert.doesNotMatch(code,/saveProfile\(/);
+assert.doesNotMatch(code,/method:'PATCH'/);
+assert.doesNotMatch(code,/Guardar cambios/);
+assert.doesNotMatch(code,/\['perfil','edit','Editar perfil'\]/);
+new Function(code);
+console.log('Perfil de Mi Movida: solo lectura, sin formularios ni escrituras; actualización exclusiva GEO.');
