@@ -255,23 +255,7 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION public.mi_movida_set_photo(p_url text,p_version bigint) RETURNS jsonb
-LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
-DECLARE v_id bigint:=private.mm_require_integrante(); v_origin text; v_prefix text;
-BEGIN
- SELECT api_url INTO v_origin FROM private.mi_movida_config WHERE singleton;
- IF v_origin IS NULL THEN RAISE EXCEPTION 'photo_storage_not_configured' USING ERRCODE='55000'; END IF;
- v_prefix:=v_origin||'/storage/v1/object/public/mi-movida-photos/'||auth.uid()::text||'/';
- IF left(p_url,length(v_prefix))<>v_prefix OR substring(p_url FROM length(v_prefix)+1) !~ '^[a-zA-Z0-9-]+\.(jpg|jpeg|png|webp)$' THEN
-  RAISE EXCEPTION 'invalid_photo_path' USING ERRCODE='22023';
- END IF;
- UPDATE public.integrantes SET foto_url=p_url,mi_movida_profile_version=mi_movida_profile_version+1
- WHERE id=v_id AND mi_movida_profile_version=p_version;
- IF NOT FOUND THEN RAISE EXCEPTION 'profile_version_conflict' USING ERRCODE='40001'; END IF;
- INSERT INTO private.mi_movida_audit(integrante_id,auth_user_id,action) VALUES(v_id,auth.uid(),'photo_updated');
- RETURN private.mm_profile(v_id);
-END;
-$$;
+-- La fotografía se conserva por su enlace existente de Google Drive; esta aplicación no la reescribe.
 
 CREATE OR REPLACE FUNCTION public.mi_movida_channel_begin(p_email text,p_token_hash text) RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
@@ -415,8 +399,8 @@ GRANT EXECUTE ON FUNCTION public.mi_movida_configure(text),public.mi_movida_rate
  public.mi_movida_recovery_prepare(text,text,text,text),public.mi_movida_recovery_consume(text),
  public.mi_movida_channel_begin(uuid,uuid,text,text),public.mi_movida_channel_confirm(uuid,uuid,text),
  public.mi_movida_revoke_session(uuid,uuid) TO service_role;
-REVOKE ALL ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_profile(jsonb,bigint),public.mi_movida_set_photo(text,bigint) FROM PUBLIC,anon;
-GRANT EXECUTE ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_profile(jsonb,bigint),public.mi_movida_set_photo(text,bigint) TO authenticated;
+REVOKE ALL ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_profile(jsonb,bigint) FROM PUBLIC,anon;
+GRANT EXECUTE ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_profile(jsonb,bigint) TO authenticated;
 COMMIT;
 
 -- Acceso internacional simplificado: document + código solo si el resultado es único.
