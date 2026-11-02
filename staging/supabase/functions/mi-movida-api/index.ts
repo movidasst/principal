@@ -25,7 +25,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
  const rawPath=new URL(req.url).pathname;
  const route=rawPath.replace(/^.*?\/mi-movida-api(?=\/|$)/,'');
  if(req.method==='GET'&&route==='/health')return respond({data:{status:'edge_gateway_ready',member_access:env('MM_ENABLE_MEMBER_READS')==='true'?'restricted':'disabled'}},200,origin);
- if(['/api/session','/api/session/bootstrap','/api/session/logout'].includes(route)){
+ if(['/api/session','/api/session/bootstrap','/api/session/refresh','/api/session/logout'].includes(route)){
   try{const result=await authRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'auth_unavailable'}},503,origin);}
  }
  if(req.method==='GET'&&(route==='/api/public/ranking'||route.startsWith('/api/public/credential/'))){
