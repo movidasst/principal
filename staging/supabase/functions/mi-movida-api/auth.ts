@@ -78,7 +78,10 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   const lookup=await jsonRequest(new URL('/rest/v1/rpc/mi_movida_auth_lookup_document',url),service,{p_document:document,p_code:code});
   if(!lookup.ok)return bad('source_unavailable',503);
   const identity=await lookup.json();
-  if(!identity?.integrante_id||identity.auth_email!=='integrante-'+identity.integrante_id+'@auth.movidasst.com')return bad('invalid_credentials');
+  const synthetic='integrante-'+identity?.integrante_id+'@auth.movidasst.com';
+  const existingUser=typeof identity?.auth_user_id==='string'&&/^[a-f0-9-]{36}$/i.test(identity.auth_user_id);
+  const email=String(identity?.auth_email||'');
+  if(!identity?.integrante_id||!email.includes('@')||(!existingUser&&email!==synthetic))return bad('invalid_credentials');
   return startIdentitySession(url,pub,service,identity);
  }
  if(route==='/api/session/refresh'&&req.method==='POST'){
