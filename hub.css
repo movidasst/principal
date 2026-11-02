@@ -61,3 +61,4 @@
 }
 @media(max-width:355px){.learning-links{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.hub-view{animation:none!important}}
+.mi-movida-frame{width:100%;height:1100px;min-height:75vh;border:1px solid #dce5eb;border-radius:18px;background:#f4f7f8}@media(max-width:650px){.mi-movida-frame{height:1050px;border-radius:12px}}

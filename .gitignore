@@ -2,3 +2,10 @@
 *-server-error.log
 .DS_Store
 node_modules/
+
+.test-tools/
+.test-data/
+.env
+.env.*
+!.env.example
+.build/
