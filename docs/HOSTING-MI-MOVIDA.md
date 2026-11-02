@@ -16,7 +16,7 @@ Variables de servidor (solo en gestor de secretos del host): `APP_ORIGIN`, `APP_
 
 1. CI sintética aprobada y Supabase nativo validado (Auth, Storage, Edge, RLS) con datos ficticios.
 2. Pruebas de Moodle y correos en servicios de ensayo.
-3. Revisar compatibilidad PIF, Directorio y privacidad pública; no declarar resueltas preferencias legacy por una nueva interfaz.
+3. Revisar compatibilidad con Directorio y privacidad pública; no declarar resueltas preferencias legacy por una nueva interfaz.
 4. Prueba en origen HTTPS real con navegador, cookies seguras, CSRF, login, logout, recuperación y dispositivo móvil.
 5. Confirmar equivalencia visual del logo con Moodle y preparar reversión.
 6. Solo entonces autorizar el despliegue. No apuntar staging al proyecto Supabase de producción.
