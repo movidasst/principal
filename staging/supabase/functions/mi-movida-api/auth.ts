@@ -34,6 +34,21 @@ export async function sessionContext(url:URL,key:string,service:string,access:st
 function personal(c:Record<string,unknown>,access?:string,refresh?:string,expires?:number){
  return {authenticated:true,person:{id:c.integrante_id,public_id:c.public_id,display_name:[c.nombres,c.apellidos].filter(Boolean).join(' ')},environment:'edge-review',...(access?{access_token:access}:{}),...(refresh?{refresh_token:refresh}:{}),...(expires?{expires_in:expires}:{})};
 }
+export async function startIdentitySession(url:URL,pub:string,service:string,identity:any):Promise<Outcome>{
+  const link=await jsonRequest(new URL('/auth/v1/admin/generate_link',url),service,{type:'magiclink',email:identity.auth_email});
+  if(!link.ok)return bad('auth_unavailable',503);
+  const linkData=await link.json(),hash=linkData.hashed_token||linkData.properties?.hashed_token;
+  if(!hash)return bad('auth_unavailable',503);
+  const verify=await jsonRequest(new URL('/auth/v1/verify',url),pub,{type:'email',token_hash:hash});
+  if(!verify.ok)return bad('auth_unavailable',503);
+  const verified=await verify.json();
+  if(!verified?.access_token||!verified?.refresh_token||!verified?.user?.id)return bad('auth_unavailable',503);
+  if(identity.auth_user_id&&identity.auth_user_id!==verified.user.id)return bad('identity_conflict',409);
+  const linking=await jsonRequest(new URL('/rest/v1/rpc/mi_movida_link_auth',url),service,{p_integrante_id:identity.integrante_id,p_auth_user_id:verified.user.id});
+  if(!linking.ok)return bad('identity_requires_review',409);
+  const c=await sessionContext(url,pub,service,verified.access_token);
+  return c?good(personal(c,verified.access_token,verified.refresh_token,verified.expires_in)):bad('session_invalid',503);
+}
 export async function authRoute(req:Request,route:string,env:Env):Promise<Outcome>{
  if(route==='/api/session'&&req.method==='GET'&&env('MM_ENABLE_MEMBER_LOGIN')!=='true')return good({authenticated:false,environment:'edge-review'});
  if(env('MM_ENABLE_MEMBER_LOGIN')!=='true')return bad('not_enabled',503);
@@ -64,19 +79,7 @@ export async function authRoute(req:Request,route:string,env:Env):Promise<Outcom
   if(!lookup.ok)return bad('source_unavailable',503);
   const identity=await lookup.json();
   if(!identity?.integrante_id||identity.auth_email!=='integrante-'+identity.integrante_id+'@auth.movidasst.com')return bad('invalid_credentials');
-  const link=await jsonRequest(new URL('/auth/v1/admin/generate_link',url),service,{type:'magiclink',email:identity.auth_email});
-  if(!link.ok)return bad('auth_unavailable',503);
-  const linkData=await link.json(),hash=linkData.hashed_token||linkData.properties?.hashed_token;
-  if(!hash)return bad('auth_unavailable',503);
-  const verify=await jsonRequest(new URL('/auth/v1/verify',url),pub,{type:'email',token_hash:hash});
-  if(!verify.ok)return bad('auth_unavailable',503);
-  const verified=await verify.json();
-  if(!verified?.access_token||!verified?.refresh_token||!verified?.user?.id)return bad('auth_unavailable',503);
-  if(identity.auth_user_id&&identity.auth_user_id!==verified.user.id)return bad('identity_conflict',409);
-  const linking=await jsonRequest(new URL('/rest/v1/rpc/mi_movida_link_auth',url),service,{p_integrante_id:identity.integrante_id,p_auth_user_id:verified.user.id});
-  if(!linking.ok)return bad('identity_requires_review',409);
-  const c=await sessionContext(url,pub,service,verified.access_token);
-  return c?good(personal(c,verified.access_token,verified.refresh_token,verified.expires_in)):bad('session_invalid',503);
+  return startIdentitySession(url,pub,service,identity);
  }
  if(route==='/api/session/refresh'&&req.method==='POST'){
   const body=await req.json().catch(()=>null);
