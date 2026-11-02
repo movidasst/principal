@@ -112,3 +112,9 @@ Deno.test('La tarjeta GEO rechaza filas de integrantes ajenos',async()=>{
   if(resp.status!==409)throw new Error('Cross-member response must be denied');
  }finally{globalThis.fetch=previous;}
 });
+
+Deno.test('Mi Movida mantiene el perfil inmodificable aun con flag de escritura activado',async()=>{
+ const env=(key:string)=>({MM_ALLOW_LOCAL_DOCKER_HOST:'true',SUPABASE_URL:'http://kong:8000',MM_ENABLE_MEMBER_READS:'true',MM_ENABLE_MEMBER_WRITES:'true'} as Record<string,string>)[key];
+ const response=await handle(new Request('https://test.supabase.co/functions/v1/mi-movida-api/api/me/profile',{method:'PATCH',headers:{Origin:'https://www.movidasst.com','Content-Type':'application/json','Authorization':'Bearer fake'},body:'{"pais_iso2":"US"'}),env);
+ if(response.status!==503)throw new Error('Profile writes must always be disabled');
+});
