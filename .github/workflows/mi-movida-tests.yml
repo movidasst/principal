@@ -52,3 +52,14 @@ jobs:
         run: supabase start --workdir ./staging -x realtime,studio,analytics,vector,imgproxy
       - name: Verificar migraciones y seed desde cero
         run: supabase db reset --local --workdir ./staging
+
+  edge-unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Testear gateway Edge sin servicios ni secretos
+        run: deno test --allow-none staging/supabase/functions/mi-movida-api/index_test.ts
