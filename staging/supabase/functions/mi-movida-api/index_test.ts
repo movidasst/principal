@@ -46,3 +46,11 @@ Deno.test('Fotografías Edge cerradas sin habilitación explícita',async()=>{
   if(res.status!==503)throw new Error('Photo endpoints must remain disabled');
  }
 });
+
+Deno.test('Recuperación de acceso permanece cerrada sin habilitación',async()=>{
+ for(const route of ['/api/session/recovery/request','/api/session/recovery/consume']){
+  const request=new Request('https://test.supabase.co/functions/v1/mi-movida-api'+route,{method:'POST',headers:{Origin:'https://www.movidasst.com','Content-Type':'application/json'},body:'{}'});
+  const result=await handle(request,()=>undefined);
+  if(result.status!==503)throw new Error('Recovery must remain disabled');
+ }
+});
