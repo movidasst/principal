@@ -20,3 +20,9 @@ Se añadió `staging/supabase/functions/mi-movida-api/index.ts`, una puerta aisl
 
 ### Publicación
 El objetivo **no requiere contratar Render, Cloudflare ni otro servidor**. La compatibilidad de los límites del plan de Supabase y las reglas de autenticación deben comprobarse. El servidor Node anterior permanece como referencia funcional hasta que Edge supere las mismas pruebas.
+
+## Primeras lecturas Edge preparadas
+
+La función ahora implementa consultas exclusivamente de lectura de perfil, insignias y certificados Desarrolla **solo si** `MM_ENABLE_MEMBER_READS=true`, una sesión JWT válida y las RPC existentes autorizan al titular mediante RLS. El interruptor está apagado por defecto. No copia información a otro sistema ni expone `service_role`.
+
+La interfaz existente todavía usa `/api/*` en el mismo origen y **no debe apuntarse directamente a esta función**: los mecanismos de sesión son diferentes. Faltan el login de dos campos portado y el adaptador de transporte del navegador; también el resto de rutas académicas y de XP.
