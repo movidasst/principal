@@ -27,6 +27,28 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
  if(['/api/session','/api/session/bootstrap','/api/session/logout'].includes(route)){
   try{const result=await authRoute(req,route,env);return respond(result.body,result.status,origin);}catch{return respond({error:{code:'auth_unavailable'}},503,origin);}
  }
+ if(req.method==='GET'&&(route==='/api/public/ranking'||route.startsWith('/api/public/credential/'))){
+  const supabase=env('SUPABASE_URL'),key=env('SUPABASE_ANON_KEY')||env('SUPABASE_PUBLISHABLE_KEY');
+  if(!supabase||!key)return respond({error:{code:'not_configured'}},503,origin);
+  const args:Record<string,unknown>={};let rpc='';
+  if(route==='/api/public/ranking'){
+   const q=new URL(req.url).searchParams;
+   const scope=q.get('scope')||'general',limit=Number(q.get('limit')||50),offset=Number(q.get('offset')||0);
+   if(!['general','estudios'].includes(scope)||!Number.isSafeInteger(limit)||limit<1||limit>100||!Number.isSafeInteger(offset)||offset<0)return respond({error:{code:'invalid_pagination'}},422,origin);
+   rpc=scope==='general'?'ranking_publico':'ranking_todos_estudios_publico';args.p_limit=limit;args.p_offset=offset;
+  }else{
+   const id=route.split('/').pop()||'';
+   if(!/^[a-f0-9-]{36}$/i.test(id))return respond({error:{code:'not_found'}},404,origin);
+   rpc='mi_movida_public_credential';args.p_public_id=id;
+  }
+  try{
+   const url=new URL('/rest/v1/rpc/'+rpc,supabase);
+   const result=await fetch(url,{method:'POST',headers:{apikey:key,authorization:'Bearer '+key,'content-type':'application/json'},body:JSON.stringify(args),redirect:'error'});
+   if(!result.ok)return respond({error:{code:'source_unavailable'}},503,origin);
+   const data=await result.json();
+   return respond({data:rpc==='mi_movida_public_credential'?data:{items:data,scope:(new URL(req.url)).searchParams.get('scope')||'general'}},200,origin);
+  }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
+ }
  const profileWrite=req.method==='PATCH'&&route==='/api/me/profile';
  const rpc=profileWrite?'mi_movida_update_profile':READ_ROUTES[route];
  if(!rpc||(!profileWrite&&req.method!=='GET')||env('MM_ENABLE_MEMBER_READS')!=='true'||(profileWrite&&env('MM_ENABLE_MEMBER_WRITES')!=='true'))
