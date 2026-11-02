@@ -11,7 +11,6 @@ function respond(data:unknown,status=200,origin:string|null=null){
 }
 const READ_ROUTES:Record<string,string>={
  '/api/me/profile':'mi_movida_profile',
- '/api/me/credential':'mi_movida_profile',
  '/api/me/badges':'mi_movida_badges',
  '/api/me/xp':'mi_movida_xp',
  '/api/me/activity':'mi_movida_activity'
@@ -124,7 +123,7 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
   if(!result.ok)return respond({error:{code:result.status===403?'forbidden':'source_unavailable'}},result.status===403?403:503,origin);
   const data=await result.json();
   const resultData=(rpc==='mi_movida_xp'||rpc==='mi_movida_activity')&&data?.next_cursor&&typeof data.next_cursor==='object'?{...data,next_cursor:btoa(JSON.stringify(data.next_cursor)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}:data;
-  return respond({data:(rpc==='mi_movida_profile'||profileWrite)?{...resultData,version:String(resultData.profile_version),recovery_channel:{verified:!!resultData.recovery_channel_verified},...(route==='/api/me/credential'?{verification_url:new URL('/functions/v1/mi-movida-api/api/public/credential/'+resultData.public_id,supabase).href}:{})}:resultData},200,origin);
+  return respond({data:(rpc==='mi_movida_profile'||profileWrite)?{...resultData,version:String(resultData.profile_version),recovery_channel:{verified:!!resultData.recovery_channel_verified}}:resultData},200,origin);
  }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
 }
 if(import.meta.main)Deno.serve(req=>handle(req));
