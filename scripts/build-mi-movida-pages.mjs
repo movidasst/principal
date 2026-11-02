@@ -16,6 +16,7 @@ if(edge){
  let html=await readFile(index,'utf8');
  const meta='<meta name="mi-movida-edge-api" content="'+edge+'">';
  if(!html.includes('</head>'))throw Error('Invalid HTML');
+ html=html.replace("connect-src 'self';","connect-src 'self' https://lfdmbkzghnwvsapxypvt.supabase.co;");
  html=html.replace('</head>',meta+'\n</head>');
  await writeFile(index,html,'utf8');
 }
