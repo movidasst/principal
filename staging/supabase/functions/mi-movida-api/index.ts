@@ -78,6 +78,36 @@ export async function handle(req:Request,env:(name:string)=>string|undefined=(na
    return respond({data:rpc==='mi_movida_public_credential'?data:{items:data,scope:(new URL(req.url)).searchParams.get('scope')||'general'}},200,origin);
   }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
  }
+ // Solo la sesión propia puede solicitar datos para pintar la credencial de GEO.
+ // No devolver código privado, token, correo ni credenciales de terceros.
+ if(req.method==='GET'&&route==='/api/me/credential-card'){
+  if(env('MM_ENABLE_MEMBER_READS')!=='true')return respond({error:{code:'not_enabled'}},503,origin);
+  const auth=req.headers.get('authorization')||'';
+  if(!/^Bearer [A-Za-z0-9._~-]+$/.test(auth))return respond({error:{code:'unauthorized'}},401,origin);
+  const base=env('SUPABASE_URL'),pub=env('SUPABASE_ANON_KEY')||env('SUPABASE_PUBLISHABLE_KEY'),service=env('SUPABASE_SERVICE_ROLE_KEY');
+  if(!base||!pub||!service)return respond({error:{code:'not_configured'}},503,origin);
+  try{
+   const context=await sessionContext(new URL(base),pub,service,auth.slice(7));
+   const ownId=String(context?.integrante_id||'');
+   if(!/^[1-9][0-9]{0,17}$/.test(ownId))return respond({error:{code:'unauthorized'}},401,origin);
+   const url=new URL('/rest/v1/integrantes',base);
+   url.searchParams.set('select','id,public_id,nombres,apellidos,documento,pais_iso2,pais_nombre,grado,carrera,foto_url');
+   url.searchParams.set('id','eq.'+ownId);
+   url.searchParams.set('limit','1');
+   const response=await fetch(url,{headers:{apikey:service,authorization:'Bearer '+service},redirect:'error',signal:AbortSignal.timeout(6000)});
+   if(!response.ok)return respond({error:{code:'source_unavailable'}},503,origin);
+   const rows=await response.json();
+   if(!Array.isArray(rows)||rows.length!==1||String(rows[0]?.id)!==ownId)return respond({error:{code:'identity_conflict'}},409,origin);
+   const p=rows[0];
+   if(!/^[0-9a-f-]{36}$/i.test(String(p.public_id||'')))return respond({error:{code:'identity_conflict'}},409,origin);
+   return respond({data:{
+    public_id:p.public_id,nombres:p.nombres||'',apellidos:p.apellidos||'',documento:p.documento||'',
+    pais_iso2:p.pais_iso2||'',pais_nombre:p.pais_nombre||'',
+    grado:p.grado||'',carrera:p.carrera||'',foto_url:p.foto_url||''
+   }},200,origin);
+  }catch{return respond({error:{code:'source_unavailable'}},503,origin);}
+ }
+
  if(req.method==='GET'&&(route==='/api/me/learning'||route==='/api/me/certificates'||/^\/api\/me\/certificates\/moodle\/[0-9]+$/.test(route))){
   if(env('MM_ENABLE_MEMBER_READS')!=='true')return respond({error:{code:'not_enabled'}},503,origin);
   const token=(req.headers.get('authorization')||'').replace(/^Bearer /,'');
