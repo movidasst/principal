@@ -13,7 +13,7 @@ test('Puerta Edge aislada: sin claves privadas ni rutas de datos de miembros act
 });
 
 test('Migración Mi Movida completamente independiente de funciones PIF',async()=>{
- for(const path of ['../../backend/sql/001_identity_and_profile.sql','../../staging/supabase/migrations/20261101235635_mi_movida_identity.sql']){
+ for(const path of ['../../backend/sql/001_identity_and_profile.sql','../../staging/supabase/migrations/20261101235635_mi_movida_identity.sql','../../backend/sql/003_photos.sql']){
   const migration=await readFile(new URL(path,import.meta.url),'utf8');
   assert.doesNotMatch(migration,/\bpif_current_integrante_id\b|\bpif_ensure_access\b|\bpif_has_full_access\b/i);
  }
