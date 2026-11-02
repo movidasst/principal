@@ -96,12 +96,7 @@ BEGIN
 END;
 $$;
 
--- H4: no user-editable metadata fallback, no automatic paid/admin access.
-CREATE OR REPLACE FUNCTION public.pif_current_integrante_id() RETURNS bigint
-LANGUAGE sql STABLE SECURITY DEFINER SET search_path='' AS $$
- SELECT private.mm_linked_integrante();
-$$;
-
+-- Mi Movida NO reemplaza funciones de PIF. Identidad y permisos de PIF se conservan.
 CREATE OR REPLACE FUNCTION public.mi_movida_configure(p_api_url text) RETURNS boolean
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
 BEGIN
@@ -426,8 +421,6 @@ GRANT EXECUTE ON FUNCTION public.mi_movida_configure(text),public.mi_movida_rate
  public.mi_movida_revoke_session(uuid,uuid) TO service_role;
 REVOKE ALL ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_profile(jsonb,bigint),public.mi_movida_set_photo(text,bigint) FROM PUBLIC,anon;
 GRANT EXECUTE ON FUNCTION public.mi_movida_profile(),public.mi_movida_update_profile(jsonb,bigint),public.mi_movida_set_photo(text,bigint) TO authenticated;
-REVOKE ALL ON FUNCTION public.pif_current_integrante_id() FROM PUBLIC,anon;
-GRANT EXECUTE ON FUNCTION public.pif_current_integrante_id() TO authenticated;
 COMMIT;
 
 -- Acceso internacional simplificado: document + código solo si el resultado es único.
