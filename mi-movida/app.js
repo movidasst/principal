@@ -74,7 +74,7 @@ function modal(title,text,extra=''){document.querySelector('#modal-content').inn
 function displayName(){return [state.profile?.nombres,state.profile?.apellidos].filter(Boolean).join(' ').trim()||state.session?.person?.display_name||'Integrante';}
 function initials(){return esc(displayName().split(/\s+/).map(s=>s[0]).slice(0,2).join(''));}
 function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+(safePhotoUrl(state.profile?.foto_url)?'<img src="'+esc(safePhotoUrl(state.profile.foto_url))+'" alt="Tu fotografía" class="avatar-photo" referrerpolicy="no-referrer">':initials())+'</span>';}
-function brand(){return '<div class="brand"><img src="/logo-oficial-movida-sst-plus.png" alt="La Movida de SST+" decoding="async"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>TU ESPACIO PERSONAL</small></span></div>';}
+function brand(){return '<div class="brand"><img src="/logo-horizontal-movida-sst-plus.webp" alt="La Movida de SST+" width="672" height="224" fetchpriority="high" decoding="async"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>TU ESPACIO PERSONAL</small></span></div>';}
 function hubReturnLink(){return '<a class="hub-return-link" href="https://www.movidasst.com/">'+icon('home')+'<span>Volver a la página principal</span></a>';}
 function navLinks(){return routes.map(([key,ico,label,group])=>(group?'<div class="nav-group">'+group+'</div>':'')+'<a class="nav-link '+(state.route===key?'active':'')+'" href="#/'+key+'"'+(state.route===key?' aria-current="page"':'')+'>'+icon(ico)+esc(label)+'</a>').join('');}
 function header(){

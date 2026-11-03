@@ -38,7 +38,7 @@ h3 { font-size:1rem; }
   display:block; box-sizing:border-box; width:min(190px,100%); max-width:100%;
   height:auto; max-height:none; aspect-ratio:auto; object-fit:contain;
   object-position:left center; padding:9px 11px; border-radius:13px;
-  background:#123F55; border:1px solid rgba(255,255,255,.15);
+  background:#fff; border:1px solid rgba(255,255,255,.15);
 }
 .brand span { display:block; min-width:0; }
 .brand strong { font-size:1.12rem; line-height:1.2; font-weight:800; letter-spacing:-.04em; }
@@ -115,7 +115,7 @@ input::placeholder, textarea::placeholder { color:#778D94; opacity:1; }
 }
 .login-art .brand { margin:0 0 12px; }
 .login-art .brand img {
-  display:block; background:#123F55; width:min(205px,70vw); height:auto;
+  display:block; background:#fff; width:min(205px,70vw); height:auto;
   border-radius:14px; padding:10px 12px;
 }
 .login-art .brand strong { font-size:1.25rem; }
@@ -139,7 +139,7 @@ dialog#modal {
 }
 dialog#modal::backdrop { background:rgba(15,35,43,.50); backdrop-filter:none; -webkit-backdrop-filter:none; }
 .modal-brand { display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-bottom:18px; }
-.modal-brand img { display:block; width:170px; max-width:75%; height:auto; border-radius:11px; padding:8px 11px; background:#123F55; }
+.modal-brand img { display:block; width:170px; max-width:75%; height:auto; border-radius:11px; padding:8px 11px; background:#fff; }
 .modal-brand span { font-size:.67rem; font-weight:750; letter-spacing:.10em; color:var(--mm-dark); }
 dialog#modal h2 { margin:0 0 9px; font-size:clamp(1.4rem,5vw,1.75rem); }
 dialog#modal p { font-size:.88rem; color:var(--muted); line-height:1.6; margin:0 0 19px; }
@@ -251,7 +251,7 @@ table { min-width:460px; }
     background:linear-gradient(145deg,#104E60 0%,#247E84 68%,#60A5A0 100%);
   }
   .login-art .brand { margin-bottom:40px; }
-  .login-art .brand img { width:205px; background:#113E53; }
+  .login-art .brand img { width:205px; background:#fff; }
   .login-art .brand strong,.login-art .brand small { color:#fff; }
   .login-art>.eyebrow { display:block; color:#DDF8F0; }
   .login-art h1 { display:block; font-size:clamp(2rem,4vw,3rem); line-height:1.13; }
