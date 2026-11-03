@@ -25,6 +25,7 @@ jobs:
           grep -q 'mi-movida-edge-api' mi-movida/index.html
           grep -q 'frame-src https://directorio.movidasst.com;' mi-movida/index.html
           node --check mi-movida/app.js
+          node tests/mi-movida-performance.mjs
           node tests/mi-movida-certificados.mjs
           node tests/mi-movida-perfil-solo-lectura.mjs
       - name: Verificar que GitHub Pages publica la ruta

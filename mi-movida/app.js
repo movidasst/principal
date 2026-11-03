@@ -11,7 +11,24 @@ const EDGE_API_BASE=document.querySelector('meta[name="mi-movida-edge-api"]')?.c
 const state={edgeAccessToken:null,edgeRefreshToken:null,photoObjectUrl:null,geoCredentialMode:'verificacion',session:null,profile:null,route:'inicio',drawer:false,tab:'movimientos',source:'Todas',scope:'general',offset:0,cache:{},error:null,busy:false,loadId:0,recoveryToken:null,channelToken:null,environment:null};
 const root=document.querySelector('#root');
 class ApiError extends Error{constructor(message,status,code){super(message);this.status=status;this.code=code;}}
+// Datos privados solo en memoria; nunca se persisten en el navegador.
+const responseCache=new Map(),pendingReads=new Map();
+let sessionGeneration=0;
+const CACHE_TTL=120000;
+function resetReadCache(){sessionGeneration++;responseCache.clear();pendingReads.clear();}
 async function api(path,options={}){
+ const cacheable=(options.method||'GET')==='GET'&&path.startsWith('/api/me/')&&state.session?.authenticated;
+ if(!cacheable)return requestApi(path,options);
+ const generation=sessionGeneration,cached=responseCache.get(path);
+ if(cached&&Date.now()-cached.time<CACHE_TTL)return cached.payload;
+ if(pendingReads.has(path))return pendingReads.get(path);
+ const request=requestApi(path,options).then(payload=>{
+  if(generation===sessionGeneration&&state.session?.authenticated)responseCache.set(path,{payload,time:Date.now()});
+  return payload;
+ }).finally(()=>{if(pendingReads.get(path)===request)pendingReads.delete(path);});
+ pendingReads.set(path,request);return request;
+}
+async function requestApi(path,options={}){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),25000);
  const headers={'Accept':'application/json',...options.headers};
  if(EDGE_API_BASE&&state.edgeAccessToken)headers.Authorization='Bearer '+state.edgeAccessToken;
@@ -57,7 +74,7 @@ function modal(title,text,extra=''){document.querySelector('#modal-content').inn
 function displayName(){return [state.profile?.nombres,state.profile?.apellidos].filter(Boolean).join(' ').trim()||state.session?.person?.display_name||'Integrante';}
 function initials(){return esc(displayName().split(/\s+/).map(s=>s[0]).slice(0,2).join(''));}
 function avatar(large=false){return '<span class="avatar '+(large?'avatar-lg':'')+'">'+(safePhotoUrl(state.profile?.foto_url)?'<img src="'+esc(safePhotoUrl(state.profile.foto_url))+'" alt="Tu fotografía" class="avatar-photo" referrerpolicy="no-referrer">':initials())+'</span>';}
-function brand(){return '<div class="brand"><img src="https://movidasst.org/pluginfile.php/1/theme_moove/sliderimage1/1793466008/La%20Movida%20de%20SST%2B.png" alt="La Movida de SST+" decoding="async"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>TU ESPACIO PERSONAL</small></span></div>';}
+function brand(){return '<div class="brand"><img src="/logo-oficial-movida-sst-plus.png" alt="La Movida de SST+" decoding="async"><span><strong>Mi Movida<span class="brand-dot">.</span></strong><small>TU ESPACIO PERSONAL</small></span></div>';}
 function hubReturnLink(){return '<a class="hub-return-link" href="https://www.movidasst.com/">'+icon('home')+'<span>Volver a la página principal</span></a>';}
 function navLinks(){return routes.map(([key,ico,label,group])=>(group?'<div class="nav-group">'+group+'</div>':'')+'<a class="nav-link '+(state.route===key?'active':'')+'" href="#/'+key+'"'+(state.route===key?' aria-current="page"':'')+'>'+icon(ico)+esc(label)+'</a>').join('');}
 function header(){
@@ -72,7 +89,7 @@ function header(){
   certificados:['MIS LOGROS','Mis certificados','Documentos emitidos y verificables, separados de cursos completados.'],
   cuenta:['TÚ TIENES EL CONTROL','Mi cuenta y seguridad','Tu acceso y privacidad sin una nueva contraseña.']
  }[state.route];
- return '<header class="page-head"><div><span class="eyebrow">'+esc(headings[0])+'</span><h1 id="page-title" tabindex="-1">'+esc(headings[1])+'</h1><p class="subtitle">'+esc(headings[2])+'</p></div>'+(state.route==='inicio'?btn('Mi perfil','perfil','edit','ghost'):'')+'</header>';
+ return '<header class="page-head"><div><span class="eyebrow">'+esc(headings[0])+'</span><h1 id="page-title" tabindex="-1">'+esc(headings[1])+'</h1><p class="subtitle">'+esc(headings[2])+'</p></div>'+(state.route==='inicio'?btn('Mi perfil','perfil','edit','ghost'):'')+'<button class="btn ghost" data-action="refresh">Actualizar</button>'+'</header>';
 }
 function shell(content){
  document.title=routes.find(r=>r[0]===state.route)?.[2]+' · Mi Movida';
@@ -84,12 +101,13 @@ function renderLogin(message=''){
  state.busy=false;root.setAttribute('aria-busy','false');document.title='Acceso · Mi Movida';
  root.innerHTML='<main class="login-shell" id="main"><section class="login-art">'+brand()+'<span class="eyebrow">DE LA REACCIÓN A LA PREVENCIÓN</span><h1>Tu comunidad.<br>Tu recorrido.<br><span>Tu movida.</span></h1><p>Un solo espacio para tu identidad, tus aportes y tu aprendizaje.</p><div class="login-orbit"><img src="./assets/comunicacion-asertiva.svg" alt=""><img src="./assets/negociacion.svg" alt=""><img src="./assets/liderazgo-preventivo.svg" alt=""></div></section><section class="login-form">'+hubReturnLink()+'<span class="eyebrow">BIENVENIDO A MI MOVIDA</span><h2>Vuelve a tu espacio.</h2><p class="subtitle">Usa tu identidad actual de integrante. No necesitas registrarte de nuevo.</p>'+(message?'<div class="note amber" role="alert">'+esc(message)+'</div>':'')+(state.recoveryToken?'<form id="consume-recovery"><p class="subtitle">Confirma que deseas recuperar tu acceso. El enlace se utiliza una sola vez y no cambia tu contraseña de Moodle.</p><button type="submit" class="btn primary wide spaced">Confirmar recuperación</button></form>':'<form id="login-form">'+loginFields()+'<label class="field"><span>Código de integrante</span><input name="member_code" type="password" maxlength="5" minlength="5" pattern="[A-Za-z0-9]{5}" autocapitalize="characters" autocomplete="current-password" required></label><button type="submit" class="btn primary wide">Ingresar '+icon('arrow')+'</button></form><button class="login-help" data-action="recovery">¿Necesitas recuperar tu acceso?</button>')+'<p class="login-note">'+icon('shield')+' Tu código no se guarda en este navegador.</p></section></main>';
 }
-function clearPrivateState(){if(state.photoObjectUrl)URL.revokeObjectURL(state.photoObjectUrl);state.photoObjectUrl=null;state.edgeAccessToken=null;state.edgeRefreshToken=null;state.session=null;state.profile=null;state.cache={};state.error=null;state.drawer=false;state.loadId++;document.querySelector('#modal')?.close();}
+function clearPrivateState(){resetReadCache();if(state.photoObjectUrl)URL.revokeObjectURL(state.photoObjectUrl);state.photoObjectUrl=null;state.edgeAccessToken=null;state.edgeRefreshToken=null;state.session=null;state.profile=null;state.cache={};state.error=null;state.drawer=false;state.loadId++;document.querySelector('#modal')?.close();}
 async function refreshSession(){const payload=data(await api('/api/session'));state.session=payload;state.environment=payload.environment;document.querySelector(".demo-bar").textContent=payload.environment==="synthetic-local"?"STAGING LOCAL · DATOS SINTÉTICOS · NO USAR DATOS REALES":"MI MOVIDA · ESPACIO PERSONAL";return payload;}
 async function boot(){
  const url=new URL(location.href),token=url.searchParams.get('recovery_token')||url.searchParams.get('token'),channelToken=url.searchParams.get('channel_token');
  if(channelToken){state.channelToken=channelToken;url.searchParams.delete('channel_token');history.replaceState(null,'',url.pathname+url.search+url.hash);}
  if(token){state.recoveryToken=token;url.searchParams.delete('token');url.searchParams.delete('recovery_token');history.replaceState(null,'',url.pathname+url.search+url.hash);}
+ if(EDGE_API_BASE&&!state.edgeAccessToken){renderLogin(state.channelToken?'Ingresa para confirmar tu canal de recuperación.':'');return;}
  try{await refreshSession();if(state.session?.authenticated&&!state.recoveryToken){if(state.channelToken)location.hash='#/cuenta';await navigate();}else renderLogin(state.channelToken?'Ingresa para confirmar tu canal de recuperación.':'');}
  catch(error){renderLogin(error.message);}
 }
@@ -107,17 +125,26 @@ async function navigate(){
  state.route=getRoute();state.drawer=false;state.error=null;state.busy=true;const id=++state.loadId;shell(loading());
  try{
   if(!state.profile)await getProfile();
-  const result=await loadRoute(state.route);
+  if(id!==state.loadId||!state.session?.authenticated)return;
+  const result=await loadRoute(state.route,id);
   if(id!==state.loadId||!state.session?.authenticated)return;
   state.cache[state.route]=result;state.busy=false;renderCurrent();document.querySelector('#page-title')?.focus({preventScroll:true});
  }catch(error){if(id!==state.loadId||!state.session?.authenticated)return;state.error=error;state.busy=false;shell(failure(error));}
 }
-async function loadRoute(route){
+async function loadRoute(route,id){
  if(route==='perfil'||route==='cuenta')return {profile:await getProfile()};
  if(route==='credencial')return {profile:state.profile};
  if(route==='inicio'){
-  const values=await Promise.allSettled([api('/api/me/xp?scope=general'),api('/api/me/activity'),api('/api/me/learning'),api('/api/me/badges')]);
-  return Object.fromEntries(['xp','activity','learning','badges'].map((key,i)=>[key,values[i].status==='fulfilled'?{value:data(values[i].value)}:{error:values[i].reason}]));
+  const result={};
+  state.cache.inicio=result;
+  const sources=[['xp','/api/me/xp?scope=general'],['activity','/api/me/activity'],['learning','/api/me/learning'],['badges','/api/me/badges']];
+  for(const [key] of sources)result[key]={pending:true};
+  if(id===state.loadId)renderCurrent();
+  await Promise.all(sources.map(async([key,path])=>{
+   try{result[key]={value:data(await api(path))};}catch(error){result[key]={error};}
+   if(id===state.loadId&&state.session?.authenticated&&state.route==='inicio')renderCurrent();
+  }));
+  return result;
  }
  const endpoints={puntos:'/api/me/xp?scope='+encodeURIComponent(state.scope),insignias:'/api/me/badges',actividad:'/api/me/activity'+(state.source==='Todas'?'':'?source='+encodeURIComponent(state.source)),aprendizaje:'/api/me/learning',certificados:'/api/me/certificates'};
  return data(await api(endpoints[route]));
@@ -125,10 +152,11 @@ async function loadRoute(route){
 function renderCurrent(){if(!state.session?.authenticated){renderLogin();return;}const content=state.error?failure(state.error):views[state.route](state.cache[state.route]||{});shell(content);}
 function stat(ico,value,label,cls=''){return '<div class="stat"><span class="stat-icon '+cls+'">'+icon(ico)+'</span><div><strong>'+esc(value)+'</strong><small>'+esc(label)+'</small></div></div>';}
 function rankingFrom(d){return d.ranking||d.summary||d;}
+function pendingBlock(){return '<div class="note" role="status">Cargando información…</div>';}
 function overview(d){
  const x=d.xp?.value,r=x?rankingFrom(x):null,activity=d.activity?.value,badges=d.badges?.value;
  const activityItems=items(activity),badgeItems=items(badges);
- return '<section class="hero"><div class="hero-copy"><span class="eyebrow">DE LA REACCIÓN A LA PREVENCIÓN</span><h2>Tu próxima movida<br>empieza aquí.</h2><p>Aprende, participa y reconoce tu recorrido en la comunidad.</p>'+btn('Mi aprendizaje','aprendizaje')+'</div><div class="hero-badge">'+avatar(true)+'<div><strong>'+esc(displayName())+'</strong><small>'+esc(state.profile?.pais_nombre||state.profile?.pais_iso2||'Integrante')+'</small></div></div></section><section class="stats">'+stat('spark',r?fmt(r.puntos??r.total)+' XP':'—','Puntos oficiales')+stat('chart',r?.posicion?'#'+r.posicion:'—',r?.fuera_de_ranking?'Fuera del ranking':'Posición general','gold')+stat('award',badges?String(badgeItems.length):'—','Reconocimientos consultados','blue')+stat('activity',activity?String(activityItems.length):'—','Actividades consultadas','lilac')+'</section><div class="dashboard-grid"><div class="stack"><section class="panel"><div class="panel-head"><h2>Mi aprendizaje</h2>'+textLink('Ver todo','aprendizaje')+'</div>'+(d.learning?.error?note(d.learning.error.message,'amber'):learningList(d.learning?.value,true))+'</section><section class="panel"><div class="panel-head"><h2>Mis últimos aportes</h2>'+textLink('Ver actividad','actividad')+'</div>'+(d.activity?.error?note(d.activity.error.message,'amber'):activityList(activityItems.slice(0,4)))+'</section></div><div class="stack"><section class="panel"><h2>Mi identidad</h2><div class="credential-mini spaced">'+avatar()+'<div><strong>'+esc(displayName())+'</strong><small>'+esc(state.profile?.carrera||'Integrante de SST+')+'</small></div></div><div class="spaced">'+btn('Mi credencial','credencial','id','ghost')+'</div></section><section class="panel"><h2>Mis reconocimientos</h2>'+(d.badges?.error?note(d.badges.error.message,'amber'):badgeItems.length?'<p class="subtitle">'+esc(badgeItems[0].nombre||badgeItems[0].name||'Reconocimiento confirmado')+'</p>':empty('Todavía no aparecen reconocimientos confirmados.'))+'<div class="spaced">'+textLink('Ver insignias','insignias')+'</div></section>'+(d.xp?.error?note(d.xp.error.message,'amber'):'')+'</div></div>';
+ return '<section class="hero"><div class="hero-copy"><span class="eyebrow">DE LA REACCIÓN A LA PREVENCIÓN</span><h2>Tu próxima movida<br>empieza aquí.</h2><p>Aprende, participa y reconoce tu recorrido en la comunidad.</p>'+btn('Mi aprendizaje','aprendizaje')+'</div><div class="hero-badge">'+avatar(true)+'<div><strong>'+esc(displayName())+'</strong><small>'+esc(state.profile?.pais_nombre||state.profile?.pais_iso2||'Integrante')+'</small></div></div></section><section class="stats">'+stat('spark',r?fmt(r.puntos??r.total)+' XP':'—','Puntos oficiales')+stat('chart',r?.posicion?'#'+r.posicion:'—',r?.fuera_de_ranking?'Fuera del ranking':'Posición general','gold')+stat('award',badges?String(badgeItems.length):'—','Reconocimientos consultados','blue')+stat('activity',activity?String(activityItems.length):'—','Actividades consultadas','lilac')+'</section><div class="dashboard-grid"><div class="stack"><section class="panel"><div class="panel-head"><h2>Mi aprendizaje</h2>'+textLink('Ver todo','aprendizaje')+'</div>'+(d.learning?.pending?pendingBlock():d.learning?.error?note(d.learning.error.message,'amber'):learningList(d.learning?.value,true))+'</section><section class="panel"><div class="panel-head"><h2>Mis últimos aportes</h2>'+textLink('Ver actividad','actividad')+'</div>'+(d.activity?.pending?pendingBlock():d.activity?.error?note(d.activity.error.message,'amber'):activityList(activityItems.slice(0,4)))+'</section></div><div class="stack"><section class="panel"><h2>Mi identidad</h2><div class="credential-mini spaced">'+avatar()+'<div><strong>'+esc(displayName())+'</strong><small>'+esc(state.profile?.carrera||'Integrante de SST+')+'</small></div></div><div class="spaced">'+btn('Mi credencial','credencial','id','ghost')+'</div></section><section class="panel"><h2>Mis reconocimientos</h2>'+(d.badges?.pending?pendingBlock():d.badges?.error?note(d.badges.error.message,'amber'):badgeItems.length?'<p class="subtitle">'+esc(badgeItems[0].nombre||badgeItems[0].name||'Reconocimiento confirmado')+'</p>':empty('Todavía no aparecen reconocimientos confirmados.'))+'<div class="spaced">'+textLink('Ver insignias','insignias')+'</div></section>'+(d.xp?.error?note(d.xp.error.message,'amber'):'')+'</div></div>';
 }
 function geoCredentialUrl(publicId){
  const id=String(publicId||'').trim();
@@ -214,7 +242,7 @@ function setFormBusy(form,busy){form.querySelectorAll('button,input,select').for
 async function submitLogin(form){
  const f=new FormData(form),body=Object.fromEntries(['document','member_code'].map(k=>[k,String(f.get(k)||'').trim()]));
  setFormBusy(form,true);
- try{const result=data(await api('/api/session/bootstrap',{method:'POST',body:JSON.stringify(body)}));if(EDGE_API_BASE){state.edgeAccessToken=result.access_token;state.edgeRefreshToken=result.refresh_token;}form.reset();await refreshSession();if(!state.session.authenticated)throw new ApiError('No se pudo establecer una sesión segura. Vuelve a ingresar.',401);location.hash=state.channelToken?'#/cuenta':'#/inicio';await navigate();}
+ try{const result=data(await api('/api/session/bootstrap',{method:'POST',body:JSON.stringify(body)}));if(EDGE_API_BASE){state.edgeAccessToken=result.access_token;state.edgeRefreshToken=result.refresh_token;}form.reset();await refreshSession();if(!state.session.authenticated)throw new ApiError('No se pudo establecer una sesión segura. Vuelve a ingresar.',401);history.replaceState(null,'',state.channelToken?'#/cuenta':'#/inicio');await navigate();}
  catch(error){const secret=form.elements.member_code;if(secret)secret.value='';renderLogin(error.message);}
 }
 async function logout(){
@@ -261,11 +289,13 @@ window.addEventListener('message',async event=>{
  if(packet.type!=='movida-geo-credential-ready')return;
  if(status)status.textContent='Comprobando tu identidad para presentar la credencial de GEO…';
  try{
-  const credentialData=data(await api('/api/me/credential-card'));
+  const [card,xpResult]=await Promise.allSettled([api('/api/me/credential-card'),api('/api/me/xp?scope=general')]);
+  if(card.status!=='fulfilled')throw card.reason;
+  const credentialData={...data(card.value)};
   if(!state.session?.authenticated||state.route!=='credencial'||String(credentialData.public_id||'').toLowerCase()!==id)throw new Error('La credencial no corresponde a esta sesión.');
   // Los puntos se leen de la sesión actual; el diseño y QR se pintan exclusivamente en GEO.
   try{
-   const xp=data(await api('/api/me/xp?scope=general'));
+   const xp=xpResult.status==='fulfilled'?data(xpResult.value):null;
    const rank=xp?.ranking||xp;
    if(rank&&typeof rank==='object'){
     credentialData.puntos=Number(rank.puntos)||0;
@@ -292,7 +322,7 @@ document.addEventListener('click',async event=>{
  if(action==='confirm-channel'){await confirmRecoveryChannel(target);return;}
  if(action==='geo-credential-verify'){state.geoCredentialMode='verificacion';renderCurrent();return;}
  if(action==='geo-credential-access'){state.geoCredentialMode='acceso';renderCurrent();return;}
- if(action==='retry'){await navigate();return;}
+ if(action==='retry'||action==='refresh'){resetReadCache();state.profile=null;await navigate();return;}
  if(action==='menu'){state.drawer=!state.drawer;renderCurrent();document.querySelector(state.drawer?'#drawer-close':'.menu-button')?.focus();return;}
  if(action==='logout'){target.disabled=true;await logout();return;}
  if(action==='recovery'){recoveryForm();return;}
@@ -327,6 +357,6 @@ async function setRecoveryChannel(form){
 }
 async function confirmRecoveryChannel(button){
  button.disabled=true;
- try{await api('/api/me/recovery-channel/confirm',{method:'POST',body:JSON.stringify({token:state.channelToken})});state.channelToken=null;await getProfile();await navigate();toast('Canal de recuperación verificado.');}
+ try{await api('/api/me/recovery-channel/confirm',{method:'POST',body:JSON.stringify({token:state.channelToken})});state.channelToken=null;resetReadCache();await getProfile();await navigate();toast('Canal de recuperación verificado.');}
  catch(error){toast(error.message);if(button.isConnected)button.disabled=false;}
 }
