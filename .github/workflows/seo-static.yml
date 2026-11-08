@@ -1,0 +1,44 @@
+name: Comprobar SEO estático
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'explorar.html'
+      - 'seguridad.html'
+      - 'mi-movida/index.html'
+      - 'offline.html'
+      - 'robots.txt'
+      - 'sitemap.xml'
+      - 'tests/seo-static.test.mjs'
+      - '.github/workflows/seo-static.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'explorar.html'
+      - 'seguridad.html'
+      - 'mi-movida/index.html'
+      - 'offline.html'
+      - 'robots.txt'
+      - 'sitemap.xml'
+      - 'tests/seo-static.test.mjs'
+      - '.github/workflows/seo-static.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar-seo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validar sitemap, canonical, robots y JSON-LD
+        run: node --test tests/seo-static.test.mjs
