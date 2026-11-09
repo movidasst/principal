@@ -53,3 +53,10 @@ En cada artículo se enlazan las referencias y se advierte que las explicaciones
 
 ## Exclusiones
 No se tocó `hub.js`, Supabase, Moodle, datos de perfiles, reglas de ingreso, PWA o API de otras aplicaciones. No se modifica la visibilidad de las áreas privadas ya existentes.
+
+## Enlace con Biblioteca colaborativa de Google Drive
+- Sitio de la biblioteca colaborativa existente: https://drive.movidasst.com/
+- Repositorio independiente: movidasst/drive. Este PR **no altera** sus reglas de sesión ni de autorización.
+- Se añadió enlace directo desde la portada del HUB y la cabecera, los botones y el pie de las seis páginas de Biblioteca SST.
+- Las seis guías HTML siguen públicas y no piden credenciales. El explorador Drive **sigue requiriendo cédula y código de credencial** por ahora. Una eventual apertura de archivos de Drive requeriría auditar permisos, datos personales, documentos y derechos de distribución antes de realizar cambios.
+- El enlace no importa documentos al sitio, no duplica contenido y no añade archivos de Drive al sitemap.
