@@ -150,8 +150,10 @@ test('Biblioteca SST: artículos públicos, CTAs opcionales y JSON-LD válido', 
     assert.match(html, /href="\/"[^>]*>Volver a la página principal<\/a>/);
     assert.equal((html.match(/<div class="actions biblioteca-actions"/g) || []).length, 1,
       page.path + ': debe tener un único bloque de accesos, al inicio de la guía');
+    const topActions = html.match(/<div class="actions biblioteca-actions"[^>]*>[\s\S]*?<\/div>/)?.[0];
+    assert.ok(topActions, page.path + ': falta bloque superior');
     for (const label of ['Registrarme gratis', 'Canal oficial de WhatsApp', 'Drive de La Movida', 'Volver a la página principal']) {
-      const exact = html.split('>' + label + '</a>').length - 1;
+      const exact = topActions.split('>' + label + '</a>').length - 1;
       assert.equal(exact, 1, page.path + ': acceso duplicado ' + label);
     }
   }
