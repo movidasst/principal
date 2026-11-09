@@ -159,7 +159,7 @@ test('La portada y Explorar enlazan a la biblioteca pública', () => {
 test('Los enlaces internos absolutos de la biblioteca resuelven a archivos del repositorio', () => {
   for (const page of publicPages.filter((page) => page.path.startsWith('biblioteca/'))) {
     const html = read(page.path);
-    for (const match of html.matchAll(/\bhref="(\/biblioteca\/[^"#?]*)"/g)) {
+    for (const match of html.matchAll(/\bhref="(\/biblioteca\/[^"#?]*\/)"/g)) {
       const pathname = match[1].replace(/^\/+/, '');
       assert.ok(existsSync(resolve(root, pathname, 'index.html')), page.path + ': falta ' + match[1]);
     }
