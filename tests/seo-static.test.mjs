@@ -1,7 +1,7 @@
 // Verificación SEO estática. Sin paquetes ni servicios externos.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 
@@ -12,6 +12,12 @@ const publicPages = [
   { path: 'index.html', url: origin + '/' },
   { path: 'explorar.html', url: origin + '/explorar.html' },
   { path: 'seguridad.html', url: origin + '/seguridad.html' },
+  { path: 'biblioteca/index.html', url: origin + '/biblioteca/' },
+  { path: 'biblioteca/lopcymat/index.html', url: origin + '/biblioteca/lopcymat/' },
+  { path: 'biblioteca/nt-04-2023/index.html', url: origin + '/biblioteca/nt-04-2023/' },
+  { path: 'biblioteca/normas-covenin/index.html', url: origin + '/biblioteca/normas-covenin/' },
+  { path: 'biblioteca/reglamentos-tecnicos/index.html', url: origin + '/biblioteca/reglamentos-tecnicos/' },
+  { path: 'biblioteca/reglamentos-tecnicos/calzado-seguridad/index.html', url: origin + '/biblioteca/reglamentos-tecnicos/calzado-seguridad/' },
 ];
 const technicalPages = [
   'diagnostico-ga4.html', 'offline.html', 'mi-movida/index.html',
@@ -115,4 +121,47 @@ test('Los datos estructurados de la portada son JSON-LD válido', () => {
   const modified = graphs.find((node) => node['@type'] === 'WebPage')?.dateModified;
   const home = sitemapEntries(read('sitemap.xml')).find((entry) => entry.loc === origin + '/');
   assert.equal(modified, home.lastmod, 'Fecha de portada coherente con sitemap');
+});
+
+
+test('Biblioteca SST: artículos públicos, CTAs opcionales y JSON-LD válido', () => {
+  const library = publicPages.filter((page) => page.path.startsWith('biblioteca/'));
+  assert.equal(library.length, 6);
+  for (const page of library) {
+    const html = read(page.path);
+    const scripts = [...html.matchAll(/<script\s+type="application\/ld\+json"\s*>([\s\S]*?)<\/script>/gi)];
+    assert.equal(scripts.length, 1, page.path + ': JSON-LD único');
+    const document = JSON.parse(scripts[0][1]);
+    const graph = document['@graph'] ?? [];
+    assert.ok(graph.some((node) => node['@type'] === 'BreadcrumbList'));
+    const entry = graph.find((node) => node['@type'] === 'Article' || node['@type'] === 'CollectionPage');
+    assert.ok(entry, page.path + ': debe declarar Article o CollectionPage');
+    assert.equal(entry.url, page.url, page.path + ': url estructurada');
+    assert.equal(entry.isAccessibleForFree, true, page.path + ': acceso gratuito');
+    assert.ok(!/noindex/i.test(html.match(/<meta name="robots" content="([^"]+)"/i)?.[1] ?? ''), page.path + ': indexable');
+    assert.ok(!/Contraseña necesaria para leer|Regístrate para leer|Ingresa para leer/i.test(html), page.path + ': sin paywall');
+    assert.match(html, /<link rel="stylesheet" href="\/biblioteca\/biblioteca\.css">/);
+    assert.match(html, /href="\/"/, page.path + ': enlace a inicio');
+  }
+  for (const page of library.filter((page) => page.path !== 'biblioteca/index.html')) {
+    const html = read(page.path);
+    assert.match(html, /href="https:\/\/registro\.movidasst\.com\/"[^>]*>Registrarme gratis<\/a>/);
+    assert.match(html, /href="https:\/\/whatsapp\.com\/channel\/0029Va0mlH5Jf05mrcCz8r3e"[^>]*>Canal oficial de WhatsApp<\/a>/);
+    assert.match(html, /href="\/"[^>]*>Volver a la página principal<\/a>/);
+  }
+});
+
+test('La portada y Explorar enlazan a la biblioteca pública', () => {
+  assert.match(read('index.html'), /href="\/biblioteca\/"/);
+  assert.match(read('explorar.html'), /href="\/biblioteca\/"/);
+});
+
+test('Los enlaces internos absolutos de la biblioteca resuelven a archivos del repositorio', () => {
+  for (const page of publicPages.filter((page) => page.path.startsWith('biblioteca/'))) {
+    const html = read(page.path);
+    for (const match of html.matchAll(/\bhref="(\/biblioteca\/[^"#?]*\/)"/g)) {
+      const pathname = match[1].replace(/^\/+/, '');
+      assert.ok(existsSync(resolve(root, pathname, 'index.html')), page.path + ': falta ' + match[1]);
+    }
+  }
 });

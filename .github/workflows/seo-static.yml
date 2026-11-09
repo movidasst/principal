@@ -10,6 +10,7 @@ on:
       - 'offline.html'
       - 'robots.txt'
       - 'sitemap.xml'
+      - 'biblioteca/**'
       - 'tests/seo-static.test.mjs'
       - '.github/workflows/seo-static.yml'
   push:
@@ -23,6 +24,7 @@ on:
       - 'offline.html'
       - 'robots.txt'
       - 'sitemap.xml'
+      - 'biblioteca/**'
       - 'tests/seo-static.test.mjs'
       - '.github/workflows/seo-static.yml'
   workflow_dispatch:
