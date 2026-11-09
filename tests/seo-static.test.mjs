@@ -165,3 +165,17 @@ test('Los enlaces internos absolutos de la biblioteca resuelven a archivos del r
     }
   }
 });
+
+
+test('Biblioteca SST enlaza al Drive colaborativo sin confundir acceso público con acceso de integrantes', () => {
+  const biblioteca = publicPages.filter((page) => page.path.startsWith('biblioteca/'));
+  assert.equal(biblioteca.length, 6);
+  for (const page of biblioteca) {
+    const html = read(page.path);
+    assert.match(html, /href="https:\/\/drive\.movidasst\.com\/"[^>]*>/i, page.path + ': falta enlace a Drive');
+    assert.match(html, /href="\/biblioteca\/"[^>]*>/i, page.path + ': falta retorno a Biblioteca');
+    assert.match(html, /<meta name="robots" content="index,follow/i, page.path + ': guías indexables');
+  }
+  assert.match(read('biblioteca/index.html'), /Drive colaborativo conserva por ahora su acceso de integrantes/);
+  assert.match(read('index.html'), /Drive de La Movida \(integrantes\)/);
+});
