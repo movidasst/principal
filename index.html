@@ -133,9 +133,8 @@
         "numberOfItems":6,
         "itemListElement":[
           {"@type":"ListItem","position":1,"name":"Registro profesional SST","url":"https://registro.movidasst.com/"},
-          {"@type":"ListItem","position":2,"name":"Directorio de profesionales SST","url":"https://directorio.movidasst.com/"},
-          {"@type":"ListItem","position":3,"name":"Academia Movida SST","url":"https://movidasst.org/login/index.php"},
-          {"@type":"ListItem","position":4,"name":"Aplicaciones para Seguridad y Salud en el Trabajo","url":"https://aplicaciones.movidasst.com/"},
+          {"@type":"ListItem","position":2,"name":"Academia Movida SST","url":"https://movidasst.org/login/index.php"},
+          {"@type":"ListItem","position":3,"name":"Aplicaciones para Seguridad y Salud en el Trabajo","url":"https://aplicaciones.movidasst.com/"},
           {"@type":"ListItem","position":5,"name":"Laboratorio Virtual de Higiene Ocupacional","url":"https://laboratorio.movidasst.com/"},
           {"@type":"ListItem","position":6,"name":"Capacitación corporativa SST para empresas","url":"https://presupuesto.movidasst.com/"}
         ]
@@ -152,7 +151,7 @@
           {
             "@type":"Question",
             "name":"¿Qué recursos ofrece para profesionales de SST en Venezuela?",
-            "acceptedAnswer":{"@type":"Answer","text":"Ofrece registro profesional, Directorio Nacional, Academia, guías de estudio, aplicaciones, biblioteca colaborativa, grupos y recursos para la práctica de la Seguridad y Salud en el Trabajo."}
+            "acceptedAnswer":{"@type":"Answer","text":"Ofrece registro profesional, Academia, guías de estudio, aplicaciones, biblioteca colaborativa, grupos y recursos para la práctica de la Seguridad y Salud en el Trabajo."}
           },
           {
             "@type":"Question",
@@ -162,7 +161,7 @@
           {
             "@type":"Question",
             "name":"¿Cómo puedo comenzar en La Movida SST?",
-            "acceptedAnswer":{"@type":"Answer","text":"El primer paso es completar el registro profesional. Desde allí puedes acceder al directorio, la credencial digital, la Academia y las aplicaciones del ecosistema."}
+            "acceptedAnswer":{"@type":"Answer","text":"El primer paso es completar el registro profesional. Desde allí puedes acceder a tu credencial digital en Mi Movida, la Academia y las aplicaciones del ecosistema."}
           }
         ]
       }
@@ -173,19 +172,6 @@
   
   <link rel="stylesheet" href="/hub.css?v=20261018tabs3">
   <link rel="stylesheet" href="/pwa-install.css?v=20261024pwa1">
-<style id="mentor-promo-style">
-.mentor-promo{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:22px auto 4px;padding:20px;background:linear-gradient(118deg,#001d50 0%,#00436b 53%,#007b85 100%);border:1px solid rgba(62,211,208,.45);border-radius:25px;box-shadow:0 15px 33px rgba(0,32,91,.17);color:#fff}
-.mentor-promo::before{content:"";position:absolute;right:-80px;top:-105px;width:290px;height:290px;border:1px solid rgba(255,255,255,.18);border-radius:50%;z-index:-1;pointer-events:none}
-.mentor-promo .mp-label{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(189,249,245,.35);background:rgba(0,0,0,.12);border-radius:99px;padding:5px 12px;font-size:.69rem;letter-spacing:.07em;font-weight:800;color:#c8fffa}
-.mentor-promo h2{color:#fff;font-size:clamp(1.55rem,3.7vw,2.4rem);line-height:1.12;margin:12px 0 9px;letter-spacing:-.035em}
-.mentor-promo h2 span{color:#ffcf4c}.mentor-promo p{color:#e5f6fa;margin:0;font-size:.94rem;max-width:650px;line-height:1.55}
-.mentor-promo .mp-tags{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 16px}.mentor-promo .mp-tags span{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);padding:5px 9px;border-radius:99px;font-size:.72rem;font-weight:700;color:#fff}
-.mentor-promo .mp-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:10px 17px;background:#ffbf18;border-radius:13px;color:#00205b;font-size:.89rem;font-weight:800;text-decoration:none;box-shadow:0 6px 17px rgba(0,0,0,.13);transition:transform .16s,background .16s}.mentor-promo .mp-button:hover{transform:translateY(-2px);background:#ffcf52}.mentor-promo .mp-button:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.mentor-promo .mp-side{display:flex;align-items:center;gap:14px;justify-content:center;min-width:0}.mentor-promo .mp-logo{display:block;width:94px;height:94px;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 7px 16px rgba(0,0,0,.19))}
-.mentor-promo .mp-side-note{color:#fff;font-size:.82rem;font-weight:650}.mentor-promo .mp-side-note strong{display:block;font-size:1.35rem;line-height:1.13;color:#fff}.mentor-promo .mp-side-note small{display:block;font-size:.71rem;color:#cdf6ed;margin-top:5px}
-@media(min-width:760px){.mentor-promo{grid-template-columns:minmax(0,1fr) 220px;align-items:center;padding:24px 28px;gap:25px}.mentor-promo .mp-side{flex-direction:column;text-align:center}.mentor-promo .mp-logo{width:130px;height:130px}}
-@media(prefers-reduced-motion:reduce){.mentor-promo *{transition:none!important}}
-</style>
   <link rel="stylesheet" href="/hub-identity-2026.css?v=20261102a">
   <script defer src="https://www.movidasst.com/analytics.js?v=20261025-ga4com2"></script>
 </head>
@@ -228,26 +214,10 @@
   </div></section>
   <div class="container quick-nav"><div class="quick-shell">
     <button type="button" class="quick-action quick-tab" data-hub-tab="aprender"  aria-controls="vista-aprender" aria-pressed="false"><span class="quick-icon" data-icon="book"></span><span><strong>Estudia</strong><small>Guías, ranking y XP</small></span></button>
-    <button type="button" class="quick-action quick-tab" data-hub-tab="comunidad"  aria-controls="vista-comunidad" aria-pressed="false"><span class="quick-icon" data-icon="users"></span><span><strong>Directorio</strong><small>Perfiles y conexiones</small></span></button>
+    <button type="button" class="quick-action quick-tab" data-hub-tab="comunidad"  aria-controls="vista-comunidad" aria-pressed="false"><span class="quick-icon" data-icon="users"></span><span><strong>Comunidad</strong><small>Participación y colaboración</small></span></button>
     <button type="button" class="quick-action quick-tab" data-hub-tab="explorar" data-hub-category="laboratorio" aria-controls="vista-explorar" aria-pressed="false"><span class="quick-icon" data-icon="flask"></span><span><strong>MovidaLab HO</strong><small>Práctica con instrumentos</small></span></button>
     <button type="button" class="quick-action quick-tab" data-hub-tab="aprender"  aria-controls="vista-aprender" aria-pressed="false"><span class="quick-icon" data-icon="graduation"></span><span><strong>Academia</strong><small>Cursos y certificados</small></span></button>
   </div></div>
-  <!-- Promoción propia Mentoring SST Plus: abre aplicación en otra pestaña -->
-  <aside class="container" aria-label="Descubre Mentoring SST Plus">
-    <div class="mentor-promo">
-      <div>
-        <span class="mp-label">✦ NUEVO · ACOMPAÑAMIENTO PROFESIONAL</span>
-        <h2>Mentoring SST <span>Plus</span></h2>
-        <p>Aprende, aplica y avanza con mentoría individual en Gestión de SST. Fortalece tu criterio técnico con videollamadas de 45 minutos y consultas por WhatsApp.</p>
-        <div class="mp-tags"><span>Desde 10 USD/mes</span><span>Sin cobros automáticos</span><span>Mentoría 1 a 1</span></div>
-        <a class="mp-button" href="https://mentoring.movidasst.com/?vista=planes" target="_blank" rel="noopener noreferrer" aria-label="Abrir planes de Mentoring SST Plus en una pestaña nueva">Conocer los planes <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="mp-side">
-        <img class="mp-logo" src="/logo-oficial-movida-sst-plus.png" alt="Logo oficial de La Movida de SST Plus" width="130" height="130" loading="lazy" decoding="async">
-        <div class="mp-side-note"><strong>David Linares Brea</strong><small>Tu mentor en Gestión de SST</small></div>
-      </div>
-    </div>
-  </aside>
 <section class="section container" aria-labelledby="bibliotecaIntroTitle">
   <div class="panel" style="background:linear-gradient(120deg,#eaf7f5,#eef5fc 60%,#fff7e6);border:1px solid #d5e7eb;border-radius:22px;padding:clamp(20px,3vw,32px);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
     <div style="max-width:780px"><span class="eyebrow">Conocimiento abierto para todos</span>
@@ -262,7 +232,6 @@
     <div class="product-grid" id="featuredGrid" aria-label="Herramientas destacadas">
       <article class="product-card"><div class="product-icon" data-icon="book"></div><h3><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia Movida SST</a></h3><p>Guías, aprendizaje colaborativo, ranking y XP.</p><div class="product-foot"><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Abrir <span data-icon="arrow"></span></a></div></article>
       <article class="product-card"><div class="product-icon" data-icon="flask"></div><h3><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a></h3><p>Práctica virtual con instrumentos.</p><div class="product-foot"><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Abrir <span data-icon="arrow"></span></a></div></article>
-      <article class="product-card"><div class="product-icon" data-icon="users"></div><h3><a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Directorio internacional</a></h3><p>Encuentra otros profesionales de SST.</p><div class="product-foot"><a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Abrir <span data-icon="arrow"></span></a></div></article>
       <article class="product-card"><div class="product-icon" data-icon="shield"></div><h3><a href="https://pp.movidasst.com/" target="_blank" rel="noopener noreferrer">IPERC multimétodo</a></h3><p>Del peligro al control con criterio técnico.</p><div class="product-foot"><a href="https://pp.movidasst.com/" target="_blank" rel="noopener noreferrer">Abrir <span data-icon="arrow"></span></a></div></article>
     </div>
   </section>
@@ -299,18 +268,11 @@
  </div>
     </section>
   </div>
-<div id="vista-comunidad" class="hub-view" data-hub-view="comunidad" aria-label="Directorio y comunidad" hidden>
+<div id="vista-comunidad" class="hub-view" data-hub-view="comunidad" aria-label="Comunidad y colaboración" hidden>
   <section class="section container" id="comunidad" aria-labelledby="communityTitle">
     <div class="section-head"><div><span class="eyebrow">Una red que aprende contigo</span><h2 id="communityTitle">Participar también es construir conocimiento.</h2><p>Tu experiencia suma a la comunidad. Participa, comparte y sigue el trabajo colectivo.</p></div></div>
-    <div class="directory-spotlight">
-  <span class="directory-spotlight-icon" data-icon="users"></span>
-  <div class="directory-spotlight-copy"><span class="eyebrow">Red internacional de profesionales</span><h3>Directorio de SST</h3>
-  <p>Conoce profesionales de distintos países, consulta perfiles y descubre la comunidad. Aquí permanece la información y el acceso a la plataforma del Directorio.</p></div>
-  <a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir Directorio <span data-icon="external"></span></a>
-</div>
     <div class="split"><div class="panel dark"><span class="eyebrow" style="color:#a6f2d3">Comunidad internacional</span><h2>De la conversación a la colaboración.</h2><p>Formamos una red de profesionales con acceso a estudios, herramientas, consultas y reconocimiento por contribuciones técnicas.</p><a class="btn btn-accent" href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participar <span data-icon="arrow"></span></a></div>
       <div class="panel"><h2>Más formas de conectar</h2><div class="link-stack">
-        <a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Directorio profesional<span data-icon="arrow"></span></a>
         <a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Ranking y mis puntos<span data-icon="arrow"></span></a>
         <a href="https://drive.movidasst.com/" target="_blank" rel="noopener noreferrer">Biblioteca colaborativa<span data-icon="arrow"></span></a>
         <a href="https://novedades.movidasst.com/" target="_blank" rel="noopener noreferrer">Radar de novedades ISO<span data-icon="arrow"></span></a>
@@ -323,7 +285,7 @@
     <div class="section-head mi-movida-entry"><div><span class="eyebrow">Tu identidad en el ecosistema</span><h2 id="profileTitle">Mi Movida, tu espacio personal</h2><p>Consulta tu credencial, perfil, puntos, aprendizaje y certificados en una sola aplicación, con tus datos oficiales.</p></div><a class="btn btn-primary" href="/mi-movida/">Entrar a Mi Movida <span data-icon="arrow"></span></a></div>
     <div class="quick-shell" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
       <a class="quick-action" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="user-plus"></span><span><strong>Mi registro</strong><small>Actualizar mis datos</small></span></a>
-      <a class="quick-action" href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="user"></span><span><strong>Mi credencial</strong><small>Perfil profesional</small></span></a>
+      <a class="quick-action" href="/mi-movida/"><span class="quick-icon" data-icon="user"></span><span><strong>Mi credencial</strong><small>Perfil profesional</small></span></a>
       <a class="quick-action" href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="trophy"></span><span><strong>Mis puntos</strong><small>XP, ranking e histórico</small></span></a>
       <a class="quick-action" href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="graduation"></span><span><strong>Mis cursos</strong><small>Academia Movida SST</small></span></a>
     </div>
@@ -338,7 +300,7 @@
 <footer class="site-footer"><div class="container">
   <div class="footer-grid">
     <div><div class="footer-brand-surface"><img class="footer-logo" src="/logo-horizontal-movida-sst-plus.webp" alt="La Movida de SST+" loading="lazy" width="236" height="78" decoding="async" data-movida-logo></div><h3>La Movida de SST+</h3><p>Comunidad internacional y ecosistema digital de Seguridad y Salud en el Trabajo.<br>De la Reacción a la Prevención.</p><p><a href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer">www.movidasst.com</a></p></div>
-    <div><h3>Explorar</h3><a href="/biblioteca/">Biblioteca SST (acceso público)</a><a href="https://drive.movidasst.com/" target="_blank" rel="noopener noreferrer">Drive de La Movida (integrantes)</a><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registro</a><a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Directorio</a><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia y ranking</a><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a><a href="https://aplicaciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Aplicaciones SST</a><a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer">Academia</a></div>
+    <div><h3>Explorar</h3><a href="/biblioteca/">Biblioteca SST (acceso público)</a><a href="https://drive.movidasst.com/" target="_blank" rel="noopener noreferrer">Drive de La Movida (integrantes)</a><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registro</a><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia y ranking</a><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a><a href="https://aplicaciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Aplicaciones SST</a><a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer">Academia</a></div>
     <div><h3>Comunidad y contacto</h3><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="https://normas.movidasst.com/" target="_blank" rel="noopener noreferrer">Normas de convivencia</a><a href="https://registro.movidasst.com/privacidad.html" target="_blank" rel="noopener noreferrer">Aviso de privacidad</a><a href="https://wa.me/56968615650" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:info@movidasst.com">info@movidasst.com</a><a href="https://davidlinares.movidasst.com/" target="_blank" rel="noopener noreferrer">Fundador</a><button type="button" data-support class="btn btn-light" style="margin-top:12px">Apoyar el proyecto <span data-icon="heart"></span></button></div>
   </div><div class="footer-base">© 2026 La Movida de SST+. Elaborado por David Linares Brea. · Comunidad de aprendizaje colaborativo.</div>
 </div></footer>
