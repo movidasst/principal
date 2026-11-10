@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-18",
+  "updated": "2026-11-10",
   "source": "La Movida de SST+ — inventario editorial para portal público",
   "notes": "Estados editoriales; validar disponibilidad en tiempo real antes de marcar una herramienta como operativa.",
   "items": [
@@ -15,18 +15,6 @@
       "status": "disponible",
       "featured": 1,
       "icon": "user-plus"
-    },
-    {
-      "id": "directorio",
-      "title": "Directorio internacional",
-      "category": "comunidad",
-      "group": "Identidad profesional",
-      "description": "Descubre perfiles de profesionales de SST y conecta con la red internacional.",
-      "url": "https://directorio.movidasst.com/",
-      "keywords": "profesionales perfiles red credencial empleo",
-      "status": "disponible",
-      "featured": 1,
-      "icon": "users"
     },
     {
       "id": "ranking",
@@ -449,18 +437,6 @@
       "icon": "chart"
     },
     {
-      "id": "proveedores",
-      "title": "Directorio de proveedores",
-      "category": "servicios",
-      "group": "Servicios y equipos",
-      "description": "Encuentra proveedores relacionados con equipos y servicios de SST.",
-      "url": "https://proveedores.movidasst.com/",
-      "keywords": "proveedores equipos servicios",
-      "status": "disponible",
-      "featured": 0,
-      "icon": "briefcase"
-    },
-    {
       "id": "mancomunados",
       "title": "Servicios mancomunados",
       "category": "servicios",
@@ -495,18 +471,6 @@
       "status": "acceso",
       "featured": 0,
       "icon": "chart"
-    },
-    {
-      "id": "mentoring",
-      "title": "Mentoring SST",
-      "category": "servicios",
-      "group": "Orientación profesional",
-      "description": "Accede a orientación y acompañamiento en proyectos de SST.",
-      "url": "https://mentoring.movidasst.com/",
-      "keywords": "asesoría acompañamiento mentoring",
-      "status": "disponible",
-      "featured": 0,
-      "icon": "messages"
     }
   ]
 }
