@@ -449,18 +449,6 @@
       "icon": "network"
     },
     {
-      "id": "empresas",
-      "title": "Capacitación para empresas",
-      "category": "servicios",
-      "group": "Capacitación corporativa",
-      "description": "Explora programas corporativos y solicita cotizaciones.",
-      "url": "https://presupuesto.movidasst.com/",
-      "keywords": "empresas presupuesto cotizar corporativo",
-      "status": "disponible",
-      "featured": 1,
-      "icon": "building"
-    },
-    {
       "id": "tablero",
       "title": "Tablero corporativo",
       "category": "servicios",
