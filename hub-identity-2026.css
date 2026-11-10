@@ -11,7 +11,7 @@ body,button,input,textarea,select{
 h1,h2,h3,h4,.display,.brand strong,.hero-tile b,
 .product-card h3,.directory-spotlight-copy h3,
 .desktop-nav .hub-tab,.desktop-nav .hub-app-link,
-.mentor-promo h2,.pwa-install-copy strong,.pwa-install-entry .pwa-install-action{
+.pwa-install-copy strong,.pwa-install-entry .pwa-install-action{
   font-family:'Inter',system-ui,sans-serif;
 }
 h1,h2,h3,h4{letter-spacing:-.035em;}
@@ -115,11 +115,6 @@ body{background:#F7FBFA;}
 .product-card:hover{border-color:#A2D5CE;box-shadow:0 14px 36px rgba(12,100,106,.10);}
 .section-head h2,.product-card h3,.panel h2,.directory-spotlight-copy h3{color:#155660;}
 .chip[aria-pressed="true"],.chip:hover{background:#007B85;border-color:#007B85;}
-.mentor-promo{
-  background:linear-gradient(120deg,#0B5963 0%,#0F7480 65%,#318E90 100%);
-  border-color:#9DD9D0;
-  box-shadow:0 16px 38px rgba(0,99,103,.16);
-}
 .site-footer{background:linear-gradient(140deg,#123F48,#0B6169 87%);}
 .footer-grid h3{color:#fff;}
 .footer-grid p,.footer-grid a{color:#E0F3F1;}
