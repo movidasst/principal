@@ -75,8 +75,8 @@ if(clear)clear.addEventListener("click",()=>{term="";search.value="";render();se
 if(more)more.addEventListener("click",()=>{page++;render()});
 
 /* Pestañas internas del HUB: cambiar de pantalla sin abrir aplicaciones ni saltar a anclas. */
-const viewNames=["inicio","explorar","aprender","comunidad","mi-movida","empresas"];
-const viewLabel={"inicio":"Inicio","explorar":"Explorar","aprender":"Aprender","comunidad":"Comunidad","mi-movida":"Mi Movida","empresas":"Empresas"};
+const viewNames=["inicio","explorar","aprender","comunidad","mi-movida"];
+const viewLabel={"inicio":"Inicio","explorar":"Explorar","aprender":"Aprender","comunidad":"Comunidad","mi-movida":"Mi Movida"};
 const viewPanels=Array.from(document.querySelectorAll("[data-hub-view]"));
 function readCurrentView(){
   try{const name=new URL(window.location.href).searchParams.get("vista");return viewNames.includes(name)?name:"inicio"}catch{return "inicio"}
