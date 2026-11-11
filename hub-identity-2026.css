@@ -246,3 +246,58 @@ body{background:#F7FBFA;}
 @media(prefers-reduced-motion:reduce){
   .header-inner .hub-social-link{transition:none;}
 }
+
+/* Inscripciones: acceso visible y bloque propio en portada, respetando la navegación PWA. */
+.desktop-nav .hub-inscripciones-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:44px;padding:10px 12px;border:1px solid #EADBAA;
+  border-radius:11px;background:#FFF8E4;color:#775C09;
+  font:750 .82rem 'Inter',system-ui,sans-serif;
+  white-space:nowrap;text-decoration:none;
+  transition:background .18s ease,border-color .18s ease;
+}
+.desktop-nav .hub-inscripciones-link:hover{background:#FFF1CB;border-color:#E1C873;}
+.desktop-nav .hub-inscripciones-link svg{width:15px;height:15px;}
+.mobile-top-menu .hub-inscripciones-link{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:46px;margin:5px 0;padding:12px 14px;
+  border:1px solid #F1DEB5;border-radius:11px;
+  background:#FFF8E7;color:#715711;font-size:.87rem;font-weight:750;text-decoration:none;
+}
+.mobile-top-menu .hub-inscripciones-link:hover{background:#FFF0CC;}
+.mobile-top-menu .hub-inscripciones-link svg{width:17px;height:17px;}
+.inscripciones-feature{
+  display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+  padding:clamp(22px,3.3vw,34px);
+  border:1px solid #CAE5DC;border-radius:24px;
+  background:linear-gradient(118deg,#E4F6EF 0%,#EDF5FC 63%,#FFF7DF 100%);
+  box-shadow:0 12px 30px rgba(15,95,91,.065);
+}
+.inscripciones-feature-copy{flex:1 1 480px;min-width:0;max-width:790px;}
+.inscripciones-feature h2{
+  margin:7px 0 11px;font-size:clamp(1.45rem,2.5vw,2rem);
+  line-height:1.15;color:#00205B;font-weight:800;letter-spacing:-.03em;
+}
+.inscripciones-feature p{margin:0;max-width:760px;font-size:.88rem;line-height:1.7;color:#486B79;}
+.inscripciones-feature-details{
+  display:flex;gap:10px 20px;flex-wrap:wrap;margin-top:16px;
+  color:#176972;font-size:.75rem;font-weight:750;
+}
+.inscripciones-feature-details > span{display:inline-flex;align-items:center;gap:7px;}
+.inscripciones-feature-details svg{width:17px;height:17px;}
+.inscripciones-feature-action{flex:0 0 auto;white-space:nowrap;}
+@media(max-width:1280px){
+  .brand-caption{display:none;}
+  .desktop-nav{gap:2px;}
+  .desktop-nav .hub-tab,.desktop-nav .hub-app-link,.desktop-nav .hub-inscripciones-link{padding-inline:10px;}
+}
+@media(max-width:760px){
+  .inscripciones-feature{padding:20px;border-radius:19px;gap:17px;}
+  .inscripciones-feature-copy{flex-basis:100%;}
+  .inscripciones-feature h2{font-size:1.52rem;}
+  .inscripciones-feature-action{flex:1 1 100%;width:100%;white-space:normal;text-align:center;}
+  .inscripciones-feature-details{gap:10px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .desktop-nav .hub-inscripciones-link{transition:none;}
+}
