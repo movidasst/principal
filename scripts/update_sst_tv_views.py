@@ -11,7 +11,7 @@ import urllib.parse
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-CATALOG = ROOT / "sst-tv/catalogo/index.html"
+CATALOG = ROOT / "tv/catalogo/index.html"
 EXTRA = ROOT / "sst-tv/catalogo/extra.js"
 OUTPUT = ROOT / "sst-tv/catalogo/views.json"
 VISIBILITY = ROOT / "sst-tv/catalogo/visibilidad.json"
