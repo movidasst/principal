@@ -1,5 +1,5 @@
 {
-  "descripcion": "Control editorial: las playlists ocultas NO aparecen en SST TV, pero las visualizaciones oficiales del canal siguen siendo el total completo de YouTube.",
+  "descripcion": "Playlists ocultas no se muestran en SST TV. Las visualizaciones oficiales de YouTube del canal completo NO cambian. Los videos de radiaciones/OSR identificables en el catálogo quedan temporalmente ocultos mientras se obtiene el ID exacto de la playlist del diplomado.",
   "playlistsOcultas": {
     "reglasDeTitulo": [
       [
@@ -17,5 +17,21 @@
     ],
     "ids": []
   },
-  "videosOcultos": []
+  "videosOcultos": [
+    "3wbcqMbvxo0",
+    "C2WYEaweJ1o",
+    "-BlKr7zAgb8",
+    "2NUDrvvCovk",
+    "8bp2Dz9O6HA",
+    "nzBAOcmuZr8",
+    "H0eYZ-RSXOo",
+    "v2HdVTTkHN8",
+    "mppbOEOxv7U",
+    "ySYgCFF9iw0",
+    "Oi8oJ-qjed8",
+    "c2pbpLHJOTc",
+    "KKVDJzg83kg",
+    "oxEaXWcGDJo",
+    "jEdpMnDaGjs"
+  ]
 }
