@@ -1,0 +1,30 @@
+name: Actualizar visualizaciones SST TV
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sst-tv-views
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Consultar visualizaciones acumuladas de YouTube
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python3 scripts/update_sst_tv_views.py
+      - name: Publicar datos actualizados
+        run: |
+          if ! git diff --quiet -- sst-tv/catalogo/views.json || [ -n "$(git ls-files --others --exclude-standard sst-tv/catalogo/views.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add sst-tv/catalogo/views.json
+            git commit -m "data: actualizar visualizaciones acumuladas SST TV"
+            git push
+          fi
