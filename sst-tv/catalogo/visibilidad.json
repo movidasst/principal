@@ -1,0 +1,21 @@
+{
+  "descripcion": "Control editorial: las playlists ocultas NO aparecen en SST TV, pero las visualizaciones oficiales del canal siguen siendo el total completo de YouTube.",
+  "playlistsOcultas": {
+    "reglasDeTitulo": [
+      [
+        "diplomado",
+        "radiol"
+      ],
+      [
+        "diplomado",
+        "osr"
+      ],
+      [
+        "diplomado",
+        "radiacion"
+      ]
+    ],
+    "ids": []
+  },
+  "videosOcultos": []
+}
