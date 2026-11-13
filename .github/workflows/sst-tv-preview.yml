@@ -1,0 +1,32 @@
+name: Crear imagen social SST TV
+on:
+  push:
+    paths:
+      - 'sst-tv/Equipo de Seguridad La Movida SST+.png'
+      - 'scripts/build_sst_tv_preview.py'
+      - '.github/workflows/sst-tv-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sst-tv-social-preview
+  cancel-in-progress: false
+jobs:
+  create-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar generador de imagen
+        run: python3 -m pip install --disable-pip-version-check pillow
+      - name: Crear imagen de 1200x630 liviana para WhatsApp
+        run: python3 scripts/build_sst_tv_preview.py
+      - name: Publicar archivo generado
+        run: |
+          if ! git diff --quiet -- sst-tv/og-sst-tv-20261113.jpg || [ -n "$(git ls-files --others --exclude-standard sst-tv/og-sst-tv-20261113.jpg)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add sst-tv/og-sst-tv-20261113.jpg
+            git commit -m "assets: publicar previsualizacion WhatsApp SST TV optimizada"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
