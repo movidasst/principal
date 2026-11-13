@@ -33,15 +33,34 @@ def normalize(text):
     return "".join(char for char in value if not unicodedata.combining(char))
 
 
+def remotely_configured_playlist_ids():
+    """Read only public playlist IDs from Supabase; no service role credentials."""
+    url = ("https://lfdmbkzghnwvsapxypvt.supabase.co/rest/v1/sst_tv_visibilidad"
+           "?select=referencia&tipo=eq.playlist")
+    request = urllib.request.Request(
+        url,
+        headers={"apikey": "sb_publishable_bRnkA6PA8-v073nrw9zxiQ_8rVGiOn1",
+                 "Accept": "application/json", "User-Agent": "LaMovidaSST-TV/1.0"})
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            rows = json.load(response)
+        return {row["referencia"] for row in rows if row.get("referencia")}
+    except (ValueError, OSError, KeyError) as error:
+        print(f"WARNING: failed to fetch playlist IDs from public visibility API: {error}")
+        return set()
+
+
 def playlist_exclusions(channel_id, catalog_ids):
-    """Resolve publicly accessible excluded playlists by title or ID."""
+    """Collect channel playlists and their catalog video IDs without changing view counts."""
     settings = json.loads(VISIBILITY.read_text(encoding="utf-8"))
     hidden_config = settings.get("playlistsOcultas", {})
     title_rules = hidden_config.get("reglasDeTitulo", [])
     explicit_ids = set(hidden_config.get("ids", []))
-    explicit_videos = set(settings.get("videosOcultos", []))
+    manual_ids = remotely_configured_playlist_ids()
+    excluded = set(settings.get("videosOcultos", []))
     matches = []
     available_playlists = []
+    seen_ids = set()
     page_token = None
     while True:
         params = {"part": "snippet", "channelId": channel_id, "maxResults": 50}
@@ -51,37 +70,56 @@ def playlist_exclusions(channel_id, catalog_ids):
         for item in page.get("items", []):
             playlist_id = item["id"]
             title = item.get("snippet", {}).get("title", "")
-            norm_title = normalize(title)
+            if playlist_id in seen_ids:
+                continue
+            seen_ids.add(playlist_id)
             available_playlists.append({"id": playlist_id, "title": title})
+            norm_title = normalize(title)
             by_rule = any(all(normalize(term) in norm_title for term in group) for group in title_rules)
             if by_rule or playlist_id in explicit_ids:
                 matches.append({"id": playlist_id, "title": title})
-                explicit_ids.discard(playlist_id)
         page_token = page.get("nextPageToken")
         if not page_token:
             break
-    for playlist_id in sorted(explicit_ids):
-        matches.append({"id": playlist_id, "title": "(ID configurado manualmente)"})
-    excluded = set(explicit_videos)
-    for playlist in matches:
+    for playlist_id in sorted((manual_ids | explicit_ids) - seen_ids):
+        title = "(Lista añadida manualmente)"
+        try:
+            details = youtube_get("playlists", part="snippet", id=playlist_id)
+            items = details.get("items", [])
+            if items:
+                title = items[0].get("snippet", {}).get("title", title)
+        except (ValueError, OSError) as error:
+            print(f"WARNING: playlist {playlist_id} title unavailable: {error}")
+        available_playlists.append({"id": playlist_id, "title": title})
+        if playlist_id in explicit_ids:
+            matches.append({"id": playlist_id, "title": title})
+    playlist_video_ids = {}
+    excluded_playlist_ids = {item["id"] for item in matches}
+    for playlist in available_playlists:
+        playlist_id = playlist["id"]
+        member_ids = set()
         page_token = None
-        while True:
-            params = {"part": "contentDetails", "playlistId": playlist["id"], "maxResults": 50}
-            if page_token:
-                params["pageToken"] = page_token
-            page = youtube_get("playlistItems", **params)
-            for item in page.get("items", []):
-                video_id = item.get("contentDetails", {}).get("videoId")
-                if video_id:
-                    excluded.add(video_id)
-            page_token = page.get("nextPageToken")
-            if not page_token:
-                break
+        try:
+            while True:
+                params = {"part": "contentDetails", "playlistId": playlist_id, "maxResults": 50}
+                if page_token:
+                    params["pageToken"] = page_token
+                page = youtube_get("playlistItems", **params)
+                for item in page.get("items", []):
+                    video_id = item.get("contentDetails", {}).get("videoId")
+                    if video_id and video_id in catalog_ids:
+                        member_ids.add(video_id)
+                page_token = page.get("nextPageToken")
+                if not page_token:
+                    break
+        except (ValueError, OSError) as error:
+            print(f"WARNING: cannot read items of playlist {playlist_id}: {error}")
+        playlist_video_ids[playlist_id] = sorted(member_ids)
+        if playlist_id in excluded_playlist_ids:
+            excluded.update(member_ids)
     filtered = sorted(excluded.intersection(catalog_ids))
-    print(f"Playlist exclusions: {len(matches)} matching playlists; {len(filtered)} catalog videos hidden.")
-    if title_rules and not matches:
-        print("WARNING: no matching public playlist found. Set its ID in visibilidad.json if unlisted.")
-    return matches, filtered, available_playlists
+    print(f"Found {len(available_playlists)} playlists; {len(filtered)} preset hidden videos.")
+    return matches, filtered, available_playlists, playlist_video_ids
 
 
 def main():
@@ -116,10 +154,10 @@ def main():
     if not channel_items or "viewCount" not in channel_items[0].get("statistics", {}):
         sys.exit("Could not retrieve official channel lifetime view count; keeping prior data")
     channel_views = int(channel_items[0]["statistics"]["viewCount"])
-    excluded_playlists, excluded_video_ids, available_playlists = playlist_exclusions(channel_items[0]["id"], set(ids))
+    excluded_playlists, excluded_video_ids, available_playlists, playlist_video_ids = playlist_exclusions(channel_items[0]["id"], set(ids))
     result = {"channelViews": channel_views, "channelId": channel_items[0]["id"],
               "hiddenPlaylists": excluded_playlists, "hiddenVideoIds": excluded_video_ids,
-              "availablePlaylists": available_playlists,
+              "availablePlaylists": available_playlists, "playlistVideoIds": playlist_video_ids,
               "catalogVisibleCount": len(ids) - len(excluded_video_ids), "catalogTotalCount": len(ids),
               "updatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
               "source": "YouTube Data API v3", "counts": counts}
