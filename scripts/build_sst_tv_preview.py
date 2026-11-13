@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Create a lightweight, legible WhatsApp/OpenGraph card from the approved SST TV artwork."""
+"""Create a lightweight, legible WhatsApp/OpenGraph card from the approved Movida TV artwork."""
 from pathlib import Path
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sst-tv" / "Equipo de Seguridad La Movida SST+.png"
-DEST = ROOT / "sst-tv" / "og-sst-tv-20261113.jpg"
+DEST = ROOT / "tv" / "og-movida-tv.jpg"
+DEST.parent.mkdir(parents=True, exist_ok=True)
 W, H = 1200, 630
 
 if not SOURCE.is_file():
@@ -24,8 +25,8 @@ def font(size, bold=True):
     return ImageFont.truetype(bold_file if bold else regular_file, size)
 draw.rounded_rectangle((65,92,385,136), radius=22, fill=(10,88,104,230), outline=(190,237,231,120), width=2)
 draw.text((85,101), "LA MOVIDA DE SST+", font=font(19), fill="white")
-draw.text((61,182), "SST", font=font(112), fill="white", stroke_width=2, stroke_fill=(0,36,64,140))
-draw.text((335,182), "TV", font=font(112), fill="#ffb600", stroke_width=2, stroke_fill=(0,36,64,140))
+draw.text((61,192), "MOVIDA", font=font(84), fill="white", stroke_width=2, stroke_fill=(0,36,64,140))
+draw.text((452,192), "TV", font=font(84), fill="#ffb600", stroke_width=2, stroke_fill=(0,36,64,140))
 draw.rounded_rectangle((66,337,501,344), radius=3, fill="#ffb600")
 draw.text((65,368), "VIDEOS · CONFERENCIAS", font=font(29), fill="white")
 draw.text((65,411), "SEGURIDAD Y SALUD", font=font(29), fill="white")
