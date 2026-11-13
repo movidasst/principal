@@ -41,6 +41,7 @@ def playlist_exclusions(channel_id, catalog_ids):
     explicit_ids = set(hidden_config.get("ids", []))
     explicit_videos = set(settings.get("videosOcultos", []))
     matches = []
+    available_playlists = []
     page_token = None
     while True:
         params = {"part": "snippet", "channelId": channel_id, "maxResults": 50}
@@ -51,6 +52,7 @@ def playlist_exclusions(channel_id, catalog_ids):
             playlist_id = item["id"]
             title = item.get("snippet", {}).get("title", "")
             norm_title = normalize(title)
+            available_playlists.append({"id": playlist_id, "title": title})
             by_rule = any(all(normalize(term) in norm_title for term in group) for group in title_rules)
             if by_rule or playlist_id in explicit_ids:
                 matches.append({"id": playlist_id, "title": title})
@@ -79,7 +81,7 @@ def playlist_exclusions(channel_id, catalog_ids):
     print(f"Playlist exclusions: {len(matches)} matching playlists; {len(filtered)} catalog videos hidden.")
     if title_rules and not matches:
         print("WARNING: no matching public playlist found. Set its ID in visibilidad.json if unlisted.")
-    return matches, filtered
+    return matches, filtered, available_playlists
 
 
 def main():
@@ -114,9 +116,10 @@ def main():
     if not channel_items or "viewCount" not in channel_items[0].get("statistics", {}):
         sys.exit("Could not retrieve official channel lifetime view count; keeping prior data")
     channel_views = int(channel_items[0]["statistics"]["viewCount"])
-    excluded_playlists, excluded_video_ids = playlist_exclusions(channel_items[0]["id"], set(ids))
+    excluded_playlists, excluded_video_ids, available_playlists = playlist_exclusions(channel_items[0]["id"], set(ids))
     result = {"channelViews": channel_views, "channelId": channel_items[0]["id"],
               "hiddenPlaylists": excluded_playlists, "hiddenVideoIds": excluded_video_ids,
+              "availablePlaylists": available_playlists,
               "catalogVisibleCount": len(ids) - len(excluded_video_ids), "catalogTotalCount": len(ids),
               "updatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
               "source": "YouTube Data API v3", "counts": counts}
