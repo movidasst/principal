@@ -37,7 +37,16 @@ def main():
                 counts[item["id"]] = int(value)
     if not counts:
         sys.exit("YouTube returned no view counts; keeping prior data")
-    result = {"updatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+    channel_params = urllib.parse.urlencode({"part": "statistics", "forHandle": "movidasst", "key": key})
+    channel_request = urllib.request.Request("https://www.googleapis.com/youtube/v3/channels?" + channel_params,
+                                            headers={"User-Agent": "LaMovidaSST-TV/1.0"})
+    with urllib.request.urlopen(channel_request, timeout=30) as response:
+        channel_payload = json.load(response)
+    channel_items = channel_payload.get("items", [])
+    if not channel_items or "viewCount" not in channel_items[0].get("statistics", {}):
+        sys.exit("Could not retrieve official channel lifetime view count; keeping prior data")
+    channel_views = int(channel_items[0]["statistics"]["viewCount"])
+    result = {"channelViews": channel_views, "channelId": channel_items[0]["id"], "updatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
               "source": "YouTube Data API v3", "counts": counts}
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"Updated {len(counts)} of {len(ids)} videos")
