@@ -1,4 +1,4 @@
-name: Crear imagen social SST TV
+name: Crear imagen social Movida TV
 on:
   push:
     paths:
@@ -22,11 +22,11 @@ jobs:
         run: python3 scripts/build_sst_tv_preview.py
       - name: Publicar archivo generado
         run: |
-          if ! git diff --quiet -- sst-tv/og-sst-tv-20261113.jpg || [ -n "$(git ls-files --others --exclude-standard sst-tv/og-sst-tv-20261113.jpg)" ]; then
+          if ! git diff --quiet -- tv/og-movida-tv.jpg || [ -n "$(git ls-files --others --exclude-standard tv/og-movida-tv.jpg)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add sst-tv/og-sst-tv-20261113.jpg
-            git commit -m "assets: publicar previsualizacion WhatsApp SST TV optimizada"
+            git add tv/og-movida-tv.jpg
+            git commit -m "assets: publicar previsualizacion WhatsApp Movida TV"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
