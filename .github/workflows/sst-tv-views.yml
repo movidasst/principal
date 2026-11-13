@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '17 9 * * *'
   workflow_dispatch:
+  push:
+    paths:
+      - 'sst-tv/catalogo/visibilidad.json'
+      - 'scripts/update_sst_tv_views.py'
+      - '.github/workflows/sst-tv-views.yml'
 permissions:
   contents: write
 concurrency:
