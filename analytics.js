@@ -46,7 +46,10 @@
   }
   var denied = {analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"};
   function enable(){
-    if (loaded) return;
+    if (loaded) {
+      window.gtag("consent","update",{...denied,analytics_storage:"granted"});
+      return;
+    }
     /* Evita una segunda etiqueta en los sitios con integración propia. */
     if (document.querySelector('script[src*="googletagmanager.com/gtag/js"], script[src*="googletagmanager.com/gtm.js"]')) { tagAlreadyPresent = true; return; }
     loaded = true;
@@ -91,6 +94,7 @@
       cleanCookies();
     }
     if (controls) { controls.remove(); controls = null; }
+    document.querySelector("[data-movida-preferences], #movida-analytics-pref button")?.focus({preventScroll:true});
   }
   function openChoices(){
     if (controls) return;
@@ -99,7 +103,7 @@
     el.setAttribute("role","region");
     el.setAttribute("aria-label","Preferencias de estadísticas");
     el.innerHTML='<strong class="movida-analytics-title">Estadísticas de La Movida SST+</strong>'+
-      '<p class="movida-analytics-text">¿Nos permites medir visitas de forma agregada para mejorar las páginas? Solo activaremos Google Analytics con tu autorización. No incluimos nombres, correos ni parámetros de la URL en las visitas que registramos. <a class="movida-analytics-link" target="_blank" rel="noopener noreferrer" href="'+privacyURL+'">Privacidad</a>.</p>'+
+      '<p class="movida-analytics-text">¿Nos permites medir visitas, clics en accesos principales y búsquedas sin resultados para mejorar las páginas? Solo activaremos Google Analytics con tu autorización. Los eventos de la portada no incluyen el texto de búsqueda, nombres, correos ni parámetros de URL. <a class="movida-analytics-link" target="_blank" rel="noopener noreferrer" href="'+privacyURL+'">Privacidad</a>.</p>'+
       '<div class="movida-analytics-actions">'+
       '<button type="button" data-movida-choice="denied">Rechazar</button>'+
       '<button type="button" data-movida-choice="granted">Permitir estadísticas</button></div>';
@@ -115,6 +119,15 @@
     var pref=preference();
     if(pref==="granted") enable();
     else if(pref!=="denied")openChoices();
+    var inlinePreference=document.querySelector("[data-movida-preferences]");
+    if(inlinePreference){
+      inlinePreference.hidden=false;
+      inlinePreference.addEventListener("click",function(){
+        openChoices();
+        controls?.querySelector("button")?.focus({preventScroll:true});
+      });
+      return;
+    }
     /* Gestión permanente del consentimiento, sin un botón flotante superpuesto. */
     var footer = document.createElement("div");
     footer.id="movida-analytics-pref";
@@ -137,6 +150,15 @@
         tagError: tagError,
         preexistingTag: tagAlreadyPresent
       };
+    },
+    trackHub: function(event, parameters){
+      if(!loaded || preference()!=="granted")return;
+      var data={page_location:window.location.origin+"/"};
+      if(event==="hub_destination_click"){
+        if(!["cursos","biblioteca","mi_movida","movida_tv"].includes(parameters.destination))return;
+        data.destination=parameters.destination;
+      }else if(event!=="hub_search_no_results")return;
+      window.gtag("event",event,data);
     },
     openPreferences: openChoices
   });

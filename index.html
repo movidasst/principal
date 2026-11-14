@@ -172,8 +172,8 @@
   
   <link rel="stylesheet" href="/hub.css?v=20261018tabs3">
   <link rel="stylesheet" href="/pwa-install.css?v=20261024pwa1">
-  <link rel="stylesheet" href="/hub-identity-2026.css?v=20261114-portada">
-  <script defer src="https://www.movidasst.com/analytics.js?v=20261025-ga4com2"></script>
+  <link rel="stylesheet" href="/hub-identity-2026.css?v=20261114-calidad">
+  <script defer src="https://www.movidasst.com/analytics.js?v=20261114-preferencias"></script>
 <style>
     .ecosystem-views { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem 1.2rem; margin:.9rem 0 1rem; padding:.75rem 1rem; border:1px solid #cce3e6; border-inline-start:4px solid #007b85; border-radius:16px; background:linear-gradient(105deg,#edf8f9,#fff 70%); color:#00205b; }
     .ecosystem-views-number { color:#006d76; font-size:clamp(1.65rem,5vw,2.15rem); line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-.035em; }
@@ -211,7 +211,7 @@
   <section class="hero-wrap" aria-labelledby="heroTitle"><div class="container hero">
     <div>
       <span class="eyebrow">Tu espacio de SST, en un solo lugar</span>
-      <h1 id="heroTitle">Un ecosistema para <em>conectar, aprender y prevenir.</em></h1>
+      <h1 id="heroTitle" tabindex="-1">Un ecosistema para <em>conectar, aprender y prevenir.</em></h1>
       <p class="hero-description">Herramientas, cursos, normas y simuladores de seguridad y salud en el trabajo.</p>
       <form id="homeSearch" class="home-search" role="search" action="/" method="get">
         <input type="hidden" name="vista" value="explorar">
@@ -233,7 +233,7 @@
   </div></section>
   <nav class="container quick-nav home-shortcuts" aria-label="Accesos rápidos"><div class="quick-shell">
     <a class="quick-action" href="https://estudia.movidasst.com/"><span class="quick-icon" data-icon="book"></span><span><strong>Estudia</strong><small>Guías, ranking y XP</small></span></a>
-    <a class="quick-action" href="https://laboratorio.movidasst.com/"><span class="quick-icon" data-icon="flask"></span><span><strong>MovidaLab HO</strong><small>Práctica con instrumentos</small></span></a>
+    <a class="quick-action" href="https://laboratorio.movidasst.com/"><span class="quick-icon" data-icon="flask"></span><span><strong>MovidaLab HO</strong><small>Laboratorio virtual</small></span></a>
     <a class="quick-action" href="https://aplicaciones.movidasst.com/"><span class="quick-icon" data-icon="shield"></span><span><strong>Aplicaciones SST</strong><small>Herramientas de prevención</small></span></a>
     <a class="quick-action" href="/?vista=comunidad"><span class="quick-icon" data-icon="users"></span><span><strong>Comunidad</strong><small>Participación y colaboración</small></span></a>
   </div></nav>
@@ -250,12 +250,17 @@
   <div class="inscripciones-feature">
     <div class="inscripciones-feature-copy">
       <span class="eyebrow">Academia Movida de SST</span>
-      <h2 id="inscripcionesTitle">Inscripciones a cursos de SST</h2>
+      <h2 id="inscripcionesTitle">Cursos e inscripciones</h2>
       <p>Explora el catálogo de cursos disponibles, consulta la información de cada formación, sus condiciones y los medios de pago. Inscríbete desde la ficha del curso en Moodle.</p>
       <div class="inscripciones-feature-details" aria-label="Información del catálogo">
         <span><span data-icon="graduation"></span> Cursos de la Academia</span>
         <span><span data-icon="check"></span> Información e inscripción en Moodle</span>
       </div>
+    </div>
+    <div class="course-highlight" id="courseHighlight" data-hide-at="2026-11-17T00:00:00-04:00" hidden>
+      <h3>Investigación de Accidentes de Trabajo</h3>
+      <p>Metodología, causalidad y prevención · Modalidad asíncrona en el catálogo</p>
+      <a class="btn btn-light" href="https://movidasst.org/course/info.php?id=153" data-movida-destination="cursos">Ver ficha e inscripción <span data-icon="arrow"></span></a>
     </div>
     <a class="btn btn-primary inscripciones-feature-action" href="https://inscripciones.movidasst.com/" target="_blank" rel="noopener noreferrer" aria-label="Ver cursos disponibles e inscribirme">Ver cursos e inscribirme <span data-icon="arrow"></span></a>
   </div>
@@ -280,7 +285,7 @@
   </div>
 <div id="vista-explorar" class="hub-view" data-hub-view="explorar" aria-label="Explorar herramientas y recursos" hidden>
   <section class="section container" id="explorar" aria-labelledby="exploreTitle">
-    <div class="section-head"><div><span class="eyebrow">Tu buscador SST</span><h2 id="exploreTitle">¿Qué necesitas hacer hoy?</h2><p>Busca por tema, herramienta, método o necesidad. Puedes guardar tus favoritas en este dispositivo.</p></div></div>
+    <div class="section-head"><div><span class="eyebrow">Tu buscador SST</span><h2 id="exploreTitle" tabindex="-1">¿Qué necesitas hacer hoy?</h2><p>Busca por tema, herramienta, método o necesidad. Puedes guardar tus favoritas en este dispositivo.</p></div></div>
     <div class="search-shell">
       <div class="search-line"><div class="searchbox"><span data-icon="search"></span><input type="search" id="searchInput" placeholder="Ej.: ruido, contratistas, ISO, emergencias..." autocomplete="off" aria-label="Buscar herramientas del ecosistema"><button type="button" class="clear" id="clearSearch" aria-label="Borrar búsqueda" hidden>×</button></div></div>
       <div id="categoryChips" class="chip-row" aria-label="Filtrar recursos por categoría"><button type="button" class="chip" data-category="all" aria-pressed="true">Todo</button><button type="button" class="chip" data-category="aprendizaje" aria-pressed="false">Aprender</button><button type="button" class="chip" data-category="laboratorio" aria-pressed="false">MovidaLab HO</button><button type="button" class="chip" data-category="herramientas" aria-pressed="false">Aplicaciones SST</button><button type="button" class="chip" data-category="comunidad" aria-pressed="false">Comunidad</button></div>
@@ -288,10 +293,11 @@
     </div>
     <div class="group-label">Explorar por área</div>
     <div class="category-strip" id="categoryRow" aria-label="Categorías del ecosistema">
-      <a class="category-tile" href="https://aplicaciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Aplicaciones SST</a><a class="category-tile" href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Laboratorio</a><a class="category-tile" href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Aprender</a><a class="category-tile" href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Comunidad</a>
+      <a class="category-tile" href="https://aplicaciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Aplicaciones SST</a><a class="category-tile" href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a><a class="category-tile" href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Aprender</a><a class="category-tile" href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Comunidad</a>
     </div>
     <div class="group-label">Recursos del ecosistema</div>
     <p id="loadingCatalog" class="subtle" style="font-size:.82rem">Cargando inventario de herramientas y recursos...</p>
+    <button type="button" class="btn btn-light" id="retryCatalog" hidden>Reintentar carga del catálogo</button>
     <div id="productGrid" class="product-grid" aria-label="Catálogo completo de La Movida"></div>
     <div id="emptyState" class="empty" hidden><h3>Sin coincidencias</h3><p>Intenta con otra palabra o selecciona otra categoría.</p></div>
     <div style="display:flex;justify-content:center;margin-top:20px"><button type="button" class="btn btn-light" id="moreButton" hidden>Ver más recursos</button></div>
@@ -300,11 +306,11 @@
   </div>
 <div id="vista-aprender" class="hub-view" data-hub-view="aprender" aria-label="Aprender y practicar" hidden>
   <section class="section container" id="aprender" aria-labelledby="learningTitle">
-    <div class="route-strip"><div><span class="eyebrow">Aprendizaje justo a tiempo</span><h2 id="learningTitle">Conecta el estudio con la práctica.</h2><p>Consulta estudios colaborativos, realiza cursos, entrena competencias y practica en el Laboratorio Virtual de Higiene Ocupacional.</p><div class="route-nodes" style="margin-top:15px"><span>Estudia</span><span>Academia</span><span>Desarrolla SST</span><span>MovidaLab HO</span></div></div>
+    <div class="route-strip"><div><span class="eyebrow">Aprendizaje justo a tiempo</span><h2 id="learningTitle" tabindex="-1">Conecta el estudio con la práctica.</h2><p>Consulta estudios colaborativos, realiza cursos, entrena competencias y practica en el Laboratorio Virtual de Higiene Ocupacional.</p><div class="route-nodes" style="margin-top:15px"><span>Estudia</span><span>Academia</span><span>Desarrolla SST</span><span>MovidaLab HO</span></div></div>
     <a class="btn btn-primary" href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Ir a Estudia <span data-icon="arrow"></span></a></div>
 <div class="learning-links" aria-label="Plataformas de aprendizaje">
  <a class="quick-action" href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="book"></span><span><strong>Estudia y ranking</strong><small>Acceder a guías y XP ↗</small></span></a>
- <a class="quick-action" href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="graduation"></span><span><strong>Academia</strong><small>Cursos y certificados ↗</small></span></a>
+ <a class="quick-action" href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="graduation"></span><span><strong>Academia</strong><small>Acceso a Moodle ↗</small></span></a>
  <a class="quick-action" href="https://desarrolla.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="spark"></span><span><strong>Desarrolla SST</strong><small>Entrenamiento de competencias ↗</small></span></a>
  <a class="quick-action" href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="flask"></span><span><strong>MovidaLab HO</strong><small>Simuladores educativos ↗</small></span></a>
  </div>
@@ -312,7 +318,7 @@
   </div>
 <div id="vista-comunidad" class="hub-view" data-hub-view="comunidad" aria-label="Comunidad y colaboración" hidden>
   <section class="section container" id="comunidad" aria-labelledby="communityTitle">
-    <div class="section-head"><div><span class="eyebrow">Una red que aprende contigo</span><h2 id="communityTitle">Participar también es construir conocimiento.</h2><p>Tu experiencia suma a la comunidad. Participa, comparte y sigue el trabajo colectivo.</p></div></div>
+    <div class="section-head"><div><span class="eyebrow">Una red que aprende contigo</span><h2 id="communityTitle" tabindex="-1">Participar también es construir conocimiento.</h2><p>Tu experiencia suma a la comunidad. Participa, comparte y sigue el trabajo colectivo.</p></div></div>
     <div class="split"><div class="panel dark"><span class="eyebrow" style="color:#a6f2d3">Comunidad internacional</span><h2>De la conversación a la colaboración.</h2><p>Formamos una red de profesionales con acceso a estudios, herramientas, consultas y reconocimiento por contribuciones técnicas.</p><a class="btn btn-accent" href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participar <span data-icon="arrow"></span></a></div>
       <div class="panel"><h2>Más formas de conectar</h2><div class="link-stack">
         <a href="https://directorio.movidasst.com/">Directorio de integrantes<span data-icon="arrow"></span></a>
@@ -325,7 +331,7 @@
   </div>
 <div id="vista-mi-movida" class="hub-view" data-hub-view="mi-movida" aria-label="Mi Movida" hidden>
   <section class="section container" id="mi-movida" aria-labelledby="profileTitle">
-    <div class="section-head mi-movida-entry"><div><span class="eyebrow">Tu identidad en el ecosistema</span><h2 id="profileTitle">Mi Movida, tu espacio personal</h2><p>Consulta tu credencial, perfil, puntos, aprendizaje y certificados en una sola aplicación, con tus datos oficiales.</p></div><a class="btn btn-primary" href="/mi-movida/">Entrar a Mi Movida <span data-icon="arrow"></span></a></div>
+    <div class="section-head mi-movida-entry"><div><span class="eyebrow">Tu identidad en el ecosistema</span><h2 id="profileTitle" tabindex="-1">Mi Movida, tu espacio personal</h2><p>Consulta tu credencial, perfil, puntos, aprendizaje y certificados en una sola aplicación, con tus datos oficiales.</p></div><a class="btn btn-primary" href="/mi-movida/">Entrar a Mi Movida <span data-icon="arrow"></span></a></div>
     <div class="quick-shell" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
       <a class="quick-action" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer"><span class="quick-icon" data-icon="user-plus"></span><span><strong>Mi registro</strong><small>Actualizar mis datos</small></span></a>
       <a class="quick-action" href="/mi-movida/"><span class="quick-icon" data-icon="user"></span><span><strong>Mi credencial</strong><small>Perfil profesional</small></span></a>
@@ -338,8 +344,8 @@
 <footer class="site-footer"><div class="container">
   <div class="footer-grid">
     <div><div class="footer-brand-surface"><img class="footer-logo" src="/logo-horizontal-movida-sst-plus.webp" alt="La Movida de SST+" loading="lazy" width="236" height="78" decoding="async" data-movida-logo></div><h3>La Movida de SST+</h3><p>Comunidad internacional y ecosistema digital de Seguridad y Salud en el Trabajo.<br>De la Reacción a la Prevención.</p><p><a href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer">www.movidasst.com</a></p></div>
-    <div><h3>Explorar</h3><a href="https://inscripciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Inscripciones a cursos</a><a href="/biblioteca/">Biblioteca SST (acceso público)</a><a href="https://drive.movidasst.com/" target="_blank" rel="noopener noreferrer">Drive de La Movida (integrantes)</a><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registro</a><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia y ranking</a><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a><a href="https://aplicaciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Aplicaciones SST</a><a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer">Academia</a></div>
-    <div><h3>Comunidad y contacto</h3><a href="https://directorio.movidasst.com/">Directorio de integrantes</a><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="https://normas.movidasst.com/" target="_blank" rel="noopener noreferrer">Normas de convivencia</a><a href="https://registro.movidasst.com/privacidad.html" target="_blank" rel="noopener noreferrer">Aviso de privacidad</a><a href="https://wa.me/56968615650" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:info@movidasst.com">info@movidasst.com</a><a href="https://davidlinares.movidasst.com/" target="_blank" rel="noopener noreferrer">Fundador</a><button type="button" data-support class="btn btn-light" style="margin-top:12px">Apoyar el proyecto <span data-icon="heart"></span></button></div>
+    <div><h3>Explorar</h3><a href="/tv/">Movida TV</a><a href="/mi-movida/">Mi Movida</a><a href="https://mac.movidasst.com/">Árbol de causas</a><a href="https://pp.movidasst.com/">IPERC multimétodo</a><a href="https://inscripciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Inscripciones a cursos</a><a href="/biblioteca/">Biblioteca SST (acceso público)</a><a href="https://drive.movidasst.com/" target="_blank" rel="noopener noreferrer">Drive de La Movida (integrantes)</a><a href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Registro</a><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia y ranking</a><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a><a href="https://aplicaciones.movidasst.com/" target="_blank" rel="noopener noreferrer">Aplicaciones SST</a><a href="https://movidasst.org/login/index.php" target="_blank" rel="noopener noreferrer">Academia · Acceso a Moodle</a></div>
+    <div><h3>Comunidad y contacto</h3><a href="https://directorio.movidasst.com/">Directorio de integrantes</a><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="https://normas.movidasst.com/" target="_blank" rel="noopener noreferrer">Normas de convivencia</a><a href="https://registro.movidasst.com/privacidad.html" target="_blank" rel="noopener noreferrer">Privacidad</a><button class="footer-preferences" type="button" data-movida-preferences hidden>Preferencias de estadísticas</button><a href="https://wa.me/56968615650" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:info@movidasst.com">info@movidasst.com</a><a href="https://davidlinares.movidasst.com/" target="_blank" rel="noopener noreferrer">Fundador</a><button type="button" data-support class="btn btn-light" style="margin-top:12px">Apoyar el proyecto <span data-icon="heart"></span></button></div>
   </div><div class="footer-base">© 2026 La Movida de SST+. Elaborado por David Linares Brea. · Comunidad de aprendizaje colaborativo.</div>
 </div></footer>
 <button class="support-fab" data-support type="button" title="Apoyar voluntariamente a La Movida" aria-label="Apoyar el proyecto"><span data-icon="heart"></span></button>
@@ -352,7 +358,7 @@
   <p class="disclaimer" style="margin-top:12px">Verifica la red antes de realizar cualquier transferencia. Donar no es requisito para acceder a los recursos gratuitos.</p>
 </section></div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-<script defer src="/hub.js?v=20261114-portada"></script>
+<script defer src="/hub.js?v=20261114-calidad"></script>
 <script defer src="/pwa-install.js?v=20261024pwa1"></script>
 <script>
 (() => {

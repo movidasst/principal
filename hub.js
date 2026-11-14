@@ -140,7 +140,11 @@ if(viewPanels.length){
     const control=event.target.closest("button[data-hub-tab]");
     if(!control)return;
     if(control.dataset.hubCategory)setCategory(control.dataset.hubCategory);
+    const focused=document.activeElement;
     showView(control.dataset.hubTab);
+    if(control.closest("[data-hub-view], #mobileMenu")?.hidden || focused?.closest("[data-hub-view], #mobileMenu")?.hidden){
+      viewPanels.find(panel=>!panel.hidden)?.querySelector("h1,h2")?.focus({preventScroll:true});
+    }
   });
 }
 
@@ -154,6 +158,63 @@ dialog?.addEventListener("click",e=>{if(e.target===dialog)closeSupport()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(dialog&&!dialog.hidden)closeSupport();if(menuPane&&!menuPane.hidden){menuPane.hidden=true;menu?.setAttribute("aria-expanded","false")}}});
 function loadPayPal(){loadedPayPal=true;const box=$("#paypal-container-L8JZJ944K29T2");if(!box)return;const s=document.createElement("script");s.src="https://www.paypal.com/sdk/js?client-id=BAAJLihJtqy1l8ByU5kM-5xUoRD7QhOIzMXEHYka6QMgJrgtidkjum4hZxfZjxGeFbb1EtfpIjKw8v-NXs&components=hosted-buttons&disable-funding=venmo&currency=USD";s.async=true;s.onload=()=>{try{window.paypal?.HostedButtons({hostedButtonId:"L8JZJ944K29T2"}).render("#paypal-container-L8JZJ944K29T2")}catch{box.textContent="No se pudo cargar PayPal. Inténtalo de nuevo más tarde."}};s.onerror=()=>{box.textContent="No se pudo cargar PayPal. Inténtalo de nuevo más tarde."};document.head.appendChild(s)}
 $("#copyBinance")?.addEventListener("click",async()=>{try{await navigator.clipboard.writeText("BINANCE (USDT)\nRed: BEP20 (BSC)\nID: 176067584\nCorreo: david.linaresb@gmail.com");showToast("Datos copiados")}catch{showToast("Selecciona y copia los datos mostrados")}});
-async function loadCatalog(){try{const r=await fetch("/ecosistema.json?v=20261114-navegacion",{cache:"default"});if(!r.ok)throw new Error("HTTP "+r.status);const d=await r.json();if(!Array.isArray(d.items))throw new Error("Formato de catálogo");catalog=d.items.filter(i=>i&&i.title&&i.id&&safeUrl(i.url)!=="#explorar");render();renderCats();$("#loadingCatalog")?.remove();}catch(err){const el=$("#loadingCatalog");if(el)el.textContent="No pudimos cargar el catálogo completo. Utiliza los accesos destacados o inténtalo nuevamente.";console.warn("Catalog not loaded",err)}}
+const retryCatalog=$("#retryCatalog");
+async function loadCatalog(){
+  const loading=$("#loadingCatalog");
+  if(retryCatalog)retryCatalog.hidden=true;
+  if(loading)loading.textContent="Cargando inventario de herramientas y recursos...";
+  try{
+    const response=await fetch("/ecosistema.json?v=20261114-navegacion",{signal:AbortSignal.timeout(10000)});
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const data=await response.json();
+    if(!Array.isArray(data.items))throw new Error("Formato de catálogo");
+    catalog=data.items.filter(i=>i&&i.title&&i.id&&safeUrl(i.url)!=="#explorar");
+    render();
+    renderCats();
+    loading?.remove();
+  }catch(error){
+    if(loading)loading.textContent="No pudimos cargar el catálogo. Usa los accesos por área o reintenta.";
+    if(count)count.textContent="Catálogo no disponible.";
+    if(retryCatalog)retryCatalog.hidden=false;
+    console.warn("Catalog not loaded",error);
+  }
+}
+retryCatalog?.addEventListener("click",loadCatalog);
 loadCatalog();
+
+const courseHighlight=$("#courseHighlight");
+if(courseHighlight){
+  const remaining=Date.parse(courseHighlight.dataset.hideAt)-Date.now();
+  if(remaining>0){
+    courseHighlight.hidden=false;
+    if(remaining<=2147483647)setTimeout(()=>{courseHighlight.hidden=true;},remaining);
+  }
+}
+
+// Solo medir destinos conocidos y si una consulta no obtuvo resultados.
+const destinations={
+  "inscripciones.movidasst.com/":"cursos",
+  "www.movidasst.com/biblioteca/":"biblioteca",
+  "www.movidasst.com/mi-movida/":"mi_movida",
+  "www.movidasst.com/tv/":"movida_tv"
+};
+document.addEventListener("click",event=>{
+  const link=event.target.closest("a[href]");
+  if(!link)return;
+  const url=new URL(link.href);
+  const destination=link.dataset.movidaDestination||destinations[url.hostname+url.pathname];
+  if(destination)window.MovidaGA4?.trackHub?.("hub_destination_click",{destination});
+});
+let emptySearchTimer;
+function trackEmptySearch(){
+  clearTimeout(emptySearchTimer);
+  if(term.length<3||!catalog.length||currentItems().length)return;
+  emptySearchTimer=setTimeout(()=>{
+    if(!$("#vista-explorar")?.hidden&&term.length>=3&&!currentItems().length){
+      window.MovidaGA4?.trackHub?.("hub_search_no_results",{});
+    }
+  },900);
+}
+search?.addEventListener("input",trackEmptySearch);
+$("#homeSearch")?.addEventListener("submit",trackEmptySearch);
 })();

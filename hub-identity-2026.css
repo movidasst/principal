@@ -350,3 +350,11 @@ body{background:#F7FBFA;}
   #vista-inicio .ecosystem-views{padding:.55rem .75rem;gap:.25rem .65rem;}
   #vista-inicio #inscripciones{padding-top:20px;}
 }
+
+.course-highlight{flex:1 0 100%;padding:14px 16px;border:1px solid #BDDEDA;border-radius:14px;background:#fff;}
+.course-highlight h3{margin:0 0 4px;color:#155660;}
+.course-highlight p{margin:0 0 10px;}
+.footer-preferences{display:block;padding:0;border:0;background:none;color:#E0F3F1;text-align:left;text-decoration:underline;cursor:pointer;min-height:36px;}
+.footer-preferences:focus-visible{outline-color:#FFB600;}
+.footer-preferences[hidden]{display:none;}
+#retryCatalog{margin-bottom:12px;}
