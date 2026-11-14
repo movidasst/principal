@@ -325,3 +325,28 @@ body{background:#F7FBFA;}
   .bottom-nav .hub-app-link,.bottom-nav .hub-tab{font-size:.68rem;white-space:nowrap;}
   .support-fab{display:none;}
 }
+
+/* Portada orientada a la búsqueda y a los destinos principales. */
+#vista-inicio .hero{grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:clamp(22px,5vw,70px);padding:40px 0 32px;}
+#vista-inicio .hero h1{font-size:clamp(2.25rem,4.3vw,4.15rem);margin:10px 0 12px;}
+#vista-inicio .hero-description{margin:0;line-height:1.55;}
+.home-search{max-width:640px;margin-top:20px;}
+.home-search label{display:block;margin-bottom:8px;color:#164C55;font-weight:750;}
+.home-search-controls{display:flex;gap:8px;}
+.home-search-controls input{flex:1;min-width:0;padding:0 12px;border:1px solid #A2C7C7;border-radius:12px;background:#fff;color:var(--ink);font-size:1rem;}
+.home-search-controls .btn{min-height:46px;padding-inline:13px;}
+.home-join{display:inline-flex;align-items:center;gap:6px;margin-top:12px;min-height:32px;color:#006D76;font-size:.9rem;font-weight:750;text-decoration:underline;text-underline-offset:.2em;}
+.home-join svg{width:16px;height:16px;}
+#vista-inicio .ecosystem-views{margin:0;}
+.home-shortcuts{margin-top:16px;}
+.home-install .pwa-install-entry:not([hidden]){margin:16px 0 0;}
+#vista-inicio #inscripciones{padding-top:28px;}
+@media(max-width:760px){
+  #vista-inicio .hero{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:24px 0 16px;}
+  #vista-inicio .hero h1{font-size:clamp(1.95rem,8vw,3.1rem);}
+  .home-search{margin-top:15px;}
+  .home-search-controls .btn{padding-inline:10px;}
+  .home-search-controls .btn svg{display:none;}
+  #vista-inicio .ecosystem-views{padding:.55rem .75rem;gap:.25rem .65rem;}
+  #vista-inicio #inscripciones{padding-top:20px;}
+}

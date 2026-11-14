@@ -88,7 +88,7 @@ const viewPanels=Array.from(document.querySelectorAll("[data-hub-view]"));
 function readCurrentView(){
   try{const name=new URL(window.location.href).searchParams.get("vista");return viewNames.includes(name)?name:"inicio"}catch{return "inicio"}
 }
-function showView(name,updateUrl=true){
+function showView(name,updateUrl=true,query=null){
   if(!viewPanels.length||!viewNames.includes(name))return;
   const current=viewPanels.find(p=>!p.hidden)?.dataset.hubView||"inicio";
   viewPanels.forEach(panel=>{const active=panel.dataset.hubView===name;panel.hidden=!active;panel.classList.toggle("is-active",active)});
@@ -100,15 +100,42 @@ function showView(name,updateUrl=true){
   });
   const pane=$("#mobileMenu"),trigger=$("#menuTrigger");
   if(pane){pane.hidden=true;trigger?.setAttribute("aria-expanded","false")}
-  if(updateUrl&&name!==current){
-    try{const next=new URL(window.location.href);if(name==="inicio")next.searchParams.delete("vista");else next.searchParams.set("vista",name);history.pushState({hubView:name},"",next.pathname+next.search)}catch{}
+  if(updateUrl&&(name!==current||query!==null)){
+    const next=new URL(window.location.href);
+    if(name==="inicio")next.searchParams.delete("vista");else next.searchParams.set("vista",name);
+    if(query)next.searchParams.set("q",query);else next.searchParams.delete("q");
+    history.pushState({hubView:name},"",next.pathname+next.search);
   }
   const announce=$("#hubViewStatus");if(announce)announce.textContent="Sección abierta: "+viewLabel[name];
   if(name!==current){window.scrollTo(0,0)}
 }
+function restoreView(){
+  const view=readCurrentView();
+  const query=new URL(window.location.href).searchParams.get("q");
+  if(view==="explorar"&&query!==null&&search){
+    term=query.trim().slice(0,160);
+    search.value=term;
+    category="all";
+    onlyFavs=false;
+    page=1;
+    if(catalog.length)render();
+  }
+  showView(view,false);
+}
 if(viewPanels.length){
-  showView(readCurrentView(),false);
-  window.addEventListener("popstate",()=>showView(readCurrentView(),false));
+  restoreView();
+  window.addEventListener("popstate",restoreView);
+  $("#homeSearch")?.addEventListener("submit",event=>{
+    event.preventDefault();
+    const input=$("#homeSearchInput");
+    const query=input.value.trim();
+    if(!query){input.focus();return;}
+    term=query;
+    search.value=term;
+    setCategory("all");
+    showView("explorar",true,term);
+    search.focus({preventScroll:true});
+  });
   document.addEventListener("click",event=>{
     const control=event.target.closest("button[data-hub-tab]");
     if(!control)return;
