@@ -178,6 +178,7 @@
     .ecosystem-views { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem 1.2rem; margin:.9rem 0 1rem; padding:.75rem 1rem; border:1px solid #cce3e6; border-inline-start:4px solid #007b85; border-radius:16px; background:linear-gradient(105deg,#edf8f9,#fff 70%); color:#00205b; }
     .ecosystem-views-number { color:#006d76; font-size:clamp(1.65rem,5vw,2.15rem); line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-.035em; }
     .ecosystem-views-label { display:block; font-weight:700; line-height:1.35; }
+    .ecosystem-views-today { display:block; margin-top:.3rem; color:#425570; font-size:.75rem; }
     .ecosystem-views-source { display:block; margin-top:.2rem; color:#425570; font-size:.82rem; }
     .ecosystem-views .ecosystem-views-link { display:inline; color:#006d76; text-decoration:underline; text-underline-offset:.15em; }
   </style>
@@ -228,6 +229,7 @@
         <div>
           <span class="ecosystem-views-label">Vistas en las plataformas de La Movida de SST+</span>
           <small class="ecosystem-views-source">Google Analytics · <a class="ecosystem-views-link" href="https://metricas.movidasst.com/">Ver Métricas</a> · Datos hasta el <time id="ecosystemViewsDate" datetime="2026-11-12">12-11-2026</time></small>
+          <small class="ecosystem-views-today" id="ecosystemViewsToday" hidden>Visitas de hoy: <strong></strong> · provisional</small>
         </div>
     </section>
   </div></section>
@@ -364,7 +366,18 @@
 (() => {
   const count = document.getElementById('ecosystemViewsCount');
   const date = document.getElementById('ecosystemViewsDate');
+  const today = document.getElementById('ecosystemViewsToday');
+  const todayFormat = new Intl.DateTimeFormat('en-CA', {
+    timeZone:'America/Santiago', year:'numeric', month:'2-digit', day:'2-digit'
+  });
   const cacheKey = 'movida-ecosystem-views-v1';
+
+  function showToday(snapshot) {
+    const parts = todayFormat.formatToParts(new Date());
+    const localDate = ['year', 'month', 'day'].map(type => parts.find(part => part.type === type).value).join('-');
+    today.hidden = snapshot?.date !== localDate || !Number.isSafeInteger(snapshot?.views) || snapshot.views < 0;
+    if (!today.hidden) today.querySelector('strong').textContent = numberFormat.format(snapshot.views);
+  }
   const numberFormat = new Intl.NumberFormat('es-CL');
   const dateFormat = new Intl.DateTimeFormat('es-CL', {dateStyle:'medium', timeZone:'UTC'});
 
@@ -385,6 +398,7 @@
   } catch {}
 
   async function refresh() {
+    if (lastToday) showToday(lastToday);
     try {
       const response = await fetch('https://metricas.movidasst.com/resumen-ecosistema.json', {
         cache:'no-store',
@@ -393,6 +407,8 @@
       });
       if (!response.ok) return;
       const data = await response.json();
+      lastToday = data.today_web_views;
+      showToday(lastToday);
       const snapshot = {views:data.total?.views, dateTo:data.views_date_to ?? data.date_to};
       if (show(snapshot)) localStorage.setItem(cacheKey, JSON.stringify(snapshot));
     } catch {
@@ -400,8 +416,9 @@
     }
   }
 
+  let lastToday;
   refresh();
-  window.setInterval(refresh, 60 * 60 * 1000);
+  window.setInterval(refresh, 5 * 60 * 1000);
 })();
 </script>
 </body></html>
