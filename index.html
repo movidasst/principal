@@ -384,7 +384,7 @@
       });
       if (!response.ok) return;
       const data = await response.json();
-      const snapshot = {views:data.total?.views, dateTo:data.date_to};
+      const snapshot = {views:data.total?.views, dateTo:data.views_date_to ?? data.date_to};
       if (show(snapshot)) localStorage.setItem(cacheKey, JSON.stringify(snapshot));
     } catch {
       // Keep the last displayed report when the source is unavailable.
