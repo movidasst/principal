@@ -358,3 +358,18 @@ body{background:#F7FBFA;}
 .footer-preferences:focus-visible{outline-color:#FFB600;}
 .footer-preferences[hidden]{display:none;}
 #retryCatalog{margin-bottom:12px;}
+
+/* Cabecera compacta: reservar espacio entre el logotipo y las redes sociales. */
+.header-inner .brand-surface{width:clamp(132px,13vw,174px);min-height:48px;padding:5px 8px;}
+.header-inner .brand-surface img{max-height:52px;}
+.header-inner > .hub-social-links{margin-left:10px;}
+@media(max-width:760px){
+  .header-inner .brand-surface{width:clamp(92px,27vw,124px);min-height:39px;padding:4px 6px;}
+  .header-inner .brand-surface img{max-height:40px;}
+  .header-inner > .hub-social-links{margin-left:5px;gap:4px;}
+}
+@media(max-width:390px){
+  .header-inner .brand-surface{width:92px;}
+  .header-inner .hub-social-link{width:32px;height:32px;min-width:32px;}
+  .header-inner .hub-social-link svg{width:18px;height:18px;}
+}
