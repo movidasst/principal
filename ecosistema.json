@@ -1,9 +1,45 @@
 {
   "version": 1,
-  "updated": "2026-11-10",
+  "updated": "2026-11-14",
   "source": "La Movida de SST+ — inventario editorial para portal público",
   "notes": "Estados editoriales; validar disponibilidad en tiempo real antes de marcar una herramienta como operativa.",
   "items": [
+    {
+      "id": "directorio",
+      "title": "Directorio de integrantes",
+      "category": "comunidad",
+      "group": "Plataforma",
+      "description": "Consulta el directorio de integrantes de La Movida de SST+.",
+      "url": "https://directorio.movidasst.com/",
+      "keywords": "directorio membresía comunidad profesionales miembros integrantes",
+      "status": "disponible",
+      "featured": 0,
+      "icon": "users"
+    },
+    {
+      "id": "movida-tv",
+      "title": "Movida TV",
+      "category": "aprendizaje",
+      "group": "Plataforma",
+      "description": "Explora videos, espacios técnicos y formación en seguridad y salud en el trabajo.",
+      "url": "https://www.movidasst.com/tv/",
+      "keywords": "movida tv videoteca videos televisión youtube grabaciones",
+      "status": "disponible",
+      "featured": 0,
+      "icon": "graduation"
+    },
+    {
+      "id": "cov-proteccion-respiratoria",
+      "title": "Protección respiratoria · COVENIN 3069",
+      "category": "recursos",
+      "group": "Recurso técnico",
+      "description": "Consulta la referencia de la Biblioteca SST sobre selección, uso y gestión de respiradores.",
+      "url": "https://www.movidasst.com/biblioteca/normas-covenin/#proteccion-respiratoria",
+      "keywords": "proteccion respiratoria epr respiradores programa 3069 mascarillas filtros",
+      "status": "disponible",
+      "featured": 0,
+      "icon": "shield"
+    },
     {
       "id": "registro",
       "title": "Registro internacional",
