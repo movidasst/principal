@@ -18,6 +18,9 @@ const publicPages = [
   { path: 'biblioteca/normas-covenin/index.html', url: origin + '/biblioteca/normas-covenin/' },
   { path: 'biblioteca/reglamentos-tecnicos/index.html', url: origin + '/biblioteca/reglamentos-tecnicos/' },
   { path: 'biblioteca/reglamentos-tecnicos/calzado-seguridad/index.html', url: origin + '/biblioteca/reglamentos-tecnicos/calzado-seguridad/' },
+  { path: 'tv/index.html', url: origin + '/tv/' },
+  { path: 'tv/catalogo/index.html', url: origin + '/tv/catalogo/' },
+  { path: 'tv/destacados/index.html', url: origin + '/tv/destacados/' },
 ];
 const technicalPages = [
   'diagnostico-ga4.html', 'offline.html', 'mi-movida/index.html',
