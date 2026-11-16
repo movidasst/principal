@@ -228,10 +228,10 @@
       <a class="home-join" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">Únete gratis <span data-icon="arrow"></span></a>
     </div>
     <section class="ecosystem-views" aria-label="Alcance digital de La Movida">
-        <strong class="ecosystem-views-number" id="ecosystemViewsCount">207.586</strong>
+        <strong class="ecosystem-views-number" id="ecosystemViewsCount">208.330</strong>
         <div>
           <span class="ecosystem-views-label">Vistas en las plataformas de La Movida de SST+</span>
-          <small class="ecosystem-views-source">Google Analytics · <a class="ecosystem-views-link" href="https://metricas.movidasst.com/">Ver Métricas</a> · Datos hasta el <time id="ecosystemViewsDate" datetime="2026-11-12">12-11-2026</time></small>
+          <small class="ecosystem-views-source">Google Analytics · <a class="ecosystem-views-link" href="https://metricas.movidasst.com/">Ver Métricas</a> · Datos hasta el <time id="ecosystemViewsDate" datetime="2026-11-14">14-11-2026</time></small>
         </div>
     </section>
   </div></section>
@@ -369,6 +369,20 @@
   const count = document.getElementById('ecosystemViewsCount');
   const date = document.getElementById('ecosystemViewsDate');
   const cacheKey = 'movida-ecosystem-views-v1';
+  const numberFormat = new Intl.NumberFormat('es-CL');
+  const dateFormat = new Intl.DateTimeFormat('es-CL', {dateStyle:'medium', timeZone:'UTC'});
+
+  function show(snapshot) {
+    const {views, dateTo} = snapshot ?? {};
+    if (!Number.isSafeInteger(views) || views < 0 || typeof dateTo !== 'string' ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(dateTo) || dateTo < date.dateTime) return false;
+    const cutoff = new Date(dateTo + 'T00:00:00Z');
+    if (Number.isNaN(cutoff.getTime()) || cutoff.toISOString().slice(0, 10) !== dateTo) return false;
+    count.textContent = numberFormat.format(views);
+    date.dateTime = dateTo;
+    date.textContent = dateFormat.format(cutoff);
+    return true;
+  }
 
   try {
     show(JSON.parse(localStorage.getItem(cacheKey)));
