@@ -192,6 +192,10 @@
     .home-directory-shortcut{background:#e5f5f0;border:1px solid #b4dcd7;}
     #vista-inicio .hero{grid-template-columns:minmax(0,1.35fr) minmax(300px,1fr);}
     @media(max-width:760px){#vista-inicio .hero{grid-template-columns:minmax(0,1fr);}.home-directory-card{padding:20px;}.home-directory-icon{float:right;margin:0 0 10px 12px;}.home-directory-card h2{font-size:1.55rem;}.home-directory-card p{margin-bottom:16px;}}
+    .home-directory-count{margin:0 0 20px;padding:14px 16px;border:1px solid #c4e3dd;border-radius:16px;background:#fff;color:#155660;}
+    .home-directory-count strong{display:block;font-size:clamp(2rem,5vw,2.7rem);line-height:1.1;font-variant-numeric:tabular-nums;}
+    .home-directory-count span{display:block;margin-top:4px;font-size:.9rem;font-weight:700;}
+    .home-directory-count small{display:block;margin-top:6px;color:#58747e;font-size:.72rem;line-height:1.5;}
   </style>
 </head>
 <body id="inicio">
@@ -244,6 +248,7 @@
         <span class="eyebrow">Nuestra red profesional</span>
         <h2 id="homeDirectoryTitle">Directorio de profesionales</h2>
         <p>Conoce a los profesionales registrados en La Movida de SST+. Nuestra aplicación principal para descubrir quiénes forman parte de esta comunidad.</p>
+        <div class="home-directory-count" role="status" aria-live="polite" aria-atomic="true"><strong id="directoryRegisteredCount">—</strong><span>profesionales registrados</span><small id="directoryRegisteredStatus">Consultando el Directorio…</small></div>
         <a class="btn btn-primary" href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Explorar profesionales <span data-icon="arrow"></span></a>
         <a class="home-directory-join" href="https://registro.movidasst.com/" target="_blank" rel="noopener noreferrer">¿Aún no eres integrante? Regístrate gratis <span data-icon="arrow"></span></a>
       </section>
@@ -428,6 +433,57 @@
 
   refresh();
   window.setInterval(refresh, 60 * 60 * 1000);
+})();
+</script>
+<script>
+(() => {
+  const value = document.getElementById('directoryRegisteredCount');
+  const status = document.getElementById('directoryRegisteredStatus');
+  const cacheKey = 'movida-directory-count-v1';
+  const refreshMs = 30 * 60 * 1000;
+  const source = 'https://script.google.com/macros/s/AKfycbwAW5aTr0nD9K21AqiSlo9Ra2iSR8qN62ElA-J_VLSMiGT8P_vxsvl4nvCO77enmyu1Jg/exec?action=getDirectory';
+  let busy = false;
+  let lastUpdated = 0;
+
+  function show(total, updatedAt) {
+    if (!Number.isSafeInteger(total) || total < 0 || !Number.isFinite(updatedAt) || updatedAt <= 0 || updatedAt > Date.now()) return false;
+    value.textContent = new Intl.NumberFormat('es-VE').format(total);
+    lastUpdated = updatedAt;
+    status.textContent = 'Actualizado ' + new Intl.DateTimeFormat('es-VE', {dateStyle:'short', timeStyle:'short'}).format(new Date(updatedAt));
+    return true;
+  }
+
+  try {
+    const cached = JSON.parse(localStorage.getItem(cacheKey));
+    if (cached) show(cached.total, cached.updatedAt);
+  } catch {}
+
+  async function refresh() {
+    if (busy || document.hidden) return;
+    busy = true;
+    try {
+      const response = await fetch(source, {redirect:'follow', cache:'no-store', credentials:'omit', signal:AbortSignal.timeout(20000)});
+      if (!response.ok) throw new Error('Directory unavailable');
+      const json = await response.json();
+      if (json.status === 'error' || !Array.isArray(json.data)) throw new Error('Invalid directory response');
+      const snapshot = {total:json.data.length, updatedAt:Date.now()};
+      show(snapshot.total, snapshot.updatedAt);
+      try { localStorage.setItem(cacheKey, JSON.stringify(snapshot)); } catch {}
+    } catch {
+      status.textContent = lastUpdated
+        ? 'Último dato disponible · se reintentará automáticamente'
+        : 'Consulta el total actualizado en el Directorio';
+      if (!lastUpdated) value.textContent = '—';
+    } finally {
+      busy = false;
+    }
+  }
+
+  refresh();
+  window.setInterval(refresh, refreshMs);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && Date.now() - lastUpdated >= refreshMs) refresh();
+  });
 })();
 </script>
 </body></html>
