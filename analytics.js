@@ -155,7 +155,7 @@
       if(!loaded || preference()!=="granted")return;
       var data={page_location:window.location.origin+"/"};
       if(event==="hub_destination_click"){
-        if(!["cursos","biblioteca","mi_movida","movida_tv"].includes(parameters.destination))return;
+        if(!["cursos","biblioteca","mi_movida","movida_tv","directorio"].includes(parameters.destination))return;
         data.destination=parameters.destination;
       }else if(event!=="hub_search_no_results")return;
       window.gtag("event",event,data);

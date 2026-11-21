@@ -68,3 +68,15 @@ El HUB principal funciona como PWA. El enlace `/site.webmanifest` declara iconos
 - `pwa/icon-512.png` contiene exactamente el PNG maestro de 512×512.
 - No volver a usar `logo-movida-sst-plus.svg` ni miniaturas antiguas para iconos PWA, pantalla de instalación, favicon o Apple Touch Icon.
 - Al sustituir iconos instalables, versionar el manifiesto y sus rutas; las apps ya instaladas pueden mantener la imagen anterior hasta reinstalarse.
+
+## Portada y catálogo · 21 noviembre 2026
+
+- Navegación principal común: Inicio, Explorar, Directorio (aplicación externa), Aprender y Mi Movida. Comunidad, cursos y Movida TV conservan accesos propios dentro de las vistas y la portada.
+- `hub-home.css` contiene la presentación actual, acotada a `.hub-modern`. La cabecera usa el logo rectangular oficial optimizado, sin cambiar el archivo maestro.
+- `ecosistema.json`: `featured` es el orden editorial positivo de las seis tarjetas destacadas; cero significa que no aparece en ese bloque. `tasks` contiene frases breves que mejoran búsquedas por necesidad. No publicar herramientas restringidas sin revisar su acceso.
+- La búsqueda sincroniza `q` y `categoria` en la URL con `replaceState`, conserva navegación Atrás/Adelante y consulta también las guías públicas de la Biblioteca.
+- Favoritos y recientes guardan solo IDs de recursos en este dispositivo. Borrar recientes no elimina favoritos. No implican sesión, cuenta unificada ni seguimiento entre dispositivos.
+- El contador de profesionales consulta `directorio_internacional_v1` de GEO con `Prefer: count=exact`, `limit=1` y lee `Content-Range`. No usar la antigua fuente de Google Apps Script. Actualiza al abrir y cada 30 minutos con la página visible.
+- El taller PSST destacado remite a Moodle `info.php?id=154`; se oculta automáticamente el 6 diciembre 2026. Verificar la ficha al actualizar la oferta.
+- El evento `hub_destination_click` incluye `directorio` en la lista permitida por `analytics.js`; no transmite términos de búsqueda ni datos de profesionales.
+- Pruebas: `node --test tests/*.mjs`. Revisar Inicio, búsqueda, favoritos, URL compartida, menú móvil y Aprender antes de publicar. Los enlaces esenciales y tarjetas destacadas siguen disponibles sin JavaScript.

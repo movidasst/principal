@@ -13,8 +13,10 @@
 <link rel="manifest" href="/site.webmanifest?v=20261024logo-nuevo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/hub.css?v=20261018tabs3">
+<link rel="stylesheet" href="/hub-identity-2026.css?v=20261114-logo-compacto-2">
+<link rel="stylesheet" href="/hub-home.css?v=20261121-hub2">
 <style>
 .explore-hero{background:linear-gradient(120deg,#00205b,#006d79);color:#fff;padding:53px 0 50px;}
 .explore-hero h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:10px 0 12px}
@@ -29,16 +31,10 @@
 @media(max-width:760px){.explore-hero{padding:36px 0 42px}.explore-tools{padding-top:28px}}
 </style>
 </head>
-<body>
+<body class="hub-modern">
 <div class="top-stripe" aria-hidden="true"></div>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
-<header class="site-header"><div class="container header-inner">
-<a class="brand" href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir inicio de La Movida en otra pestaña">
-<img src="/logo-oficial-movida-sst-plus.png" alt="Logo de La Movida de SST+" width="56" height="56">
-<span><strong>La Movida de SST <span style="color:#007b85">Plus</span></strong><small>De la Reacción a la Prevención</small></span>
-</a>
-<a class="btn btn-primary" href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer">Inicio del HUB <span data-icon="external"></span></a>
-</div></header>
+<header class="site-header"><div class="container header-inner"><a class="brand brand-home" href="/" aria-label="Inicio de La Movida"><span class="brand-surface"><img src="/logo-horizontal-movida-sst-plus-compact.webp" alt="La Movida de SST+" width="224" height="74" decoding="async"></span></a><a class="btn btn-primary" href="/">Volver al inicio</a></div></header>
 <main id="contenido">
 <section class="explore-hero" aria-labelledby="exploreHeading"><div class="container explore-top">
 <div><span class="eyebrow">Todos los recursos en un solo catálogo</span>
@@ -52,7 +48,7 @@
 <p>Busca por nombre, tema, norma o tipo de actividad. Marca tus favoritos para encontrarlos más fácilmente en este dispositivo.</p></div></div>
 <div class="search-shell">
   <div class="search-line"><div class="searchbox"><span data-icon="search"></span>
-  <input type="search" id="searchInput" aria-label="Buscar herramientas del ecosistema" placeholder="Ej.: ruido, IPERC, contratistas, normas..." autocomplete="off">
+  <input type="search" maxlength="160" id="searchInput" aria-label="Buscar herramientas del ecosistema" placeholder="Ej.: ruido, IPERC, contratistas, normas..." autocomplete="off">
   <button type="button" class="clear" id="clearSearch" aria-label="Borrar búsqueda" hidden>×</button></div></div>
   <div id="categoryChips" class="chip-row" aria-label="Filtrar por categoría">
     <button type="button" class="chip" data-category="all" aria-pressed="true">Todo</button><button type="button" class="chip" data-category="favoritos">★ Favoritos</button>
@@ -86,17 +82,11 @@
 <div class="footer-grid">
 <div><img class="footer-logo" src="/logo-oficial-movida-sst-plus.png" alt="" loading="lazy" width="66" height="66"><h3>La Movida de SST+</h3><p>Aprendizaje colaborativo, práctica y desarrollo profesional. De la Reacción a la Prevención.</p></div>
 <div><h3>Accesos</h3><a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer">Estudia</a><a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer">Directorio</a><a href="https://laboratorio.movidasst.com/" target="_blank" rel="noopener noreferrer">MovidaLab HO</a></div>
-<div><h3>Comunidad</h3><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="https://grupos.movidasst.com/" target="_blank" rel="noopener noreferrer">Grupos y canales</a><a href="mailto:info@movidasst.com">Contacto</a></div>
+<div><h3>Comunidad</h3><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="https://participa.movidasst.com/" target="_blank" rel="noopener noreferrer">Participa</a><a href="mailto:info@movidasst.com">Contacto</a></div>
 </div>
 <div class="footer-base">© 2026 La Movida de SST+ · Elaborado por David Linares Brea · www.movidasst.com</div>
 </div></footer>
-<nav class="bottom-nav" aria-label="Accesos de La Movida en pestañas nuevas">
-<a href="https://www.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="home"></span>Inicio</a>
-<a class="active" aria-current="page" href="https://www.movidasst.com/explorar.html" target="_blank" rel="noopener noreferrer"><span data-icon="grid"></span>Explorar</a>
-<a href="https://estudia.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="graduation"></span>Aprender</a>
-<a href="https://grupos.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="users"></span>Comunidad</a>
-<a href="https://directorio.movidasst.com/" target="_blank" rel="noopener noreferrer"><span data-icon="user"></span>Mi Movida</a>
-</nav>
+<nav class="bottom-nav" aria-label="Navegación principal móvil"><a href="/" class="hub-app-link"><span data-icon="home"></span><span>Inicio</span></a><a href="/explorar.html" class="hub-app-link active" aria-current="page"><span data-icon="grid"></span><span>Explorar</span></a><a href="https://directorio.movidasst.com/" class="hub-app-link" target="_blank" rel="noopener noreferrer"><span data-icon="users"></span><span>Directorio</span></a><a href="/?vista=aprender" class="hub-app-link"><span data-icon="graduation"></span><span>Aprender</span></a><a href="/mi-movida/" class="hub-app-link"><span data-icon="user"></span><span>Mi Movida</span></a></nav>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-<script defer src="/hub.js?v=20261018tabs3"></script>
+<script defer src="/hub.js?v=20261121-hub2"></script>
 </body></html>

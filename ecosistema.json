@@ -1,20 +1,23 @@
 {
   "version": 1,
-  "updated": "2026-11-14",
+  "updated": "2026-11-21",
   "source": "La Movida de SST+ — inventario editorial para portal público",
   "notes": "Estados editoriales; validar disponibilidad en tiempo real antes de marcar una herramienta como operativa.",
   "items": [
     {
       "id": "directorio",
-      "title": "Directorio de integrantes",
+      "title": "Directorio de profesionales",
       "category": "comunidad",
       "group": "Plataforma",
-      "description": "Consulta el directorio de integrantes de La Movida de SST+.",
+      "description": "Encuentra a los profesionales registrados en La Movida de SST+ y conoce sus perfiles.",
       "url": "https://directorio.movidasst.com/",
       "keywords": "directorio membresía comunidad profesionales miembros integrantes",
       "status": "disponible",
       "featured": 0,
-      "icon": "users"
+      "icon": "users",
+      "tasks": [
+        "encontrar profesionales"
+      ]
     },
     {
       "id": "movida-tv",
@@ -49,7 +52,7 @@
       "url": "https://registro.movidasst.com/",
       "keywords": "registro identidad profesional integrante",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "user-plus"
     },
     {
@@ -61,7 +64,7 @@
       "url": "https://estudia.movidasst.com/",
       "keywords": "ranking puntos xp premios constancia mis puntos",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "trophy"
     },
     {
@@ -73,7 +76,7 @@
       "url": "https://participa.movidasst.com/",
       "keywords": "encuestas votar participación",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "messages"
     },
     {
@@ -97,7 +100,7 @@
       "url": "https://estudia.movidasst.com/",
       "keywords": "estudio normas guías aprendizaje xp actualización",
       "status": "disponible",
-      "featured": 1,
+      "featured": 4,
       "icon": "book"
     },
     {
@@ -109,7 +112,7 @@
       "url": "https://movidasst.org/login/index.php",
       "keywords": "moodle curso formación certificados academia",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "graduation"
     },
     {
@@ -133,7 +136,7 @@
       "url": "https://desarrolla.movidasst.com/",
       "keywords": "habilidades competencias roleplay comunicación liderazgo",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "spark"
     },
     {
@@ -157,8 +160,11 @@
       "url": "https://laboratorio.movidasst.com/",
       "keywords": "simuladores instrumentos higiene ocupacional laboratorio",
       "status": "disponible",
-      "featured": 1,
-      "icon": "flask"
+      "featured": 3,
+      "icon": "flask",
+      "tasks": [
+        "practicar mediciones"
+      ]
     },
     {
       "id": "sonometro",
@@ -277,8 +283,12 @@
       "url": "https://pp.movidasst.com/",
       "keywords": "iperc riesgos peligros controles matriz",
       "status": "disponible",
-      "featured": 1,
-      "icon": "shield"
+      "featured": 2,
+      "icon": "shield",
+      "tasks": [
+        "evaluar riesgos",
+        "identificar peligros"
+      ]
     },
     {
       "id": "controlbanding",
@@ -313,8 +323,12 @@
       "url": "https://psst.movidasst.com/",
       "keywords": "psst nt04 programa auditoría",
       "status": "disponible",
-      "featured": 0,
-      "icon": "check"
+      "featured": 5,
+      "icon": "check",
+      "tasks": [
+        "revisar psst",
+        "programa seguridad salud trabajo"
+      ]
     },
     {
       "id": "estadisticas",
@@ -335,10 +349,13 @@
       "group": "Investigación",
       "description": "Investiga accidentes con un proceso guiado de hechos, causas y medidas.",
       "url": "https://mac.movidasst.com/",
-      "keywords": "accidentes investigación árbol causas",
+      "keywords": "accidentes investigación árbol causas investigar investigacion accidente accidentes hechos causas medidas",
       "status": "disponible",
-      "featured": 0,
-      "icon": "git"
+      "featured": 1,
+      "icon": "git",
+      "tasks": [
+        "investigar accidente"
+      ]
     },
     {
       "id": "contratistas",
@@ -349,7 +366,7 @@
       "url": "https://contratista.movidasst.com/",
       "keywords": "contratistas curso requisitos selección permisos",
       "status": "disponible",
-      "featured": 1,
+      "featured": 6,
       "icon": "briefcase"
     },
     {
@@ -397,7 +414,7 @@
       "url": "https://pefamiliar.movidasst.com/",
       "keywords": "emergencia familiar mochila casa riesgo emergencias respuesta desastres prevención",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "home"
     },
     {
@@ -409,7 +426,7 @@
       "url": "https://drive.movidasst.com/",
       "keywords": "biblioteca documentos formatos archivos drive",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "folder"
     },
     {
@@ -421,7 +438,7 @@
       "url": "https://novedades.movidasst.com/",
       "keywords": "iso normas novedad dis pas cd radar",
       "status": "disponible",
-      "featured": 1,
+      "featured": 0,
       "icon": "radar"
     },
     {
@@ -457,7 +474,7 @@
       "url": "https://pif.movidasst.com/",
       "keywords": "pif factores desempeño humano performance influencing factors",
       "status": "experimental",
-      "featured": 1,
+      "featured": 0,
       "icon": "brain"
     },
     {
@@ -495,6 +512,57 @@
       "status": "acceso",
       "featured": 0,
       "icon": "chart"
+    },
+    {
+      "id": "biblioteca-publica",
+      "title": "Biblioteca SST",
+      "description": "Leyes, normas y guías técnicas de acceso público.",
+      "url": "https://www.movidasst.com/biblioteca/",
+      "keywords": "biblioteca legislacion normativa leyes reglamentos normas covenin",
+      "icon": "book",
+      "category": "recursos",
+      "group": "Biblioteca pública",
+      "status": "disponible",
+      "featured": 0,
+      "tasks": [
+        "consultar normativa"
+      ]
+    },
+    {
+      "id": "lopcymat",
+      "title": "LOPCYMAT · Biblioteca SST",
+      "description": "Consulta la guía pública de la Ley Orgánica de Prevención, Condiciones y Medio Ambiente de Trabajo.",
+      "url": "https://www.movidasst.com/biblioteca/lopcymat/",
+      "keywords": "lopcymat ley legislacion venezuela prevencion condiciones medio ambiente trabajo",
+      "icon": "book",
+      "category": "recursos",
+      "group": "Biblioteca pública",
+      "status": "disponible",
+      "featured": 0
+    },
+    {
+      "id": "nt-04-2023",
+      "title": "NT-04:2023 · Programa de SST",
+      "description": "Consulta la guía pública sobre el Programa de Seguridad y Salud en el Trabajo.",
+      "url": "https://www.movidasst.com/biblioteca/nt-04-2023/",
+      "keywords": "nt 04 2023 nt042023 psst programa seguridad salud trabajo normativa",
+      "icon": "check",
+      "category": "recursos",
+      "group": "Biblioteca pública",
+      "status": "disponible",
+      "featured": 0
+    },
+    {
+      "id": "normas-covenin",
+      "title": "Normas COVENIN · Biblioteca SST",
+      "description": "Explora referencias y guías públicas de normas técnicas COVENIN.",
+      "url": "https://www.movidasst.com/biblioteca/normas-covenin/",
+      "keywords": "normas covenin normativa normas tecnicas respiratoria",
+      "icon": "folder",
+      "category": "recursos",
+      "group": "Biblioteca pública",
+      "status": "disponible",
+      "featured": 0
     }
   ]
 }

@@ -56,29 +56,53 @@ try{const f=JSON.parse(localStorage.getItem(favoritesKey)||"[]");if(Array.isArra
 const store=()=>{try{localStorage.setItem(favoritesKey,JSON.stringify([...favorites]))}catch{}};
 const badges=i=>i.status==="experimental"?'<span class="badge beta tag">En prueba</span>':i.status==="acceso"?'<span class="badge restricted tag">Acceso privado</span>':"";
 function product(i){const favorite=favorites.has(i.id);return '<article class="product-card" data-id="'+safeText(i.id)+'">'+
-'<div class="product-icon">'+svg(i.icon)+'</div>'+badges(i)+
+'<div class="product-preview"><span class="product-icon">'+svg(i.icon)+'</span><span class="product-kind">'+safeText(i.group||label[i.category])+'</span></div>'+badges(i)+
 '<h3><a href="'+safeUrl(i.url)+'" target="_blank" rel="noopener noreferrer">'+safeText(i.title)+'</a></h3>'+
 '<p>'+safeText(i.description)+'</p>'+
-'<div class="product-foot"><a href="'+safeUrl(i.url)+'" target="_blank" rel="noopener noreferrer" aria-label="Abrir '+safeText(i.title)+'">Abrir '+svg("arrow")+'</a><button class="favorite-btn" type="button" data-favorite="'+safeText(i.id)+'" aria-label="'+(favorite?"Quitar de":"Guardar en")+' favoritos: '+safeText(i.title)+'" aria-pressed="'+favorite+'">'+svg("star")+'</button></div></article>'}
-function setCategory(next){category=next;onlyFavs=next==="favoritos";page=1;render();}
+'<div class="product-foot"><a href="'+safeUrl(i.url)+'" target="_blank" rel="noopener noreferrer" aria-label="Abrir '+safeText(i.title)+'">Abrir recurso</a><button class="favorite-btn" type="button" data-favorite="'+safeText(i.id)+'" aria-label="'+(favorite?"Quitar de":"Guardar en")+' favoritos: '+safeText(i.title)+'" aria-pressed="'+favorite+'">'+svg("star")+'</button></div></article>'}
+function setCategory(next){category=next;onlyFavs=next==="favoritos";page=1;render();syncSearchUrl();}
 function renderChips(){if(!chips)return;const a=[["all","Todo"],["favoritos","★ Favoritos"],...Object.entries(label)];chips.innerHTML=a.map(([key,title])=>'<button type="button" class="chip" data-category="'+key+'" aria-pressed="'+(category===key)+'">'+safeText(title)+'</button>').join("")}
 function renderCats(){if(!cats)return;cats.innerHTML=Object.entries(label).map(([key,title])=>'<button class="category-tile" type="button" data-category="'+key+'"><span class="icon">'+svg(groupIcons[key])+'</span>'+safeText(title)+'</button>').join("")}
+const stopWords=new Set(["de","del","la","el","las","los","un","una","para","como","quiero","necesito","en","y"]);
+const searchWords=value=>normalize(value).replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w&&!stopWords.has(w)).map(w=>({accidentes:"accidente",riesgos:"riesgo",profesionales:"profesional",investigacion:"investigar",mediciones:"medicion",normativas:"normativa"}[w]||w));
 function currentItems(){
-  const items=catalog.filter(i=>(category==="all"||onlyFavs||i.category===category) && (!onlyFavs||favorites.has(i.id)));
-  const words=normalize(term).match(/[a-z0-9]+/g);
-  if(!words)return items;
-  const matches=(text)=>words.every(word=>text.includes(word));
-  return items.filter(i=>matches(normalize([i.title,i.description,i.keywords,i.group,label[i.category]].join(" "))))
-    .sort((a,b)=>Number(matches(normalize(b.title)))-Number(matches(normalize(a.title))));
+  const items=catalog.filter(i=>(category==="all"||onlyFavs||i.category===category)&&(!onlyFavs||favorites.has(i.id)));
+  const words=searchWords(term);
+  if(!words.length)return items;
+  const scored=items.map(i=>{
+    const title=searchWords(i.title).join(" "), tasks=searchWords((i.tasks||[]).join(" ")).join(" ");
+    const text=searchWords([i.title,i.description,i.keywords,i.group,label[i.category],tasks].join(" ")).join(" ");
+    if(!words.every(w=>text.includes(w)))return null;
+    const score=words.reduce((n,w)=>n+(title.includes(w)?6:0)+(tasks.includes(w)?8:0),0);
+    return {item:i,score};
+  }).filter(Boolean);
+  return scored.sort((a,b)=>b.score-a.score).map(x=>x.item);
 }
-function render(){renderChips();const list=currentItems();if(results)results.innerHTML=list.slice(0,page*pageSize).map(product).join("");if(count)count.textContent=list.length+" recurso"+(list.length===1?"":"s")+" encontrado"+(list.length===1?"":"s");if(empty)empty.hidden=list.length>0||!catalog.length;if(more){more.hidden=list.length<=page*pageSize;more.textContent="Ver más recursos ("+Math.max(0,list.length-page*pageSize)+")"}if(clear)clear.hidden=!term;if(featured)featured.innerHTML=["estudia","laboratorio","desarrolla","iperc","contratistas","participa","pif"].map(id=>catalog.find(i=>i.id===id)).filter(Boolean).map(product).join("")}
+function syncSearchUrl(){
+  if(viewPanels.length&&$("#vista-explorar")?.hidden)return;
+  const url=new URL(location.href);
+  if(term)url.searchParams.set("q",term);else url.searchParams.delete("q");
+  if(category!=="all")url.searchParams.set("categoria",category);else url.searchParams.delete("categoria");
+  history.replaceState(history.state,"",url.pathname+url.search+url.hash);
+}
+function render(){
+  if(chips&&!chips.children.length)renderChips();
+  $$("[data-category]",chips||document).forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.category===category)));
+  const list=currentItems();
+  if(results)results.innerHTML=list.slice(0,page*pageSize).map(product).join("");
+  if(count)count.textContent=list.length+" recurso"+(list.length===1?"":"s")+" encontrado"+(list.length===1?"":"s");
+  if(empty)empty.hidden=list.length>0||!catalog.length;
+  if(more){more.hidden=list.length<=page*pageSize;more.textContent="Ver más recursos ("+Math.max(0,list.length-page*pageSize)+")"}
+  if(clear)clear.hidden=!term;
+}
+function renderFeatured(){if(featured)featured.innerHTML=catalog.filter(i=>Number(i.featured)>0).sort((a,b)=>a.featured-b.featured).slice(0,6).map(product).join("");}
 function showToast(s){const el=$("#toast");if(!el)return;el.textContent=s;el.hidden=false;clearTimeout(showToast.t);showToast.t=setTimeout(()=>{el.hidden=true},2200)}
 document.addEventListener("click",e=>{
 const cat=e.target.closest("[data-category]");if(cat){setCategory(cat.dataset.category);return}
-const fav=e.target.closest("[data-favorite]");if(fav){const id=fav.dataset.favorite;if(favorites.has(id)){favorites.delete(id);showToast("Quitado de favoritos")}else{favorites.add(id);showToast("Guardado en favoritos")}store();render();}
+const fav=e.target.closest("[data-favorite]");if(fav){const id=fav.dataset.favorite;const region=fav.closest("[id]")?.id;if(favorites.has(id)){favorites.delete(id);showToast("Quitado de favoritos")}else{favorites.add(id);showToast("Guardado en favoritos")}store();render();renderFeatured();renderPersonal();if(region){const parent=document.getElementById(region);let restored=false;parent?.querySelectorAll("[data-favorite]").forEach(button=>{if(button.dataset.favorite===id){button.focus({preventScroll:true});restored=true}});if(!restored&&count){count.tabIndex=-1;count.focus({preventScroll:true})}}}
 });
-if(search){search.addEventListener("input",()=>{term=search.value.trim();page=1;render()});document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();if(viewPanels.length)showView("explorar");search.focus()}})}
-if(clear)clear.addEventListener("click",()=>{term="";search.value="";render();search.focus()});
+if(search){search.addEventListener("input",()=>{term=search.value.trim().slice(0,160);page=1;render();syncSearchUrl()});document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();if(viewPanels.length)showView("explorar");search.focus()}})}
+if(clear)clear.addEventListener("click",()=>{term="";search.value="";render();syncSearchUrl();search.focus()});
 if(more)more.addEventListener("click",()=>{page++;render()});
 
 /* Pestañas internas del HUB: cambiar de pantalla sin abrir aplicaciones ni saltar a anclas. */
@@ -104,6 +128,7 @@ function showView(name,updateUrl=true,query=null){
     const next=new URL(window.location.href);
     if(name==="inicio")next.searchParams.delete("vista");else next.searchParams.set("vista",name);
     if(query)next.searchParams.set("q",query);else next.searchParams.delete("q");
+    if(name!=="explorar")next.searchParams.delete("categoria");
     history.pushState({hubView:name},"",next.pathname+next.search);
   }
   const announce=$("#hubViewStatus");if(announce)announce.textContent="Sección abierta: "+viewLabel[name];
@@ -112,11 +137,12 @@ function showView(name,updateUrl=true,query=null){
 function restoreView(){
   const view=readCurrentView();
   const query=new URL(window.location.href).searchParams.get("q");
-  if(view==="explorar"&&query!==null&&search){
-    term=query.trim().slice(0,160);
+  if(view==="explorar"&&search){
+    term=(query||"").trim().slice(0,160);
     search.value=term;
-    category="all";
-    onlyFavs=false;
+    const requestedCategory=new URL(location.href).searchParams.get("categoria");
+    category=requestedCategory==="favoritos"||Object.hasOwn(label,requestedCategory)?requestedCategory:"all";
+    onlyFavs=category==="favoritos";
     page=1;
     if(catalog.length)render();
   }
@@ -132,8 +158,9 @@ if(viewPanels.length){
     if(!query){input.focus();return;}
     term=query;
     search.value=term;
-    setCategory("all");
+    category="all";onlyFavs=false;page=1;render();
     showView("explorar",true,term);
+    syncSearchUrl();
     search.focus({preventScroll:true});
   });
   document.addEventListener("click",event=>{
@@ -152,24 +179,55 @@ const menu=$("#menuTrigger"),menuPane=$("#mobileMenu");
 if(menu&&menuPane){menu.addEventListener("click",()=>{menuPane.hidden=!menuPane.hidden;menu.setAttribute("aria-expanded",String(!menuPane.hidden))});menuPane.addEventListener("click",e=>{if(e.target.closest("a,button[data-hub-tab]")){menuPane.hidden=true;menu.setAttribute("aria-expanded","false")}});}
 const dialog=$("#supportDialog"),openBtns=$$("[data-support]"),closeBtn=$("#closeSupport");let previousFocus=null, loadedPayPal=false;
 function openSupport(){if(!dialog)return;previousFocus=document.activeElement;dialog.hidden=false;closeBtn?.focus();document.body.style.overflow="hidden";if(!loadedPayPal)loadPayPal();}
+dialog?.addEventListener("keydown",event=>{if(event.key!=="Tab")return;const controls=$$("a[href],button:not([disabled]),input,select,textarea,[tabindex=\"0\"]",dialog).filter(el=>!el.hidden);const first=controls[0],last=controls[controls.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus()}});
 function closeSupport(){if(!dialog)return;dialog.hidden=true;document.body.style.overflow="";previousFocus?.focus()}
 openBtns.forEach(b=>b.addEventListener("click",openSupport));closeBtn?.addEventListener("click",closeSupport);
 dialog?.addEventListener("click",e=>{if(e.target===dialog)closeSupport()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(dialog&&!dialog.hidden)closeSupport();if(menuPane&&!menuPane.hidden){menuPane.hidden=true;menu?.setAttribute("aria-expanded","false")}}});
 function loadPayPal(){loadedPayPal=true;const box=$("#paypal-container-L8JZJ944K29T2");if(!box)return;const s=document.createElement("script");s.src="https://www.paypal.com/sdk/js?client-id=BAAJLihJtqy1l8ByU5kM-5xUoRD7QhOIzMXEHYka6QMgJrgtidkjum4hZxfZjxGeFbb1EtfpIjKw8v-NXs&components=hosted-buttons&disable-funding=venmo&currency=USD";s.async=true;s.onload=()=>{try{window.paypal?.HostedButtons({hostedButtonId:"L8JZJ944K29T2"}).render("#paypal-container-L8JZJ944K29T2")}catch{box.textContent="No se pudo cargar PayPal. Inténtalo de nuevo más tarde."}};s.onerror=()=>{box.textContent="No se pudo cargar PayPal. Inténtalo de nuevo más tarde."};document.head.appendChild(s)}
 $("#copyBinance")?.addEventListener("click",async()=>{try{await navigator.clipboard.writeText("BINANCE (USDT)\nRed: BEP20 (BSC)\nID: 176067584\nCorreo: david.linaresb@gmail.com");showToast("Datos copiados")}catch{showToast("Selecciona y copia los datos mostrados")}});
+const recentKey="movidasst:hub:recientes";
+let recent=[];
+try{const saved=JSON.parse(localStorage.getItem(recentKey)||"[]");if(Array.isArray(saved))recent=saved.filter(x=>typeof x==="string").slice(0,6);}catch{}
+function recordRecent(url,preferredId){
+  const found=catalog.find(i=>i.id===preferredId)||catalog.find(i=>{const u=new URL(i.url);return u.origin===url.origin&&u.pathname===url.pathname&&u.hash===url.hash});
+  if(!found)return;
+  recent=[found.id,...recent.filter(id=>id!==found.id)].slice(0,6);
+  try{localStorage.setItem(recentKey,JSON.stringify(recent));}catch{}
+  renderPersonal();
+}
+function renderPersonal(){
+  const grid=$("#personalGrid"),section=$("#personalAccess");if(!grid||!section)return;
+  const saved=catalog.filter(i=>favorites.has(i.id));
+  const ids=new Set(saved.map(i=>i.id));
+  const opened=recent.map(id=>catalog.find(i=>i.id===id)).filter(i=>i&&!ids.has(i.id));
+  const items=[...saved,...opened].slice(0,6);
+  section.hidden=!items.length;
+  grid.innerHTML=items.map(i=>'<a class="personal-link" href="'+safeUrl(i.url)+'" target="_blank" rel="noopener noreferrer"><span class="quick-icon">'+svg(i.icon)+'</span><span><strong>'+safeText(i.title)+'</strong><small>'+ (favorites.has(i.id)?"Favorito":"Abierto recientemente")+'</small></span></a>').join("");
+}
+$("#clearRecent")?.addEventListener("click",()=>{recent=[];try{localStorage.removeItem(recentKey);}catch{}renderPersonal();showToast("Historial de este dispositivo borrado");});
+window.addEventListener("storage",event=>{if(event.key!==favoritesKey&&event.key!==recentKey)return;try{const saved=JSON.parse(event.newValue||"[]");if(!Array.isArray(saved))return;if(event.key===favoritesKey){favorites=new Set(saved.filter(x=>typeof x==="string"));render();renderFeatured();}else recent=saved.filter(x=>typeof x==="string").slice(0,6);renderPersonal();}catch{}});
+document.addEventListener("click",event=>{
+  const suggestion=event.target.closest("[data-search-term]");if(!suggestion)return;
+  term=suggestion.dataset.searchTerm;category="all";onlyFavs=false;page=1;if(search)search.value=term;render();showView("explorar",true,term);syncSearchUrl();search?.focus({preventScroll:true});
+});
+document.addEventListener("click",event=>{document.querySelectorAll(".social-menu[open]").forEach(menu=>{if(!menu.contains(event.target))menu.open=false});});
+document.addEventListener("keydown",event=>{if(event.key==="Escape")document.querySelectorAll(".social-menu[open]").forEach(menu=>{menu.open=false;menu.querySelector("summary")?.focus()});});
 const retryCatalog=$("#retryCatalog");
 async function loadCatalog(){
   const loading=$("#loadingCatalog");
   if(retryCatalog)retryCatalog.hidden=true;
   if(loading)loading.textContent="Cargando inventario de herramientas y recursos...";
   try{
-    const response=await fetch("/ecosistema.json?v=20261114-navegacion",{signal:AbortSignal.timeout(10000)});
+    const response=await fetch("/ecosistema.json?v=20261121-hub2",{signal:AbortSignal.timeout(10000)});
     if(!response.ok)throw new Error("HTTP "+response.status);
     const data=await response.json();
     if(!Array.isArray(data.items))throw new Error("Formato de catálogo");
     catalog=data.items.filter(i=>i&&i.title&&i.id&&safeUrl(i.url)!=="#explorar");
+    renderChips();
     render();
+    renderFeatured();
+    renderPersonal();
     renderCats();
     loading?.remove();
   }catch(error){
@@ -181,6 +239,8 @@ async function loadCatalog(){
 }
 retryCatalog?.addEventListener("click",loadCatalog);
 loadCatalog();
+
+if(!viewPanels.length&&search){const params=new URL(location.href).searchParams;term=(params.get("q")||"").slice(0,160);search.value=term;const requested=params.get("categoria");if(requested==="favoritos"||Object.hasOwn(label,requested)){category=requested;onlyFavs=category==="favoritos";}}
 
 const courseHighlight=$("#courseHighlight");
 if(courseHighlight){
@@ -194,6 +254,7 @@ if(courseHighlight){
 // Solo medir destinos conocidos y si una consulta no obtuvo resultados.
 const destinations={
   "inscripciones.movidasst.com/":"cursos",
+  "directorio.movidasst.com/":"directorio",
   "www.movidasst.com/biblioteca/":"biblioteca",
   "www.movidasst.com/mi-movida/":"mi_movida",
   "www.movidasst.com/tv/":"movida_tv"
@@ -203,6 +264,7 @@ document.addEventListener("click",event=>{
   if(!link)return;
   const url=new URL(link.href);
   const destination=link.dataset.movidaDestination||destinations[url.hostname+url.pathname];
+  recordRecent(url,link.closest("[data-id]")?.dataset.id);
   if(destination)window.MovidaGA4?.trackHub?.("hub_destination_click",{destination});
 });
 let emptySearchTimer;
